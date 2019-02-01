@@ -3,7 +3,9 @@ This project is the teacher front-end for Quizdini 2.0
 ## To-Do List
 
 * Create rough drawing of a MatchGameCreator
-* Mock up of MatchGameCreator
+* Mock up of MatchGameCreator using Formik
+  * Complete following along with the video 
+  * Examine this (codepen)[https://codesandbox.io/s/qJR4ykJk] to see how to create custom input controls, etc.
 
 ## React Router
 

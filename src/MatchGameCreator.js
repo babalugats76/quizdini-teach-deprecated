@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { Formik, Field } from 'formik';
+import { withFormik } from 'formik';
+
 
 class MatchGameCreator extends Component {
 
@@ -74,24 +75,19 @@ class MatchGameCreator extends Component {
 
   render() {
 
-    const initialValues = {
-      title: 'Short, meaningful name',
-      instructions: 'Default instructions string'
-    }
+    const {values} = this.props;
 
     return (
       <div class="container">
         <h1>Match Game</h1>
-        <Formik initialValues={initialValues}>
-          {() => <div>
-            <div className="row">
-              <Field name="title" type="text" />
-            </div>
-            <div className="row">
-              <Field name="instructions" type="text" />
-            </div>
-          </div>}
-        </Formik>
+        <div>
+          <label htmlFor="title" className="label">Title</label>
+          <input id="title" type="text" value={values.title} />
+        </div>
+        <div>
+          <label htmlFor="instructions" className="label">Instructions</label>
+          <input id="instructions" type="text" value={values.instructions} />
+        </div>
       </div>
     );
   }
@@ -112,4 +108,9 @@ class JsonEditor extends React.Component {
   }
 }
 
-export default MatchGameCreator;
+export default withFormik({
+  mapPropsToValues: () => ({
+    title: 'Short, and sweet',
+    instructions: 'Keep it real simple'
+  })
+})(MatchGameCreator);

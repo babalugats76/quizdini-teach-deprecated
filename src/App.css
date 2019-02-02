@@ -3,3 +3,7 @@ textarea.editor {
   line-height: 1.3em;
   height: 120px;
 }
+
+.label {
+  display: block;
+}

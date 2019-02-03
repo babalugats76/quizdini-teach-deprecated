@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
-import { withFormik } from 'formik';
+import MatchForm from './MatchForm';
 
-
-class MatchGameCreator extends Component {
+class MatchGame extends Component {
 
   constructor(props) {
     super(props);
@@ -75,10 +74,12 @@ class MatchGameCreator extends Component {
 
   render() {
 
-    const {values} = this.props;
+    /*const {values} = this.props; */
+
+    const match = { title: 'Short and sweet', instructions: 'Tell them what to do'};
 
     return (
-      <div class="container">
+      /*<div class="container">
         <h1>Match Game</h1>
         <div>
           <label htmlFor="title" className="label">Title</label>
@@ -88,6 +89,9 @@ class MatchGameCreator extends Component {
           <label htmlFor="instructions" className="label">Instructions</label>
           <input id="instructions" type="text" value={values.instructions} />
         </div>
+      </div>*/
+      <div class="container">
+        <MatchForm match={match} />
       </div>
     );
   }
@@ -108,9 +112,4 @@ class JsonEditor extends React.Component {
   }
 }
 
-export default withFormik({
-  mapPropsToValues: () => ({
-    title: 'Short, and sweet',
-    instructions: 'Keep it real simple'
-  })
-})(MatchGameCreator);
+export default MatchGame;

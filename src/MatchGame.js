@@ -22,6 +22,11 @@ class MatchGame extends Component {
 
   }
 
+  handleSubmit(match) {
+    console.log('Saving game...');
+    console.log(match);
+  }
+
   getItems(str) {
 
     let json = str.split('\n');
@@ -90,8 +95,12 @@ class MatchGame extends Component {
           <input id="instructions" type="text" value={values.instructions} />
         </div>
       </div>*/
-      <div class="container">
-        <MatchForm match={match} />
+      <div className="container">
+        <h2>Match Game</h2>
+        <MatchForm 
+          match={match} 
+          onSubmit={(payload) => this.handleSubmit(payload)}
+          />
       </div>
     );
   }

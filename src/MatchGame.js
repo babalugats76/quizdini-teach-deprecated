@@ -27,47 +27,6 @@ class MatchGame extends Component {
     console.log(match);
   }
 
-  getItems(str) {
-
-    let json = str.split('\n');
-    let items = new Array(0).fill(null);
-
-    json.reduce((pairs, line) => {
-      let vals = line.split(',') || [];
-      if (!Array.isArray(vals)
-        || !vals.length
-        || vals.length < 2
-        || vals[0].trim().length === 0
-        || vals[1].trim().length === 0) {
-        return items;
-      }
-      return items.push({ "term": vals[0].trim(), "definition": vals[1].trim() });
-    }, items);
-
-    return items;
-  }
-
-  toJson(arr, indentSpaces) {
-    return ((arr && arr.length > 0) ? JSON.stringify(arr.reverse(), null, indentSpaces) : '');
-  }
-
-  handleEditorChange(event) {
-
-    const text = event.target.value;
-    let items = this.getItems(text);
-    const json = this.toJson(items, 3);
-    const definitions = items.map((item) => { return item.definition; });
-    const terms = items.map((item) => { return item.term; });
-
-    this.setState({
-      text: text,
-      json: json,
-      terms: terms,
-      definitions: definitions
-    });
-
-  }
-
   /*render() {
     return (<div>
       <div className="container align-top">
@@ -84,7 +43,8 @@ class MatchGame extends Component {
     const match = { 
       title: '', 
       instructions: '',
-      matches: '',
+      matches: [],
+      matchText: '',
       config: {
         itemsPerBoard: 9,
         duration: 180

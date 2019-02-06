@@ -84,6 +84,7 @@ class MatchGame extends Component {
     const match = { 
       title: '', 
       instructions: '',
+      matches: '',
       config: {
         itemsPerBoard: 9,
         duration: 180

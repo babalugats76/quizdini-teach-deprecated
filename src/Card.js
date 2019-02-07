@@ -7,7 +7,7 @@ class Card extends Component {
     super(props);
     this.state = { 
       open: false ,
-      timeout: 500
+      timeout: 800
     }
   }
 
@@ -27,11 +27,11 @@ class Card extends Component {
 
     /* Define object for the following states: 'default', 'entering', 'entered', 'exiting', 'exited' */
     const transitionStyles = {
-      default: {  maxHeight: '0', overflow: 'hidden' },
-      entering: { maxHeight: '0', overflow: 'hidden' },
-      entered: { transition: `visibility 0ms linear {timeout}ms, opacity {timeout}ms linear`, maxHeight: 'none', overflow: 'visible' },
-      exiting: { transition: `opacity {timeout}ms ease-in-out, max-height {timeout} ease-out`, opacity: 1.0, visibility: 'visible', maxHeight: 'none', overflow: 'visible' },
-      exited: { opacity: 0, 'color': '#FFFFFF', 'borderColor': '#FFFFFF', maxHeight: '0', overflow: 'hidden' }
+      default: {  maxheight: '0', overflow: 'hidden' },
+      entering: {  transition: `max-height ${timeout}ms ease-in-out`, maxHeight: '1000px', 'height': 'auto', overflow: 'hidden' },
+      entered: {  maxHeight: '1000px', 'height': 'auto', overflow: 'hidden' },
+      exiting: { transition: `max-height ${timeout}ms ease-out`, maxHeight: 0, 'height': 'auto', overflow: 'hidden' },
+      exited: {  height: '0', overflow: 'hidden' }
     };
 
 

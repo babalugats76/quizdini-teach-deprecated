@@ -23,7 +23,7 @@ class Card extends Component {
   }
 
   render() {
-
+// eslint-disable-next-line
     const { title, text } = this.props;
     const { timeout, isOpen } = this.state;
 
@@ -33,12 +33,18 @@ class Card extends Component {
       { 'expand': isOpen, 'collapse': !isOpen, 'show': !isOpen }
     );
 
+    const createMarkup = (text) => { return {__html: text }; };
+
     return (
       <div className={cardClass}>
         <div className="card-body">
-          <h5 className="card-title" onClick={(e) => this.handleTitleClick(e)}>{title}</h5>
+          <h5 
+             className="card-title" 
+             dangerouslySetInnerHTML={createMarkup(title)}
+             onClick={(e) => this.handleTitleClick(e)}>
+          </h5>
             <Accordian timeout={timeout} isOpen={isOpen}>
-              <p className="card-text">{text}</p>
+              <p className="card-text" dangerouslySetInnerHTML={createMarkup(text)} />
             </Accordian>
         </div>
       </div>

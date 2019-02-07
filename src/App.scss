@@ -1,3 +1,10 @@
+@import "./variables";
+@import "./mixins";
+
+html {
+  font-size: 14px;
+}
+
 textarea.editor {
   font-size: 15px;
   line-height: 1.3em;
@@ -11,5 +18,7 @@ textarea.editor {
 
 textarea#matchText {
   width: 100%;
+  padding: .6em;
   overflow-y: scroll;
 }
+

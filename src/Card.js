@@ -36,9 +36,9 @@ class Card extends Component {
 
 
     return (
-      <div className="card">
+      <div className="card text-center">
         <div className="card-body">
-          <p className="card-title" onClick={(e) => this.handleClick(e)}>{title}</p>
+          <h5 className="card-title" onClick={(e) => this.handleClick(e)}>{title}</h5>
           <StyleTransition
             mountOnEnter={true}
             unmountOnExit={true}

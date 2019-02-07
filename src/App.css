@@ -8,3 +8,8 @@ textarea.editor {
   font-weight: bold;
   display: block;
 }
+
+textarea#matchText {
+  width: 100%;
+  overflow-y: scroll;
+}

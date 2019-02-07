@@ -4,6 +4,7 @@ import Label from './Label';
 import TextInput from './TextInput';
 import RangeInput from './RangeInput';
 import MatchEditor from './MatchEditor';
+import MatchList from './MatchList';
 import { withFormik } from 'formik';
 import DisplayFormikState from './FormikHelper';
 
@@ -13,7 +14,12 @@ const MatchForm = (props) => {
   return (
     <form onSubmit={handleSubmit}>
       <div className="row">
-        <div className="col-4">
+        <div className="col-5">
+          <fieldset>
+            <legend>Configuration</legend>
+            <button type="submit" disabled={isSubmitting} className="btn btn-primary float-right">Save</button>
+          </fieldset>
+          <br />
           <TextInput
             id="title"
             type="text"
@@ -48,11 +54,8 @@ const MatchForm = (props) => {
             value={values.duration}
             onChange={handleChange}
           />
-          <button type="submit" disabled={isSubmitting} className="btn btn-primary">
-            Submit
-          </button>
         </div>
-        <div className="col-4">
+        <div className="col-7">
           <MatchEditor
             id="matchText"
             rows={10}
@@ -63,8 +66,12 @@ const MatchForm = (props) => {
             setFieldValue={setFieldValue}
           />
         </div>
-        <div className="col-4">
-
+      </div>
+      <div className="row">
+        <div className="col-12">
+          <MatchList
+            matches={values.matches}
+          />
         </div>
       </div>
       <div className="row">

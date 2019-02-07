@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Label from './Label';
 
 class MatchEditor extends Component {
 
@@ -32,7 +33,7 @@ class MatchEditor extends Component {
     return ((arr && arr.length > 0) ? JSON.stringify(arr.reverse(), null, indentSpaces) : '');
   }
 
-  /***
+  /**
    * @param {Event} e  Event to handle.
    * Perform any necessary processing
    * Notify Formik of fields' new values
@@ -66,13 +67,16 @@ class MatchEditor extends Component {
     const fieldAttrs = (({ rows, cols }) => ({ rows, cols }))(this.props);
 
     return (
-      <textarea
-        id={id}
-        placeholder={placeholder.split('\\n').join('\n')}
-        value={value.split('\\n').join('\n')}
-        onChange={(e) => this.handleEditorChange(e)}
-        {...fieldAttrs}
-      />
+      <div className="form-group">
+        <Label htmlFor={id}>{label}</Label>
+        <textarea
+          id={id}
+          placeholder={placeholder.split('\\n').join('\n')}
+          value={value.split('\\n').join('\n')}
+          onChange={(e) => this.handleEditorChange(e)}
+          {...fieldAttrs}
+        />
+      </div>
     );
   }
 }

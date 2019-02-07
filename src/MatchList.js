@@ -4,13 +4,11 @@ import Card from './Card';
 
 const MatchList = ({ matches, ...props }) => {
   return (
-    <ul className="list-group list-group-flush">
-       { matches.map((match, idx) => (
-           <li className="list-group-item" key={idx}>
-             <Card title={match.term || ''} text={match.definition || ''} />
-           </li>
-         )) }
-    </ul>
+    <div className="d-flex flex-row flex-wrap">
+      {matches.map((match, idx) => (
+        <Card key={idx} title={match.term || ''} text={match.definition || ''} />
+      ))}
+    </div>
   );
 };
 

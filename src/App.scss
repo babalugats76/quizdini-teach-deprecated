@@ -11,6 +11,11 @@ textarea.editor {
   height: 120px;
 }
 
+.card {
+  min-width: 8ch;
+  max-width: 30ch;
+}
+
 .label {
   font-weight: bold;
   display: block;
@@ -21,4 +26,3 @@ textarea#matchText {
   padding: .6em;
   overflow-y: scroll;
 }
-

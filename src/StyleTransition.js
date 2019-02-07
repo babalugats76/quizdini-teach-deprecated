@@ -14,7 +14,6 @@ const StyleTransition = ({ children, ...props }) => {
    * Return transition after cloning children and pushing down style
    * Make sure props.styles is pushed down to rendered HTML
    */
-
   return (<Transition {...props}>
     {(transitionState, innerProps) => React.cloneElement(children, {
       style: getStyles({...props.transitionStyles})(transitionState)

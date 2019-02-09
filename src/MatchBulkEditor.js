@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Label from './Label';
 
-class MatchEditor extends Component {
+class MatchBulkEditor extends Component {
 
   /**
    * @param {string} str  Text to parse matches out of.
@@ -81,4 +81,4 @@ class MatchEditor extends Component {
   }
 }
 
-export default MatchEditor;
+export default MatchBulkEditor;

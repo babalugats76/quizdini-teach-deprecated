@@ -29,3 +29,7 @@ I am going to try to implement a limited, rich-text editor using Slate
 To install: `npm i slate slate-react immutable`
 
 Documentation can be found [here](https://docs.slatejs.org)
+
+A great rich-text source code example can be found [here](https://github.com/ianstormtaylor/slate/tree/master/examples/rich-text)
+
+In order to make things differentiating between `cmd` on Mac and `ctrl` on Windows, we will use the `is-hotkey` module

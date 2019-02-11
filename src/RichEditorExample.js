@@ -1,129 +1,141 @@
 import React, { Component } from 'react';
 import { Editor } from 'slate-react';
-import { Value } from 'slate';
-
-const UnderlineMark = (props) => {
-  return (
-    <u {...props.attributes}>{props.children}</u>
-  );
-}
-
-const ItalicMark = (props) => {
-  return (
-    <em {...props.attributes}>{props.children}</em>
-  );
-}
-
-const PreformattedMark = (props) => {
-  return (
-    <code {...props.attributes}>{props.children}</code>
-  );
-}
-
-const SuperscriptMark = (props) => {
-  return (
-    <sup {...props.attributes}>{props.children}</sup>
-  );
-}
-
-const SubscriptMark = (props) => {
-  return (
-    <sub {...props.attributes}>{props.children}</sub>
-  );
-}
-
-const markHotKey = (options) => {
-
-  const { key, type } = options;
-
-  return {
-    onKeyDown(event, editor, next) {
-      if (!event.ctrlKey || event.key !== key) return next();
-      event.preventDefault();
-      editor.toggleMark(type);
-    }
-  }
-}
-
-const underlinePlugin = markHotKey({ key: 'u', type: 'underline' });
-const italicPlugin = markHotKey({ key: 'i', type: 'italic' });
-const preformattedPlugin = markHotKey({ key: 'p', type: 'preformatted' });
-const superscriptPlugin = markHotKey({ key: 'ArrowUp', type: 'superscript' });
-const subscriptPlugin = markHotKey({ key: 'ArrowDown', type: 'subscript' });
-
-// eslint-disable-next-line
-const plugins = [
-  underlinePlugin, 
-  italicPlugin, 
-  preformattedPlugin,
-  superscriptPlugin,
-  subscriptPlugin
-];
+import { isKeyHotkey } from 'is-hotkey';
+import Plain from 'slate-plain-serializer';
 
 class RichEditorExample extends Component {
 
-  initialValue = Value.fromJSON({
-    document: {
-      nodes: [
-        {
-          object: 'block',
-          type: 'paragraph',
-          nodes: [
-            {
-              object: 'text',
-              leaves: [
-                {
-                  text: 'Enter term...'
-                }
-              ]
-            }
-          ]
-        }
-      ]
-    }
-  });
-
+  /**
+   * Initialize component.
+   * Set editor's initial state.
+   * 
+   * @param {Object} props 
+   */
   constructor(props) {
     super(props);
     this.state = {
-      value: this.initialValue
+      value: Plain.deserialize('')
     };
   }
 
+  /* Used to reference instance of Editor component */
+  ref = (editor) => {
+    this.editor = editor
+  }
+
+  /**
+   * If any marks in selection match, return true
+   * 
+   * @param {String} type  Type of mark to search selection for
+   * @return {Boolean}    
+   */
+  hasMark = (type) => {
+    const { value } = this.state;
+    return value.activeMarks.some(mark => mark.type === type);
+  }
+
+  /**
+   * On change, save the new `value` to state
+   *
+   * @param {Editor} editor
+   */
   onChange = ({ value }) => {
     this.setState((state, props) => {
       return { value };
     });
   }
 
+  /**
+   * Renders a mark (used for formatting) with props
+   * 
+   * @param {Object} props 
+   * @param {Editor} editor 
+   * @param {function} next Callback function (if no custom action to take)
+   * @return {Element}
+   */
   renderMark(props, editor, next) {
-    switch (props.mark.type) {
+
+    const { attributes, children, mark } = props;
+
+    switch (mark.type) {
+      case 'code':
+        return <code {...attributes}>{children}</code>;
       case 'underline':
-        return <UnderlineMark {...props} />;
-      case 'italic':
-        return <ItalicMark {...props} />;
-      case 'preformatted':
-        return <PreformattedMark {...props} />
+        return <u {...attributes}>{children}</u>;
       case 'superscript':
-        return <SuperscriptMark {...props} />;
+        return <sup {...attributes}>{children}</sup>;
       case 'subscript':
-        return <SubscriptMark {...props} />;
+        return <sub {...attributes}>{children}</sub>;
       default:
         return next();
     }
+
+  }
+
+  /**
+   * On key down, if it's a formatting command toggle a mark.
+   *
+   * @param {Event} event
+   * @param {Editor} editor
+   * @return {Change}
+   */
+  onKeyDown = (event, editor, next) => {
+    
+    let mark;
+    const isUnderline = isKeyHotkey('mod+u');
+    const isCode = isKeyHotkey('mod+`');
+    const isSuperscript = isKeyHotkey('mod+ArrowUp');
+    const isSubscript = isKeyHotkey('mod+ArrowDown');
+
+    if (isUnderline(event)) {
+      mark = 'underline';
+    } else if (isCode(event)) {
+      mark = 'code';
+    } else if (isSuperscript(event)) {
+      mark = 'superscript';
+    } else if (isSubscript(event)) {
+      mark = 'subscript';
+    } else {
+      return next();
+    }
+
+    event.preventDefault();
+    editor.toggleMark(mark);
+  }
+
+  /**
+   * Generic event handler to attach to mark buttons
+   * 
+   * @param {Event} event  
+   * @param {String} type  Type of mark (formatting) to apply, e.g., underline
+   */
+  onClickMark = (event, type) => {
+    event.preventDefault()
+    this.editor.toggleMark(type)
   }
 
   render() {
 
     const { value } = this.state;
-
     return (
-      <Editor
-        value={value}
-        plugins={plugins}
-        onChange={this.onChange}
-        renderMark={this.renderMark}
-      />
+      <React.Fragment>
+        <div className="format-toolbar">
+          <button onClick={(event) => this.onClickMark(event, 'underline')} >Underline</button>
+          <button onClick={(event) => this.onClickMark(event, 'code')} >Code</button>
+          <button onClick={(event) => this.onClickMark(event, 'superscript')} >Superscript</button>
+          <button onClick={(event) => this.onClickMark(event, 'subscript')} >Subscript</button>
+        </div>
+        <Editor
+          autoFocus
+          spellCheck={false}
+          placeholder="Enter some rich text..."
+          ref={this.ref}
+          value={value}
+          onChange={this.onChange}
+          onKeyDown={this.onKeyDown}
+          renderMark={this.renderMark}
+        />
+      </React.Fragment>
     );
   }
 }

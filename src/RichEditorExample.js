@@ -117,8 +117,10 @@ class RichEditorExample extends Component {
   render() {
 
     const { value } = this.state;
+    const { placeholder } = this.props;
+
     return (
-      <React.Fragment>
+      <div className="rich-text-editor-container">
         <div className="format-toolbar">
           <button onClick={(event) => this.onClickMark(event, 'underline')} >Underline</button>
           <button onClick={(event) => this.onClickMark(event, 'code')} >Code</button>
@@ -128,14 +130,15 @@ class RichEditorExample extends Component {
         <Editor
           autoFocus
           spellCheck={false}
-          placeholder="Enter some rich text..."
+          className="rich-text-editor"
+          placeholder={placeholder}
           ref={this.ref}
           value={value}
           onChange={this.onChange}
           onKeyDown={this.onKeyDown}
           renderMark={this.renderMark}
         />
-      </React.Fragment>
+      </div>
     );
   }
 }

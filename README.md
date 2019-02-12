@@ -33,3 +33,13 @@ Documentation can be found [here](https://docs.slatejs.org)
 A great rich-text source code example can be found [here](https://github.com/ianstormtaylor/slate/tree/master/examples/rich-text)
 
 In order to make things differentiating between `cmd` on Mac and `ctrl` on Windows, we will use the `is-hotkey` module
+
+## Font Awesome
+
+I am also going to try out the free set of Font Awesome 5.0 svg icons
+
+To install: `$ npm i @fortawesome/fontawesome-svg-core @fortawesome/free-solid-svg-icons @fortawesome/react-fontawesome`
+
+Documentation may be found [here](https://www.npmjs.com/package/@fortawesome/react-fontawesome)
+
+Consider adding library to project (index) consistent with this [article](https://scotch.io/tutorials/using-font-awesome-5-with-react)

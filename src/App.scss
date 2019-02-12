@@ -55,9 +55,30 @@ textarea#matchText {
   border-bottom: 2px solid rgb(238, 238, 238);
 }
 
+.format-toolbar button {
+  background-color: transparent;
+  padding: 3px 6px;
+  border: none;
+  color: #4e4e4e;
+  margin-right: 3px;
+  border-radius: 3px;
+  font-size: 1rem;
+}
+
+.format-toolbar button:hover {
+  cursor: pointer;
+  background-color: #eae8e8;
+}
+
 .rich-text-editor-container {
   max-width: 42em;
   margin: 20px auto;
   padding: 20px;
   background: rgb(255, 255, 255);
+}
+
+.icon {
+  font-size: 1rem !important;
+  line-height: 1rem !important;
+  vertical-align: none;
 }

@@ -3,8 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^1.2.14",
+    "@fortawesome/free-solid-svg-icons": "^5.7.1",
+    "@fortawesome/react-fontawesome": "^0.1.4",
     "classnames": "^2.2.6",
-    "draft-js-buttons-plugin": "^1.2.0",
     "formik": "^1.4.3",
     "immutable": "^4.0.0-rc.12",
     "is-hotkey": "^0.1.4",

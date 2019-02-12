@@ -3,6 +3,8 @@ import { Editor } from 'slate-react';
 import { isKeyHotkey } from 'is-hotkey';
 import Plain from 'slate-plain-serializer';
 
+import Icon from './Icon';
+
 class RichEditorExample extends Component {
 
   /**
@@ -122,10 +124,10 @@ class RichEditorExample extends Component {
     return (
       <div className="rich-text-editor-container">
         <div className="format-toolbar">
-          <button onClick={(event) => this.onClickMark(event, 'underline')} >Underline</button>
-          <button onClick={(event) => this.onClickMark(event, 'code')} >Code</button>
-          <button onClick={(event) => this.onClickMark(event, 'superscript')} >Superscript</button>
-          <button onClick={(event) => this.onClickMark(event, 'subscript')} >Subscript</button>
+          <button title="Underline" onClick={(event) => this.onClickMark(event, 'underline')} ><Icon type='underline' /></button>
+          <button title="Code" onClick={(event) => this.onClickMark(event, 'code')} ><Icon type='code' /></button>
+          <button title="Superscript" onClick={(event) => this.onClickMark(event, 'superscript')} ><Icon type='superscript' /></button>
+          <button title="Subscript" onClick={(event) => this.onClickMark(event, 'subscript')} ><Icon type='subscript' /></button>
         </div>
         <Editor
           autoFocus

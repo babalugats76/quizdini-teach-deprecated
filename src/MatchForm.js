@@ -70,7 +70,8 @@ const MatchForm = (props) => {
       </div>
       <div className="row">
         <div className="col-12">
-          <RichEditorExample placeholder="Enter term..." />
+          <RichEditorExample 
+             placeholder="Enter term..." />
         </div>
       </div>
       <div className="row">

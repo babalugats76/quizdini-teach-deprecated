@@ -75,7 +75,7 @@ class MatchGame extends Component {
         <MatchForm 
           match={match} 
           onSubmit={(payload) => this.handleSubmit(payload)}
-          />
+        />
       </div>
     );
   }

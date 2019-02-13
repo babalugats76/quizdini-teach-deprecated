@@ -1,11 +1,62 @@
 import React, { Component } from 'react';
 import { Editor } from 'slate-react';
+import { Value } from 'slate';
 import { isKeyHotkey } from 'is-hotkey';
+// eslint-disable-next-line
 import Plain from 'slate-plain-serializer';
 
 import Icon from './Icon';
 
 class RichEditorExample extends Component {
+
+  initialValue = Value.fromJSON({
+    document: {
+      nodes: [
+        {
+          object: 'block',
+          type: 'paragraph',
+          nodes: [
+            {
+              object: 'text',
+              leaves: [
+                {
+                  text: 'A line of text in a paragraph.',
+                },
+              ],
+            },
+          ],
+        },
+        {
+          object: 'block',
+          type: 'paragraph',
+          nodes: [
+            {
+              object: 'text',
+              leaves: [
+                {
+                  text: 'A second line of text in a paragraph.',
+                },
+              ],
+            },
+          ],
+        },
+        {
+          object: 'block',
+          type: 'paragraph',
+          nodes: [
+            {
+              object: 'text',
+              leaves: [
+                {
+                  text: 'A third line of text in a paragraph.',
+                },
+              ],
+            },
+          ],
+        },
+      ],
+    },
+  })
 
   /**
    * Initialize component.
@@ -16,9 +67,35 @@ class RichEditorExample extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      value: Plain.deserialize('')
+      //value: Plain.deserialize('')
+      value: this.initialValue
     };
   }
+
+  schema = {
+    document: {
+      nodes: [
+        {
+          match: { type: 'paragraph' },
+          min: 1,
+          max: 1
+        },
+      ],
+    },
+    blocks: {
+      paragraph: {
+        marks: [
+          { type: 'underline' },
+          { type: 'code' },
+          { type: 'superscript' },
+          { type: 'subscript' }
+        ],
+        nodes: [
+          { match: { object: 'text' } }
+        ]
+      },
+    }
+  };
 
   /* Used to reference instance of Editor component */
   ref = (editor) => {
@@ -82,7 +159,7 @@ class RichEditorExample extends Component {
    * @return {Change}
    */
   onKeyDown = (event, editor, next) => {
-    
+
     let mark;
     const isUnderline = isKeyHotkey('mod+u');
     const isCode = isKeyHotkey('mod+`');
@@ -130,6 +207,7 @@ class RichEditorExample extends Component {
           <button title="Subscript" onClick={(event) => this.onClickMark(event, 'subscript')} ><Icon type='subscript' /></button>
         </div>
         <Editor
+          schema={this.schema}
           autoFocus
           spellCheck={false}
           className="rich-text-editor"

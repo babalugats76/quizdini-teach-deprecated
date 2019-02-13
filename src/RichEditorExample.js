@@ -1,15 +1,97 @@
 import React, { Component } from 'react';
 import { Editor } from 'slate-react';
+// eslint-disable-next-line
 import { Value } from 'slate';
 import { isKeyHotkey } from 'is-hotkey';
 // eslint-disable-next-line
 import Plain from 'slate-plain-serializer';
+import Html from 'slate-html-serializer'
 
 import Icon from './Icon';
 
-class RichEditorExample extends Component {
+const BLOCK_TAGS = {
+  p: 'paragraph'
+};
 
-  initialValue = Value.fromJSON({
+// Add a dictionary of mark tags.
+const MARK_TAGS = {
+  u: 'underline',
+  code: 'code',
+  sup: 'superscript',
+  sub: 'subscript'
+};
+
+class RichEditorExample extends Component {
+  
+  rules = [
+    {
+      deserialize(el, next) {
+        console.log(el.tagName.toLowerCase());
+        console.log(BLOCK_TAGS);
+        if (BLOCK_TAGS[el.tagName.toLowerCase()] === 'p') {
+          return {
+            object: 'block',
+            type: 'paragraph',
+            data: {
+              className: el.getAttribute('class'),
+            },
+            nodes: next(el.childNodes),
+          }
+        }
+      },
+      // Add a serializing function property to our rule...
+      serialize(obj, children) {
+        if (obj.object === 'block') {
+          switch(obj.type) {
+            case 'paragraph':
+              /**
+               * In this case, do not wrap in <p>
+               * Return plain text, coupled with HTML mark for styling only
+               * (of the children)
+               */
+              return (<React.Fragment>{children}</React.Fragment>);
+            default:
+              break;
+          }
+        }
+      },
+    },
+    {
+      deserialize(el, next) {
+        /* whitelist of tags */
+        const type = MARK_TAGS[el.tagName.toLowerCase()];
+        if (type) {
+          return {
+            object: 'mark',
+            type: type,
+            nodes: next(el.childNodes),
+          }
+        }
+      },
+      serialize(obj, children) {
+        if (obj.object === 'mark') {
+          switch(obj.type) {
+            case 'underline':
+              return <u>{children}</u>;
+            case 'code':
+              return <code>{children}</code>;
+            case 'superscript':
+              return <sup>{children}</sup>;  
+            case 'subscript':
+              return <sub>{children}</sub>;  
+            default:
+              break;
+          }
+        }
+      }
+    }
+  ];
+
+  serializer = new Html({ rules: this.rules });
+
+  initialValue = this.serializer.deserialize('<p>Hello<u>World</u>!<code>x=2;</code> and 2<sup>2</sup> is still not equal log<sub>10</sub>57.</p>');
+
+  /*initialValue = Value.fromJSON({
     document: {
       nodes: [
         {
@@ -56,7 +138,7 @@ class RichEditorExample extends Component {
         },
       ],
     },
-  })
+  })*/
 
   /**
    * Initialize component.
@@ -68,7 +150,8 @@ class RichEditorExample extends Component {
     super(props);
     this.state = {
       //value: Plain.deserialize('')
-      value: this.initialValue
+      value: this.initialValue,
+      output: 'Output will go here...'
     };
   }
 
@@ -119,8 +202,11 @@ class RichEditorExample extends Component {
    * @param {Editor} editor
    */
   onChange = ({ value }) => {
+    console.log('On change...');
     this.setState((state, props) => {
-      return { value };
+      const serialized = this.serializer.serialize(state.value);
+      console.log(serialized);
+      return { value, output: serialized };
     });
   }
 
@@ -180,6 +266,7 @@ class RichEditorExample extends Component {
 
     event.preventDefault();
     editor.toggleMark(mark);
+    editor.forceUpdate();
   }
 
   /**
@@ -189,8 +276,8 @@ class RichEditorExample extends Component {
    * @param {String} type  Type of mark (formatting) to apply, e.g., underline
    */
   onClickMark = (event, type) => {
-    event.preventDefault()
-    this.editor.toggleMark(type)
+    event.preventDefault();
+    this.editor.toggleMark(type);
   }
 
   render() {
@@ -218,6 +305,9 @@ class RichEditorExample extends Component {
           onKeyDown={this.onKeyDown}
           renderMark={this.renderMark}
         />
+        <pre>
+          {this.state.output}
+        </pre>
       </div>
     );
   }

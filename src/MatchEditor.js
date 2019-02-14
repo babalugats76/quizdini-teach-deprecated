@@ -1,13 +1,34 @@
 import React, { Component } from 'react';
 import { Editor } from 'slate-react';
-// eslint-disable-next-line
-import { Value } from 'slate';
 import { isKeyHotkey } from 'is-hotkey';
-// eslint-disable-next-line
-import Plain from 'slate-plain-serializer';
 import Html from 'slate-html-serializer'
 
 import Icon from './Icon';
+
+const schema = {
+  document: {
+    nodes: [
+      {
+        match: { type: 'paragraph' },
+        min: 1,
+        max: 1
+      },
+    ],
+  },
+  blocks: {
+    paragraph: {
+      marks: [
+        { type: 'underline' },
+        { type: 'code' },
+        { type: 'superscript' },
+        { type: 'subscript' }
+      ],
+      nodes: [
+        { match: { object: 'text' } }
+      ]
+    },
+  }
+};
 
 const BLOCK_TAGS = {
   p: 'paragraph'
@@ -21,125 +42,72 @@ const MARK_TAGS = {
   sub: 'subscript'
 };
 
-class RichEditorExample extends Component {
-  
-  rules = [
-    {
-      deserialize(el, next) {
-        console.log(el.tagName.toLowerCase());
-        console.log(BLOCK_TAGS);
-        if (BLOCK_TAGS[el.tagName.toLowerCase()] === 'p') {
-          return {
-            object: 'block',
-            type: 'paragraph',
-            data: {
-              className: el.getAttribute('class'),
-            },
-            nodes: next(el.childNodes),
-          }
+const rules = [
+  {
+    deserialize(el, next) {
+      if (BLOCK_TAGS[el.tagName.toLowerCase()] === 'p') {
+        return {
+          object: 'block',
+          type: 'paragraph',
+          data: {
+            className: el.getAttribute('class'),
+          },
+          nodes: next(el.childNodes),
         }
-      },
-      // Add a serializing function property to our rule...
-      serialize(obj, children) {
-        if (obj.object === 'block') {
-          switch(obj.type) {
-            case 'paragraph':
-              /**
-               * In this case, do not wrap in <p>
-               * Return plain text, coupled with HTML mark for styling only
-               * (of the children)
-               */
-              return (<React.Fragment>{children}</React.Fragment>);
-            default:
-              break;
-          }
-        }
-      },
+      }
     },
-    {
-      deserialize(el, next) {
-        /* whitelist of tags */
-        const type = MARK_TAGS[el.tagName.toLowerCase()];
-        if (type) {
-          return {
-            object: 'mark',
-            type: type,
-            nodes: next(el.childNodes),
-          }
+    // Add a serializing function property to our rule...
+    serialize(obj, children) {
+      if (obj.object === 'block') {
+        switch(obj.type) {
+          case 'paragraph':
+            /**
+             * In this case, do not wrap in <p>
+             * Return plain text, coupled with HTML mark for styling only
+             * (of the children)
+             */
+            return (<React.Fragment>{children}</React.Fragment>);
+          default:
+            break;
         }
-      },
-      serialize(obj, children) {
-        if (obj.object === 'mark') {
-          switch(obj.type) {
-            case 'underline':
-              return <u>{children}</u>;
-            case 'code':
-              return <code>{children}</code>;
-            case 'superscript':
-              return <sup>{children}</sup>;  
-            case 'subscript':
-              return <sub>{children}</sub>;  
-            default:
-              break;
-          }
+      }
+    },
+  },
+  {
+    deserialize(el, next) {
+      /* whitelist of tags */
+      const type = MARK_TAGS[el.tagName.toLowerCase()];
+      if (type) {
+        return {
+          object: 'mark',
+          type: type,
+          nodes: next(el.childNodes),
+        }
+      }
+    },
+    serialize(obj, children) {
+      if (obj.object === 'mark') {
+        switch(obj.type) {
+          case 'underline':
+            return <u>{children}</u>;
+          case 'code':
+            return <code>{children}</code>;
+          case 'superscript':
+            return <sup>{children}</sup>;  
+          case 'subscript':
+            return <sub>{children}</sub>;  
+          default:
+            break;
         }
       }
     }
-  ];
+  }
+];
 
-  serializer = new Html({ rules: this.rules });
+const serializer = new Html({ rules: rules });
 
-  initialValue = this.serializer.deserialize('<p>Hello<u>World</u>!<code>x=2;</code> and 2<sup>2</sup> is still not equal log<sub>10</sub>57.</p>');
-
-  /*initialValue = Value.fromJSON({
-    document: {
-      nodes: [
-        {
-          object: 'block',
-          type: 'paragraph',
-          nodes: [
-            {
-              object: 'text',
-              leaves: [
-                {
-                  text: 'A line of text in a paragraph.',
-                },
-              ],
-            },
-          ],
-        },
-        {
-          object: 'block',
-          type: 'paragraph',
-          nodes: [
-            {
-              object: 'text',
-              leaves: [
-                {
-                  text: 'A second line of text in a paragraph.',
-                },
-              ],
-            },
-          ],
-        },
-        {
-          object: 'block',
-          type: 'paragraph',
-          nodes: [
-            {
-              object: 'text',
-              leaves: [
-                {
-                  text: 'A third line of text in a paragraph.',
-                },
-              ],
-            },
-          ],
-        },
-      ],
-    },
-  })*/
-
+class MatchEditor extends Component {
+  
   /**
    * Initialize component.
    * Set editor's initial state.
@@ -148,37 +116,12 @@ class RichEditorExample extends Component {
    */
   constructor(props) {
     super(props);
+    const { initialValue } = props;
     this.state = {
-      //value: Plain.deserialize('')
-      value: this.initialValue,
+      value: serializer.deserialize(initialValue || ''),
       output: 'Output will go here...'
     };
   }
-
-  schema = {
-    document: {
-      nodes: [
-        {
-          match: { type: 'paragraph' },
-          min: 1,
-          max: 1
-        },
-      ],
-    },
-    blocks: {
-      paragraph: {
-        marks: [
-          { type: 'underline' },
-          { type: 'code' },
-          { type: 'superscript' },
-          { type: 'subscript' }
-        ],
-        nodes: [
-          { match: { object: 'text' } }
-        ]
-      },
-    }
-  };
 
   /* Used to reference instance of Editor component */
   ref = (editor) => {
@@ -202,9 +145,8 @@ class RichEditorExample extends Component {
    * @param {Editor} editor
    */
   onChange = ({ value }) => {
-    console.log('On change...');
     this.setState((state, props) => {
-      const serialized = this.serializer.serialize(state.value);
+      const serialized = serializer.serialize(state.value);
       console.log(serialized);
       return { value, output: serialized };
     });
@@ -264,9 +206,9 @@ class RichEditorExample extends Component {
       return next();
     }
 
+    console.log('On key down!');
     event.preventDefault();
     editor.toggleMark(mark);
-    editor.forceUpdate();
   }
 
   /**
@@ -280,10 +222,15 @@ class RichEditorExample extends Component {
     this.editor.toggleMark(type);
   }
 
+  onClearFormat = (event) => {
+    event.preventDefault();
+    console.log('Clear formatting called...');
+  }
+
   render() {
 
     const { value } = this.state;
-    const { placeholder } = this.props;
+    const { id, placeholder } = this.props;
 
     return (
       <div className="rich-text-editor-container">
@@ -294,7 +241,8 @@ class RichEditorExample extends Component {
           <button title="Subscript" onClick={(event) => this.onClickMark(event, 'subscript')} ><Icon type='subscript' /></button>
         </div>
         <Editor
-          schema={this.schema}
+          id={id}
+          schema={schema}
           autoFocus
           spellCheck={false}
           className="rich-text-editor"
@@ -313,4 +261,4 @@ class RichEditorExample extends Component {
   }
 }
 
-export default RichEditorExample;
+export default MatchEditor;

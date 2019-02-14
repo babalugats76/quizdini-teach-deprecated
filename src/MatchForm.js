@@ -3,7 +3,7 @@ import React from 'react';
 import Label from './Label';
 import TextInput from './TextInput';
 import RangeInput from './RangeInput';
-import RichEditorExample from './RichEditorExample';
+import MatchEditor from './MatchEditor';
 import MatchBulkEditor from './MatchBulkEditor';
 import MatchList from './MatchList';
 import { withFormik } from 'formik';
@@ -70,8 +70,14 @@ const MatchForm = (props) => {
       </div>
       <div className="row">
         <div className="col-12">
-          <RichEditorExample 
-             placeholder="Enter term..." />
+          <MatchEditor
+            id="term"
+            initialValue='<p>Hello World!</p>'
+            placeholder="Enter term..." />
+          <MatchEditor
+            id="definition"
+            initialValue='<p>Deez Nutz</p>'
+            placeholder="Enter definition..." />   
         </div>
       </div>
       <div className="row">

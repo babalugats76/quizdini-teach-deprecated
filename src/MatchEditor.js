@@ -3,7 +3,7 @@ import { Editor } from 'slate-react';
 import { isKeyHotkey } from 'is-hotkey';
 import Html from 'slate-html-serializer'
 
-import Icon from './Icon';
+import { IconUnderline, IconCode, IconSuperscript, IconSubscript, IconClearFormatting } from './Icons';
 
 const schema = {
   document: {
@@ -222,7 +222,7 @@ class MatchEditor extends Component {
     this.editor.toggleMark(type);
   }
 
-  onClearFormat = (event) => {
+  onClearFormatting = (event) => {
     event.preventDefault();
     console.log('Clear formatting called...');
   }
@@ -235,10 +235,11 @@ class MatchEditor extends Component {
     return (
       <div className="rich-text-editor-container">
         <div className="format-toolbar">
-          <button title="Underline" onClick={(event) => this.onClickMark(event, 'underline')} ><Icon type='underline' /></button>
-          <button title="Code" onClick={(event) => this.onClickMark(event, 'code')} ><Icon type='code' /></button>
-          <button title="Superscript" onClick={(event) => this.onClickMark(event, 'superscript')} ><Icon type='superscript' /></button>
-          <button title="Subscript" onClick={(event) => this.onClickMark(event, 'subscript')} ><Icon type='subscript' /></button>
+          <button id="btn-underline" title="Underline" onClick={(event) => this.onClickMark(event, 'underline')} ><IconUnderline /></button>
+          <button id="btn-code" title="Code" onClick={(event) => this.onClickMark(event, 'code')} ><IconCode /></button>
+          <button id="btn-superscript" title="Superscript" onClick={(event) => this.onClickMark(event, 'superscript')} ><IconSuperscript /></button>
+          <button id="btn-subscript" title="Subscript" onClick={(event) => this.onClickMark(event, 'subscript')} ><IconSubscript /></button>
+          <button id="btn-clear-formatting" title="Clear Formatting" onClick={(event) => this.onClearFormatting(event)} ><IconClearFormatting /></button>
         </div>
         <Editor
           id={id}

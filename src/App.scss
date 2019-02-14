@@ -79,7 +79,14 @@ textarea#matchText {
 }
 
 .icon {
-  font-size: 1rem !important;
-  line-height: 1rem !important;
-  vertical-align: none;
+  font-size: 20px;
+  line-height: 20px;
+}
+
+svg.icon {
+  fill: #ddd;
+}
+
+.format-toolbar button:hover > svg.icon {
+  fill: #222;
 }

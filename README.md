@@ -7,9 +7,7 @@ This project is the teacher front-end for Quizdini 2.0
 * Work on validation schema, etc. for MatchForm
 * Work on adding validation message/notification component
 * Investigate onPointerDown and alternatives that support mobile events, in React for use with the Toolbar Buttons
-* Wire dummy button and create dummy function for clear formatting
-* Write slate code to remove marks from selected text
-* Create modular SVG icon system using icons from [Icon Moon](https://icomoon.io) and referring to this [CSS Tricks article](https://css-tricks.com/creating-svg-icon-system-react/)
+* Work on insert special character rich text editor enhancements
 
 ## React Router
 
@@ -37,12 +35,6 @@ A great rich-text source code example can be found [here](https://github.com/ian
 
 In order to make things differentiating between `cmd` on Mac and `ctrl` on Windows, we will use the `is-hotkey` module
 
-## Font Awesome
+## Icon System
 
-I am also going to try out the free set of Font Awesome 5.0 svg icons
-
-To install: `$ npm i @fortawesome/fontawesome-svg-core @fortawesome/free-solid-svg-icons @fortawesome/react-fontawesome`
-
-Documentation may be found [here](https://www.npmjs.com/package/@fortawesome/react-fontawesome)
-
-Consider adding library to project (index) consistent with this [article](https://scotch.io/tutorials/using-font-awesome-5-with-react)
+In lieu of font awesome or something like that, went with creating own modular SVG icon system using icons from [Icon Moon](https://icomoon.io) and referring to this [CSS Tricks article](https://css-tricks.com/creating-svg-icon-system-react/)

@@ -147,7 +147,7 @@ class MatchEditor extends Component {
   onChange = ({ value }) => {
     this.setState((state, props) => {
       const serialized = serializer.serialize(state.value);
-      console.log(serialized);
+      console.log('Serializing...',serialized);
       return { value, output: serialized };
     });
   }
@@ -219,12 +219,36 @@ class MatchEditor extends Component {
    */
   onClickMark = (event, type) => {
     event.preventDefault();
-    this.editor.toggleMark(type);
+    const editor = this.editor;
+    const { value } = editor;
+    const originalSelection = value.selection;
+    editor.toggleMark(type);
+    editor.onChange(editor.select(originalSelection));
   }
 
+  /**
+   * Event handler for clear formatting tooltip
+   * Find active marks -> remove -> focus
+   * 
+   * @param {Event} event
+   */
   onClearFormatting = (event) => {
+    
     event.preventDefault();
-    console.log('Clear formatting called...');
+  
+    const editor = this.editor;
+    const { value } = editor;
+    const originalSelection = value.selection;
+
+    /* Remove existing marks */
+    if (value.marks.size) {
+      value.marks.forEach(mark => {
+        editor.removeMark(mark)
+      })
+    }
+
+    editor.onChange(editor.select(originalSelection));
+
   }
 
   render() {

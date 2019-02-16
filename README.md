@@ -3,7 +3,7 @@ This project is the teacher front-end for Quizdini 2.0
 ## To-Do List
 
 * Mock up of MatchGameCreator using Formik
-* Examine this (codepen)[https://codesandbox.io/s/qJR4ykJk] to see how to create custom input controls, etc.
+* Examine this [codepen](https://codesandbox.io/s/qJR4ykJk) to see how to create custom input controls, etc.
 * Work on validation schema, etc. for MatchForm
 * Work on adding validation message/notification component
 * Investigate onPointerDown and alternatives that support mobile events, in React for use with the Toolbar Buttons

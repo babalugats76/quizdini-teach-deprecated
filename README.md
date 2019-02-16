@@ -23,6 +23,10 @@ To install: `npm i formik`
 
 Documentation can be found [here](https://jaredpalmer.com/formik/docs/overview)
 
+## Yup
+
+I am also going to try Yup in order to do schema-based form validation. I have used Joi in the past, but we will see how this one goes. Install using `npm i yup' and the documentation can be found [here](https://www.npmjs.com/package/yup)
+
 ## slate.js
 
 I am going to try to implement a limited, rich-text editor using Slate

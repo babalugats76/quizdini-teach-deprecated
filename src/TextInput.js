@@ -1,8 +1,9 @@
 import React from 'react';
 import classNames from 'classnames';
 import Label from './Label';
+import InputFeedback from './InputFeedback';
 
-const TextInput = ({ type, id, label, maxlength, value, onChange, ...props }) => {
+const TextInput = ({ type, id, label, maxlength, error, value, onChange, ...props }) => {
 
   const txtPct = ((maxlength - value.length) / maxlength) * 100;
 
@@ -29,6 +30,7 @@ const TextInput = ({ type, id, label, maxlength, value, onChange, ...props }) =>
           <span className={txtClass}>{maxlength - value.length}</span>
         </div>
       </div>
+      <InputFeedback error={error} />
     </div>
   );
 }

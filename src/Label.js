@@ -1,12 +1,13 @@
 import React from 'react';
-import { Label as UILabel } from 'semantic-ui-react';
+import { Label } from 'semantic-ui-react';
 
-const Label = ({ children, ...props }) => {
+const MyLabel = ({ children, ...props }) => {
   return (
-    <UILabel {...props}>
+    <Label {...props}>
       {children}
-    </UILabel>
+    </Label>
   );
 };
 
-export default Label;
+export default MyLabel;
+export {MyLabel as Label};

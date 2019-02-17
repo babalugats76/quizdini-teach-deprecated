@@ -1,5 +1,6 @@
 import React from 'react';
 import classNames from 'classnames';
+// eslint-disable-next-line 
 import Label from './Label';
 import { Input } from 'semantic-ui-react';
 
@@ -17,16 +18,15 @@ const TextInput = ({ type, id, label, maxlength, error, value, onChange, ...prop
 
   return (
     <div className="form-group">
-      <Label htmlFor={id}>{label}</Label>
       <div className="input-group">
         <Input
           id={id}
-          type="type"
+          type="text"
+          label={label}
           maxLength={maxlength}
           value={value}
           onChange={onChange}
           className="form-control"
-          focus={true}
           {...props}
         />
         <div className="input-group-append">

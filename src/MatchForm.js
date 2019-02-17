@@ -64,6 +64,7 @@ const MatchForm = (props) => {
             id="title"
             type="text"
             label="Title"
+            labelPosition="left"
             placeholder="Legends of Computer Science"
             error={touched.title && errors.title}
             maxlength={40}
@@ -75,6 +76,7 @@ const MatchForm = (props) => {
             id="instructions"
             type="text"
             label="Instructions"
+            labelPosition="left"
             placeholder="Match each legend with their accomplishment"
             error={touched.instructions && errors.instructions}
             maxlength={60}
@@ -87,7 +89,6 @@ const MatchForm = (props) => {
             label="itemsPerBoard"
             placeholder="Matches per board"
             selection
-            compact
             options={itemsPerBoard}
             error={touched.itemsPerBoard && errors.itemsPerBoard}
             value={values.itemsPerBoard}

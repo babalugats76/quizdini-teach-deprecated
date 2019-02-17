@@ -2,6 +2,7 @@ import React from 'react';
 // eslint-disable-next-line
 import Label from './Label';
 import TextInput from './TextInput';
+// eslint-disable-next-line
 import RangeInput from './RangeInput';
 import MatchEditor from './MatchEditor';
 import MatchBulkEditor from './MatchBulkEditor';
@@ -9,7 +10,7 @@ import MatchList from './MatchList';
 import { withFormik } from 'formik';
 import DisplayFormikState from './FormikHelper';
 import * as Yup from 'yup';
-
+import Dropdown from './Dropdown';
 
 const MatchSchema = Yup.object().shape(
   {
@@ -31,6 +32,25 @@ const MatchSchema = Yup.object().shape(
 const MatchForm = (props) => {
   // eslint-disable-next-line
   const { values, touched, errors, handleChange, isSubmitting, handleSubmit, setFieldValue, onSubmit } = props;
+
+
+  const onDropdownChange = (event, data, fieldName) => {
+    event.preventDefault();
+    console.log('Dropdown changed...');
+    console.log(data);
+    setFieldValue(fieldName, data.value);
+    
+ }
+
+  const itemsPerBoard = [
+    {text: '4', value: 4},
+    {text: '5', value: 5},
+    {text: '6', value: 6},
+    {text: '7', value: 7},
+    {text: '8', value: 8},
+    {text: '9', value: 9},
+  ];
+
   return (
     <form onSubmit={handleSubmit}>
       <div className="row">
@@ -49,6 +69,7 @@ const MatchForm = (props) => {
             maxlength={40}
             value={values.title}
             onChange={handleChange} 
+            tabIndex={1}
              />
           <TextInput
             id="instructions"
@@ -58,27 +79,20 @@ const MatchForm = (props) => {
             error={touched.instructions && errors.instructions}
             maxlength={60}
             value={values.instructions}
-            onChange={handleChange} />
-          <RangeInput
+            onChange={handleChange} 
+            tabIndex={2}
+            />
+          <Dropdown
             id="itemsPerBoard"
-            label="Matches Per Board"
-            min={4}
-            max={9}
-            step={1}
+            label="itemsPerBoard"
+            placeholder="Matches per board"
+            selection
+            compact
+            options={itemsPerBoard}
             error={touched.itemsPerBoard && errors.itemsPerBoard}
             value={values.itemsPerBoard}
-            onChange={handleChange}
-          />
-          <RangeInput
-            id="duration"
-            label="Game Length (seconds)"
-            min={60}
-            max={300}
-            step={15}
-            error={touched.duration && errors.duration}
-            value={values.duration}
-            onChange={handleChange}
-          />
+            onChange={(event, data, fieldName) => onDropdownChange(event, data, 'itemsPerBoard')}
+          />    
         </div>
         <div className="col-7">
           <MatchBulkEditor

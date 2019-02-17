@@ -17,7 +17,7 @@ const RangeInput = ({id, label, min, max, step, error, value, onChange, ...props
         step={step}
         value={value}
         onChange={onChange} 
-        className="form-control-range"
+        className="ui slider range"
         {...props} />
       <datalist id={`${id}-list`}>
         {Array.from({length: Math.floor(((max - min) + 1) / step)}, (v, k) => min + (k * step)).map((v,i) => <option id={v} key={v} value={v} label={v} />)}

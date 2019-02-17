@@ -1,10 +1,11 @@
 import React from 'react';
+import { Label as UILabel } from 'semantic-ui-react';
 
-const Label = ({ error, className, children, ...props }) => {
+const Label = ({ children, ...props }) => {
   return (
-    <label className="label" {...props}>
+    <UILabel {...props}>
       {children}
-    </label>
+    </UILabel>
   );
 };
 

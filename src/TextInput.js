@@ -1,6 +1,8 @@
 import React from 'react';
 import classNames from 'classnames';
 import Label from './Label';
+import { Input } from 'semantic-ui-react';
+
 import InputFeedback from './InputFeedback';
 
 const TextInput = ({ type, id, label, maxlength, error, value, onChange, ...props }) => {
@@ -17,13 +19,14 @@ const TextInput = ({ type, id, label, maxlength, error, value, onChange, ...prop
     <div className="form-group">
       <Label htmlFor={id}>{label}</Label>
       <div className="input-group">
-        <input
+        <Input
           id={id}
           type="type"
           maxLength={maxlength}
           value={value}
           onChange={onChange}
           className="form-control"
+          focus={true}
           {...props}
         />
         <div className="input-group-append">

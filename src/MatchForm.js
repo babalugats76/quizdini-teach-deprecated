@@ -93,7 +93,17 @@ const MatchForm = (props) => {
             error={touched.itemsPerBoard && errors.itemsPerBoard}
             value={values.itemsPerBoard}
             onChange={(event, data, fieldName) => onDropdownChange(event, data, 'itemsPerBoard')}
-          />    
+          />   
+          <RangeInput
+            id="duration"
+            label="Game Length (seconds)"
+            min={60}
+            max={300}
+            step={15}
+            error={touched.duration && errors.duration}
+            value={values.duration}
+            onChange={handleChange}
+          /> 
         </div>
         <div className="col-7">
           <MatchBulkEditor

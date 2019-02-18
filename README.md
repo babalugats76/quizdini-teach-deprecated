@@ -9,12 +9,13 @@ This project is the teacher front-end for Quizdini 2.0
 * Investigate onPointerDown and alternatives that support mobile events, in React for use with the Toolbar Buttons
 * Insert special character rich text editor enhancements
 * Continuing to customize semantic ui components
+* Add instance of Dropdown to MatchForm
 * Is it possible to use inline SVG for icons
 * Work on semantic ui layout
   * Header (fixed)
   * Footer
   * Navbar
-* Semantic ui custom stylesheet; instead of CDN
+* Semantic ui custom stylesheet; instead of CDN; rough instructions can be found [here](https://react.semantic-ui.com/usage) but I am sure will be needed beyond that
   * Custom colors
   * Custom fonts
 * Match form validation

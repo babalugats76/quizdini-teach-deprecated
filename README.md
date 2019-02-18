@@ -22,6 +22,7 @@ This project is the teacher front-end for Quizdini 2.0
 * Match form submission
 * Mock up Login Component / Page
 * Investigate redirects, etc.
+* Add Control/Cmd keys for clear formatting and insert pi
 
 ## React Router
 

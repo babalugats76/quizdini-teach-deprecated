@@ -268,7 +268,6 @@ class MatchEditor extends Component {
         <Editor
           id={id}
           schema={schema}
-          autoFocus
           spellCheck={false}
           className="rich-text-editor"
           placeholder={placeholder}

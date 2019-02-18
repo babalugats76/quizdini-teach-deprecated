@@ -79,17 +79,16 @@ textarea#matchText {
 }
 
 .icon {
-  font-size: 20px;
-  line-height: 20px;
+  font-size: 1.5rem;
 }
 
-svg.icon {
+/*svg.icon {
   fill: #ddd;
-}
+}*/
 
-.format-toolbar button:hover > svg.icon {
+/*.format-toolbar button:hover > svg.icon {
   fill: #222;
-}
+}*/
 
 input[type="range"] {
   -webkit-appearance: none;

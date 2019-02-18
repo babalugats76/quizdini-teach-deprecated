@@ -2,8 +2,7 @@ import React, { Component } from 'react';
 import { Editor } from 'slate-react';
 import { isKeyHotkey } from 'is-hotkey';
 import Html from 'slate-html-serializer'
-
-import { IconUnderline, IconCode, IconSuperscript, IconSubscript, IconClearFormatting } from './Icons';
+import FormatToolbar from './FormatToolbar';
 
 const schema = {
   document: {
@@ -59,7 +58,7 @@ const rules = [
     // Add a serializing function property to our rule...
     serialize(obj, children) {
       if (obj.object === 'block') {
-        switch(obj.type) {
+        switch (obj.type) {
           case 'paragraph':
             /**
              * In this case, do not wrap in <p>
@@ -87,15 +86,15 @@ const rules = [
     },
     serialize(obj, children) {
       if (obj.object === 'mark') {
-        switch(obj.type) {
+        switch (obj.type) {
           case 'underline':
             return <u>{children}</u>;
           case 'code':
             return <code>{children}</code>;
           case 'superscript':
-            return <sup>{children}</sup>;  
+            return <sup>{children}</sup>;
           case 'subscript':
-            return <sub>{children}</sub>;  
+            return <sub>{children}</sub>;
           default:
             break;
         }
@@ -107,7 +106,7 @@ const rules = [
 const serializer = new Html({ rules: rules });
 
 class MatchEditor extends Component {
-  
+
   /**
    * Initialize component.
    * Set editor's initial state.
@@ -147,7 +146,7 @@ class MatchEditor extends Component {
   onChange = ({ value }) => {
     this.setState((state, props) => {
       const serialized = serializer.serialize(state.value);
-      console.log('Serializing...',serialized);
+      console.log('Serializing...', serialized);
       return { value, output: serialized };
     });
   }
@@ -228,14 +227,14 @@ class MatchEditor extends Component {
 
   /**
    * Event handler for clear formatting tooltip
-   * Find active marks -> remove -> focus
+   * Prevent default -> Find active marks -> remove -> focus
    * 
    * @param {Event} event
    */
   onClearFormatting = (event) => {
-    
+
     event.preventDefault();
-  
+
     const editor = this.editor;
     const { value } = editor;
     const originalSelection = value.selection;
@@ -251,20 +250,74 @@ class MatchEditor extends Component {
 
   }
 
+  /**
+   * Event handler for inserting special characters tooltip
+   * Prevent default -> Determine char -> insert char -> flush changes
+   * 
+   * @param {Event} event
+   */
+  onClickCharacter = (event, character) => {
+
+    event.preventDefault();
+    const editor = this.editor;
+    const { value } = editor;
+    const originalSelection = value.selection;
+
+    let char;
+
+    switch (character) {
+      case 'pi':
+        char = '\u03C0';
+        break;
+      default:
+        return;
+    }
+
+    editor.insertText(char);
+    editor.onChange(editor.select(originalSelection));
+
+  }
+
   render() {
 
     const { value } = this.state;
     const { id, placeholder } = this.props;
 
+    /* Tooltip buttons the formatting toolbar will have */
+    const buttons = [{
+      type: 'underline',
+      title: 'Underline',
+      onClick: (event) => this.onClickMark(event, 'underline')
+    },
+    {
+      type: 'code',
+      title: 'Code',
+      onClick: (event) => this.onClickMark(event, 'code')
+    },
+    {
+      type: 'superscript',
+      title: 'Superscript',
+      onClick: (event) => this.onClickMark(event, 'superscript')
+    },
+    {
+      type: 'subscript',
+      title: 'Subscript',
+      onClick: (event) => this.onClickMark(event, 'subscript')
+    },
+    {
+      type: 'clear-formatting',
+      title: 'Clear Formatting',
+      onClick: (event) => (event) => this.onClearFormatting(event)
+    },
+    {
+      type: 'pi',
+      title: 'Insert pi symbol',
+      onClick: (event) => this.onClickCharacter(event, 'pi')
+    }];
+
     return (
       <div className="rich-text-editor-container">
-        <div className="format-toolbar">
-          <button id="btn-underline" title="Underline" onClick={(event) => this.onClickMark(event, 'underline')} ><IconUnderline /></button>
-          <button id="btn-code" title="Code" onClick={(event) => this.onClickMark(event, 'code')} ><IconCode /></button>
-          <button id="btn-superscript" title="Superscript" onClick={(event) => this.onClickMark(event, 'superscript')} ><IconSuperscript /></button>
-          <button id="btn-subscript" title="Subscript" onClick={(event) => this.onClickMark(event, 'subscript')} ><IconSubscript /></button>
-          <button id="btn-clear-formatting" title="Clear Formatting" onClick={(event) => this.onClearFormatting(event)} ><IconClearFormatting /></button>
-        </div>
+        <FormatToolbar buttons={buttons} />
         <Editor
           id={id}
           schema={schema}

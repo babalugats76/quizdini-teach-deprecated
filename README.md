@@ -9,6 +9,7 @@ This project is the teacher front-end for Quizdini 2.0
 * Investigate onPointerDown and alternatives that support mobile events, in React for use with the Toolbar Buttons
 * Insert special character rich text editor enhancements
 * Continuing to customize semantic ui components
+   * Dropdown component needs its own `onChange` function to call `setFieldValue` based on `data` object, etc.
 * Add instance of Dropdown to MatchForm
 * Is it possible to use inline SVG for icons
 * Work on semantic ui layout

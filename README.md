@@ -7,7 +7,20 @@ This project is the teacher front-end for Quizdini 2.0
 * Work on validation schema, etc. for MatchForm
 * Work on adding validation message/notification component
 * Investigate onPointerDown and alternatives that support mobile events, in React for use with the Toolbar Buttons
-* Work on insert special character rich text editor enhancements
+* Insert special character rich text editor enhancements
+* Continuing to customize semantic ui components
+* Is it possible to use inline SVG for icons
+* Work on semantic ui layout
+  * Header (fixed)
+  * Footer
+  * Navbar
+* Semantic ui custom stylesheet; instead of CDN
+  * Custom colors
+  * Custom fonts
+* Match form validation
+* Match form submission
+* Mock up Login Component / Page
+* Investigate redirects, etc.
 
 ## React Router
 

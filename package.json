@@ -5,7 +5,7 @@
   "dependencies": {
     "classnames": "^2.2.6",
     "formik": "^1.5.0",
-    "immutable": "^4.0.0-rc.12",
+    "immutable": ">=3.8.0",
     "is-hotkey": "^0.1.4",
     "node-sass": "^4.11.0",
     "react": "^16.8.2",

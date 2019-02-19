@@ -57,3 +57,7 @@ In order to make things differentiating between `cmd` on Mac and `ctrl` on Windo
 ## Icon System
 
 In lieu of font awesome or something like that, went with creating own modular SVG icon system using icons from [Icon Moon](https://icomoon.io) and referring to this [CSS Tricks article](https://css-tricks.com/creating-svg-icon-system-react/)
+
+## Semantic UI
+
+I will be using [Semantic UI React](https://react.semantic-ui.com/) as the component UI framework for this project. [Documentation](https://react.semantic-ui.com/) is robust and rich with examples.

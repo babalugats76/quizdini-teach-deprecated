@@ -10,7 +10,9 @@ import MatchList from './MatchList';
 import { withFormik } from 'formik';
 import DisplayFormikState from './FormikHelper';
 import * as Yup from 'yup';
-import Dropdown from './Dropdown';
+import InlineDropdown from './InlineDropdown';
+// eslint-disable-next-line
+import { Grid, SegmentGroup, Segment }  from 'semantic-ui-react';
 
 const MatchSchema = Yup.object().shape(
   {
@@ -60,6 +62,9 @@ const MatchForm = (props) => {
             <button type="submit" disabled={isSubmitting} className="btn btn-primary float-right">Save</button>
           </fieldset>
           <br />
+          <Grid>
+            <Grid.Column computer={8} mobile={16} tablet={16}>
+              <Segment.Group>
           <TextInput
             id="title"
             type="text"
@@ -84,9 +89,12 @@ const MatchForm = (props) => {
             onChange={handleChange} 
             tabIndex={2}
             />
-          <Dropdown
+            </Segment.Group>
+            </Grid.Column>
+            </Grid>
+          <InlineDropdown
             id="itemsPerBoard"
-            label="itemsPerBoard"
+            label="Tiles Per Board"
             placeholder="Matches per board"
             selection
             options={itemsPerBoard}

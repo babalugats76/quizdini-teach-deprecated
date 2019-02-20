@@ -106,3 +106,17 @@ input[type="range"]::-webkit-slider-thumb {
   height: 0.7em;
   width: 0.7em;
 }
+
+.ui.image.label svg {
+  display: inline-block;
+  vertical-align: top;
+  height: 2.1666em;
+  margin: -.5833em .5em -.5833em -.5em;
+  border-radius: .28571429rem 0 0 .28571429rem;
+}
+
+.ui.label > svg {
+  width: auto!important;
+  vertical-align: middle;
+  height: 2.1666em!important;
+}

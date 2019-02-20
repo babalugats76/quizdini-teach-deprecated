@@ -1,8 +1,8 @@
 import React from 'react';
 import classNames from 'classnames';
 // eslint-disable-next-line 
-import Label from './Label';
-import { Input } from 'semantic-ui-react';
+//import Label from './Label';
+import { Segment, Input, Label } from 'semantic-ui-react';
 
 import InputFeedback from './InputFeedback';
 
@@ -17,8 +17,7 @@ const TextInput = ({ type, id, label, maxlength, error, value, onChange, ...prop
   );
 
   return (
-    <div className="form-group">
-      <div className="input-group">
+      <Segment padded>
         <Input
           id={id}
           type="text"
@@ -26,15 +25,11 @@ const TextInput = ({ type, id, label, maxlength, error, value, onChange, ...prop
           maxLength={maxlength}
           value={value}
           onChange={onChange}
-          className="form-control"
           {...props}
         />
-        <div className="input-group-append">
-          <span className={txtClass}>{maxlength - value.length}</span>
-        </div>
-      </div>
-      <InputFeedback error={error} />
-    </div>
+        <InputFeedback error={error} />
+        <Label className={txtClass} attached='top right'>{maxlength - value.length} characters left</Label>
+      </Segment>
   );
 }
 

@@ -1,21 +1,21 @@
 import React from 'react';
 // eslint-disable-next-line
 import { Dropdown, Image, Label, Segment, Header } from 'semantic-ui-react';
-import SVGIcon from "./SVGIcon";
+import Icon from './Icon';
+// eslint-disable-next-line
 
 
-const InputDropdown = ({ id, label, icon, options, error, value, setFieldValue, ...props }) => {
+const InputDropdown = ({ id, label, icon, iconName, options, error, value, setFieldValue, ...props }) => {
 
   const onChange = (event, data) => {
     event.preventDefault();
     setFieldValue(id, data.value);
   } 
  
-
   return (
     <React.Fragment>
       <Header>
-        <SVGIcon name={icon} />
+        <Icon name={iconName} icon={icon} />
         <p>{label}</p>
       </Header>
       <Dropdown

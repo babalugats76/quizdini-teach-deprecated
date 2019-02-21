@@ -1,8 +1,6 @@
 import React from 'react';
 // eslint-disable-next-line
 import { Label, Icon } from 'semantic-ui-react';
-// eslint-disable-next-line
-import { IconSubscript } from './Icons';
 
 const MyLabel = ({ icon = '', children, ...props }) => {
   return (

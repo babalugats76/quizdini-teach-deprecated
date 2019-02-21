@@ -1,23 +1,18 @@
 import React from 'react';
 import { Button } from 'semantic-ui-react';
-import SVGIcon from './SVGIcon';
+import Icon from './Icon';
 // eslint-disable-next-line
-import { IconUnderline, IconCode, IconSuperscript, IconSubscript, IconClearFormatting, IconPi } from './Icons';
 
-const IconButton = ({ children, ...props }) => (
-  <Button icon {...props}>
-    {children}
-  </Button>
-)
 
 const FormatToolbar = ({ buttons, ...props }) => {
 
+  // Loop through metadata to create buttons
   const btns = buttons.map((btn, idx) => {
-    const { icon, ...props } = btn;
+    const { name, icon, tooltip, onClick, ...props } = btn;
     return (
-      <IconButton key={idx} {...props}>
-        <SVGIcon name={icon} className="icon" />
-      </IconButton>);
+      <Button key={idx} icon title={tooltip} onClick={onClick} {...props}>
+        <Icon name={name} icon={icon} {...props} />
+      </Button>);
   });
 
   return (

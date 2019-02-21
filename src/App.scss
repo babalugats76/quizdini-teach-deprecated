@@ -78,45 +78,11 @@ textarea#matchText {
   background: white;
 }
 
-.icon {
-  font-size: 1.5rem;
+svg.icon {
+  display: 'inline-block';
+  vertical-align: 'middle';
 }
 
-/*svg.icon {
-  fill: #ddd;
-}*/
-
-/*.format-toolbar button:hover > svg.icon {
-  fill: #222;
-}*/
-
-input[type="range"] {
-  -webkit-appearance: none;
-  border-width: 1px;
-  border-style: solid;
-  border-radius: 50rem;
-  border-color: rgba(0, 0, 0, 0.1);
-  padding: 3px 5px;
-}
-
-input[type="range"]::-webkit-slider-thumb {
-  -webkit-appearance: none;
-  background: #89B84C;
-  border-radius: 50rem;
-  height: 0.7em;
-  width: 0.7em;
-}
-
-.ui.image.label svg {
-  display: inline-block;
-  vertical-align: top;
-  height: 2.1666em;
-  margin: -.5833em .5em -.5833em -.5em;
-  border-radius: .28571429rem 0 0 .28571429rem;
-}
-
-.ui.label > svg {
-  width: auto!important;
-  vertical-align: middle;
-  height: 2.1666em!important;
+.ui.header>.icon {
+  display: 'inline-block' !important;
 }

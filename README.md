@@ -23,6 +23,7 @@ This project is the teacher front-end for Quizdini 2.0
 * Mock up Login Component / Page
 * Investigate redirects, etc.
 * Add Control/Cmd keys for clear formatting and insert pi
+* Work on Icon system guided roughly by [this article](https://medium.com/@david.gilbertson/icons-as-react-components-de3e33cb8792)
 
 ## React Router
 

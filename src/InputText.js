@@ -6,7 +6,7 @@ import { Segment, Input, Label } from 'semantic-ui-react';
 
 import InputFeedback from './InputFeedback';
 
-const TextInput = ({ type, id, label, maxlength, error, value, onChange, ...props }) => {
+const InputText = ({ type, id, label, maxlength, error, value, onChange, ...props }) => {
 
   const txtPct = ((maxlength - value.length) / maxlength) * 100;
 
@@ -33,4 +33,4 @@ const TextInput = ({ type, id, label, maxlength, error, value, onChange, ...prop
   );
 }
 
-export default TextInput;
+export default InputText;

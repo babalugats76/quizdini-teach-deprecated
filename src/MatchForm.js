@@ -1,7 +1,7 @@
 import React from 'react';
 // eslint-disable-next-line
 import Label from './Label';
-import TextInput from './TextInput';
+import InputText from './InputText';
 // eslint-disable-next-line
 import RangeInput from './RangeInput';
 import MatchEditor from './MatchEditor';
@@ -10,9 +10,9 @@ import MatchList from './MatchList';
 import { withFormik } from 'formik';
 import DisplayFormikState from './FormikHelper';
 import * as Yup from 'yup';
-import InlineDropdown from './InlineDropdown';
+import InputDropdown from './InputDropdown';
 // eslint-disable-next-line
-import { Grid, SegmentGroup, Segment } from 'semantic-ui-react';
+import { Grid, SegmentGroup, Segment, Divider } from 'semantic-ui-react';
 
 const MatchSchema = Yup.object().shape(
   {
@@ -36,21 +36,30 @@ const MatchForm = (props) => {
   const { values, touched, errors, handleChange, isSubmitting, handleSubmit, setFieldValue, onSubmit } = props;
 
 
-  const onDropdownChange = (event, data, fieldName) => {
+  /*const onDropdownChange = (event, data, fieldName) => {
     event.preventDefault();
     console.log('Dropdown changed...');
     console.log(data);
     setFieldValue(fieldName, data.value);
 
-  }
+  }*/
 
-  const itemsPerBoard = [
+  const itemsPerBoardOptions = [
     { text: '4', value: 4 },
     { text: '5', value: 5 },
     { text: '6', value: 6 },
     { text: '7', value: 7 },
     { text: '8', value: 8 },
     { text: '9', value: 9 },
+  ];
+
+  const durationOptions = [
+    { text: '60', value: 60 },
+    { text: '90', value: 90 },
+    { text: '120', value: 120 },
+    { text: '180', value: 180 },
+    { text: '240', value: 240 },
+    { text: '300', value: 300 },
   ];
 
   return (
@@ -63,7 +72,7 @@ const MatchForm = (props) => {
       <Grid columns={2} stackable>
         <Grid.Column computer={8} mobile={16} tablet={16}>
           <Segment.Group>
-            <TextInput
+            <InputText
               id="title"
               type="text"
               label="Title"
@@ -75,7 +84,7 @@ const MatchForm = (props) => {
               onChange={handleChange}
               tabIndex={1}
             />
-            <TextInput
+            <InputText
               id="instructions"
               type="text"
               label="Instructions"
@@ -89,49 +98,64 @@ const MatchForm = (props) => {
             />
           </Segment.Group>
         </Grid.Column>
-        <Grid.Column computer={4} mobile={16} tablet={16}>
-        <InlineDropdown
-          id="itemsPerBoard"
-          label="Tiles Per Board"
-          placeholder="Matches per board"
-          selection
-          options={itemsPerBoard}
-          error={touched.itemsPerBoard && errors.itemsPerBoard}
-          value={values.itemsPerBoard}
-          onChange={(event, data, fieldName) => onDropdownChange(event, data, 'itemsPerBoard')}
-        />
-        <RangeInput
-          id="duration"
-          label="Game Length (seconds)"
-          min={60}
-          max={300}
-          step={15}
-          error={touched.duration && errors.duration}
-          value={values.duration}
-          onChange={handleChange}
-        /> 
+        <Grid.Column computer={8} mobile={16} tablet={16}>
+          <Segment placeholder padded>
+          <Grid columns={2} stackable textAlign='center'>
+            <Divider vertical>Options</Divider>
+            <Grid.Row verticalAlign='middle'>
+              <Grid.Column>
+                <InputDropdown
+                  id="itemsPerBoard"
+                  label="Game Tiles"
+                  icon="tiles"
+                  selection
+                  compact
+                  options={itemsPerBoardOptions}
+                  error={touched.itemsPerBoard && errors.itemsPerBoard}
+                  value={values.itemsPerBoard}
+                  setFieldValue={setFieldValue}
+                />
+              </Grid.Column>
+
+              <Grid.Column>
+                <InputDropdown
+                  id="duration"
+                  label="Seconds"
+                  icon="timer"
+                  selection
+                  compact
+                  options={durationOptions}
+                  error={touched.duration && errors.duration}
+                  value={values.duration}
+                  onChange={handleChange}
+                />
+              </Grid.Column>
+            </Grid.Row>
+           </Grid>
+          </Segment>
+      
         </Grid.Column>
         </Grid>
-      <MatchBulkEditor
-        id="matchText"
-        rows={10}
-        cols={30}
-        label="Knowledge Bank"
-        placeholder="Konrad Zuse, German Computer Inventor\nShawn Fanning, Created Napster"
-        value={values.matchText}
-        setFieldValue={setFieldValue}
-      />
-      <MatchEditor
-        id="term"
-        initialValue='<p>Hello World!</p>'
-        placeholder="Enter term..." />
-      <MatchEditor
-        id="definition"
-        initialValue='<p>Deez Nutz</p>'
-        placeholder="Enter definition..." />   
-      <MatchList
-        matches={values.matches}
-      />
+    <MatchBulkEditor
+      id="matchText"
+      rows={10}
+      cols={30}
+      label="Knowledge Bank"
+      placeholder="Konrad Zuse, German Computer Inventor\nShawn Fanning, Created Napster"
+      value={values.matchText}
+      setFieldValue={setFieldValue}
+    />
+    <MatchEditor
+      id="term"
+      initialValue='<p>Hello World!</p>'
+      placeholder="Enter term..." />
+    <MatchEditor
+      id="definition"
+      initialValue='<p>Deez Nutz</p>'
+      placeholder="Enter definition..." />
+    <MatchList
+      matches={values.matches}
+    />
     <DisplayFormikState {...props} />
     </form >
   );

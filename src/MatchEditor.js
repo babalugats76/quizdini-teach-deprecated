@@ -285,32 +285,32 @@ class MatchEditor extends Component {
 
     /* Tooltip buttons the formatting toolbar will have */
     const buttons = [{
-      type: 'underline',
+      icon: 'underline',
       title: 'Underline',
       onClick: (event) => this.onClickMark(event, 'underline')
     },
     {
-      type: 'code',
+      icon: 'code',
       title: 'Code',
       onClick: (event) => this.onClickMark(event, 'code')
     },
     {
-      type: 'superscript',
+      icon: 'superscript',
       title: 'Superscript',
       onClick: (event) => this.onClickMark(event, 'superscript')
     },
     {
-      type: 'subscript',
+      icon: 'subscript',
       title: 'Subscript',
       onClick: (event) => this.onClickMark(event, 'subscript')
     },
     {
-      type: 'clear-formatting',
+      icon: 'clear-formatting',
       title: 'Clear Formatting',
       onClick: (event) => (event) => this.onClearFormatting(event)
     },
     {
-      type: 'pi',
+      icon: 'pi',
       title: 'Insert pi symbol',
       onClick: (event) => this.onClickCharacter(event, 'pi')
     }];

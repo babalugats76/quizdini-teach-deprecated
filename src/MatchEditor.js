@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { Editor } from 'slate-react';
 import { isKeyHotkey } from 'is-hotkey';
 import Html from 'slate-html-serializer'
-import { ICONS } from './constants';
 import FormatToolbar from './FormatToolbar';
 
 const schema = {
@@ -286,38 +285,32 @@ class MatchEditor extends Component {
 
     /* Tooltip buttons the formatting toolbar will have */
     const buttons = [{
-      name: 'underline',
-      icon: ICONS.UNDERLINE,
+      icon: 'underline',
       tooltip: 'Underline',
       onClick: (event) => this.onClickMark(event, 'underline')
     },
     {
-      name: 'code',
-      icon: ICONS.CODE,
+      icon: 'code',
       tooltip: 'Code',
       onClick: (event) => this.onClickMark(event, 'code')
     },
     {
-      name: 'superscript',
-      icon: ICONS.SUPERSCRIPT,
+      icon: 'superscript',
       tooltip: 'Superscript',
       onClick: (event) => this.onClickMark(event, 'superscript')
     },
     {
-      name: 'subscript',
-      icon: ICONS.SUBSCRIPT,
+      icon: 'subscript',
       tooltip: 'Subscript',
       onClick: (event) => this.onClickMark(event, 'subscript')
     },
     {
-      name: 'clear-formatting',
-      icon: ICONS.CLEAR_FORMATTING,
+      icon: 'clear',
       tooltip: 'Clear Formatting',
       onClick: (event) => (event) => this.onClearFormatting(event)
     },
     {
-      name: 'pi',
-      icon: ICONS.PI,
+      icon: 'pi',
       tooltip: 'Insert pi symbol',
       onClick: (event) => this.onClickCharacter(event, 'pi')
     }];

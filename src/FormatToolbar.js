@@ -8,10 +8,10 @@ const FormatToolbar = ({ buttons, ...props }) => {
 
   // Loop through metadata to create buttons
   const btns = buttons.map((btn, idx) => {
-    const { name, icon, tooltip, onClick, ...props } = btn;
+    const { icon, tooltip, onClick, ...props } = btn;
     return (
       <Button key={idx} icon title={tooltip} onClick={onClick} {...props}>
-        <Icon name={name} icon={icon} {...props} />
+        <Icon icon={icon} {...props} />
       </Button>);
   });
 

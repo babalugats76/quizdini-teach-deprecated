@@ -78,11 +78,6 @@ textarea#matchText {
   background: white;
 }
 
-svg.icon {
-  display: 'inline-block';
-  vertical-align: 'middle';
-}
-
-.ui.header>.icon {
-  display: 'inline-block' !important;
+svg.icon > path {
+  fill: red;
 }

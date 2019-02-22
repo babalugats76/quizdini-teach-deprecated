@@ -13,7 +13,6 @@ import * as Yup from 'yup';
 import InputDropdown from './InputDropdown';
 // eslint-disable-next-line
 import { Grid, SegmentGroup, Segment, Divider } from 'semantic-ui-react';
-import { ICONS } from './constants';
 
 const MatchSchema = Yup.object().shape(
   {
@@ -108,8 +107,7 @@ const MatchForm = (props) => {
                 <InputDropdown
                   id="itemsPerBoard"
                   label="Game Tiles"
-                  icon={ICONS.TILES}
-                  iconName="tiles"
+                  icon="tiles"
                   selection
                   compact
                   options={itemsPerBoardOptions}
@@ -123,8 +121,7 @@ const MatchForm = (props) => {
                 <InputDropdown
                   id="duration"
                   label="Seconds"
-                  icon={ICONS.TIMER}
-                  iconName="timer"
+                  icon="timer"
                   selection
                   compact
                   options={durationOptions}

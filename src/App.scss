@@ -1,5 +1,7 @@
 @import "./variables";
 @import "./mixins";
+@include font-face($hkgroteskmedium, "/fonts/hkgrotesk-medium-webfont");
+
 
 html {
   font-size: 14px;

@@ -1,3 +1,14 @@
 /*******************************
      User Global Variables
 *******************************/
+@jaywalker: 'jaywalkerregular';
+@hkgrotesk: 'hk_groteskmedium';
+@importGoogleFonts : false;
+@spaceCadet: #1a1c57;
+@blue: #014ce4;
+@electricIndigo: #711cff;
+@navyPurple: #aa54ff;
+@brightTurquoise: #01e7e4;
+@glossyGrape: #a499b3;
+@primaryColor: @spaceCadet;
+@secondaryColor: @spaceCadet;

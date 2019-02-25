@@ -13,7 +13,6 @@
              Page
 *******************************/
 
-@import url('https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic&subset=latin');
 html,
 body {
   height: 100%;
@@ -193,3 +192,17 @@ body .ui.inverted:not(.dimmer)::-webkit-scrollbar-thumb:hover {
          Site Overrides
 *******************************/
 
+@font-face {
+  font-family: 'hk_groteskmedium';
+  src: url('/fonts/hkgrotesk-medium-webfont.eot');
+  src: url('/fonts/hkgrotesk-medium-webfont.eot?#iefix') format('embedded-opentype'), url('/fonts/hkgrotesk-medium-webfont.woff2') format('woff2'), url('/fonts/hkgrotesk-medium-webfont.woff') format('woff'), url('/fonts/hkgrotesk-medium-webfont.ttf') format('truetype'), url('/fonts/hkgrotesk-medium-webfont.svg#svgFontName') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'jaywalkerregular';
+  src: url('/fonts/jaywalker-regular-webfont.eot');
+  src: url('/fonts/jaywalker-regular-webfont.eot?#iefix') format('embedded-opentype'), url('/fonts/jaywalker-regular-webfont.woff2') format('woff2'), url('/fonts/jaywalker-regular-webfont.woff') format('woff'), url('/fonts/jaywalker-regular-webfont.ttf') format('truetype'), url('/fonts/jaywalker-regular-webfont.svg#svgFontName') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}

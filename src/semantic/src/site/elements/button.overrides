@@ -1,3 +1,10 @@
 /*******************************
          Site Overrides
 *******************************/
+.ui.icon.button {
+  background-color: #ddd;
+}
+
+.ui.icon.button > svg > path {
+  fill: green;
+}

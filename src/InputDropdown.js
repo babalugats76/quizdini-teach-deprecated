@@ -12,9 +12,9 @@ const InputDropdown = ({ id, label, icon, options, error, value, setFieldValue, 
  
   return (
     <React.Fragment>
-      <Header>
-        <Icon size="60" icon={icon} />
-        <p>{label}</p>
+      <Header as='h4' icon textAlign="center">
+         <Icon size="60" icon={icon} display="block" />
+         {label}
       </Header>
       <Dropdown
         id={id}

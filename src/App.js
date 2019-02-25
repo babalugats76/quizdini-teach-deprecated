@@ -5,7 +5,7 @@ import { Container } from "semantic-ui-react";
 import Hello from './Hello';
 import MatchGame from './MatchGame';
 import './App.scss';
-import './fomantic/dist/semantic.css';
+import './semantic/dist/semantic.css';
 
 class App extends Component {
   render() {

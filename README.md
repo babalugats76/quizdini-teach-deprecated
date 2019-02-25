@@ -63,6 +63,8 @@ In lieu of font awesome or something like that, went with creating own modular S
 
 I will be using [Semantic UI React](https://react.semantic-ui.com/) as the component UI framework for this project. [Documentation](https://react.semantic-ui.com/) is robust and rich with examples.
 
-Customizing the semantic ui theme appear to be a big pain; I am currently trying to follow the setup from [this article](https://jsramblings.com/2018/03/04/how-to-use-semantic-ui-with-a-custom-theme-in-your-CRA-app.html)
+Due to lack of development, we will be using a community fork of Semantic UI, called Fomantic UI
 
-1. Install using `install semantic-ui` using `Express (Set components and output folder)`; `Yes`; `src/semantic`; select all components; `No` to set permissions; `No` to RTL; `dist/` for output location
+1. Install using `install fomantic-ui` using `Express (Set components and output folder)`; `Yes`; `src/semantic`; select all components; `No` to set permissions; `No` to RTL; `dist/` for output location
+2. Customize by following the [theming documentation](https://fomantic-ui.com/usage/theming.html)
+3. Check out [this video](https://www.youtube.com/watch?v=a9mUH1EWp40)

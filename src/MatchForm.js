@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 // eslint-disable-next-line
 import Label from './Label';
 import InputText from './InputText';
@@ -12,7 +12,7 @@ import DisplayFormikState from './FormikHelper';
 import * as Yup from 'yup';
 import InputDropdown from './InputDropdown';
 // eslint-disable-next-line
-import { Grid, SegmentGroup, Segment, Divider } from 'semantic-ui-react';
+import { Grid, SegmentGroup, Segment, Divider, Accordion } from 'semantic-ui-react';
 
 const MatchSchema = Yup.object().shape(
   {
@@ -31,134 +31,192 @@ const MatchSchema = Yup.object().shape(
   }
 );
 
-const MatchForm = (props) => {
-  // eslint-disable-next-line
-  const { values, touched, errors, handleChange, isSubmitting, handleSubmit, setFieldValue, onSubmit } = props;
+const itemsPerBoardOptions = [
+  { text: '4', value: 4 },
+  { text: '5', value: 5 },
+  { text: '6', value: 6 },
+  { text: '7', value: 7 },
+  { text: '8', value: 8 },
+  { text: '9', value: 9 },
+];
+
+const durationOptions = [
+  { text: '60', value: 60 },
+  { text: '90', value: 90 },
+  { text: '120', value: 120 },
+  { text: '180', value: 180 },
+  { text: '240', value: 240 },
+  { text: '300', value: 300 },
+];
+
+class MatchForm extends Component {
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      optionIdx: {
+        0: { active: false } ,
+        1: { active: false }
+      }
+    }
+  }
+  
+  handleAccordionClick = (event, titleProps) => {
+    const { index } = titleProps;
+    this.setState((state, props) => {
+      let newOptionIdx = state.optionIdx;
+      newOptionIdx[index].active = ! newOptionIdx[index].active;
+      return { optionIdx: newOptionIdx } 
+    }); 
+  }
+
+  render() {
+
+    // eslint-disable-next-line
+    const { values, touched, errors, handleChange, isSubmitting, handleSubmit, setFieldValue, onSubmit } = this.props;
+    const { optionIdx } = this.state;
 
 
-  /*const onDropdownChange = (event, data, fieldName) => {
-    event.preventDefault();
-    console.log('Dropdown changed...');
-    console.log(data);
-    setFieldValue(fieldName, data.value);
+    return (
+      <form onSubmit={onSubmit}>
+        <fieldset>
+          <legend>Configuration</legend>
+          <button type="submit" disabled={isSubmitting} className="btn btn-primary float-right">Save</button>
+        </fieldset>
+        <br />
+        <Grid columns={2} stackable>
+          <Grid.Column computer={8} mobile={16} tablet={16}>
+            <Segment.Group>
+              <InputText
+                id="title"
+                type="text"
+                label="Title"
+                labelPosition="left"
+                placeholder="Legends of Computer Science"
+                error={touched.title && errors.title}
+                maxlength={40}
+                value={values.title}
+                onChange={handleChange}
+                tabIndex={1}
+              />
+              <InputText
+                id="instructions"
+                type="text"
+                label="Instructions"
+                labelPosition="left"
+                placeholder="Match each legend with their accomplishment"
+                error={touched.instructions && errors.instructions}
+                maxlength={60}
+                value={values.instructions}
+                onChange={handleChange}
+                tabIndex={2}
+              />
+            </Segment.Group>
+            <Accordion fluid styled>
+              <Accordion.Title active={optionIdx['0'].active} index={0} onClick={this.handleAccordionClick}>Game Options</Accordion.Title>
+              <Accordion.Content active={optionIdx['0'].active}>
+                <Segment placeholder padded>
+                  <Grid columns={2} stackable textAlign='center'>
+                    <Divider vertical>Options</Divider>
+                    <Grid.Row verticalAlign='middle'>
+                      <Grid.Column>
+                        <InputDropdown
+                          id="itemsPerBoard"
+                          label="Game Tiles"
+                          icon="tiles"
+                          selection
+                          compact
+                          options={itemsPerBoardOptions}
+                          error={touched.itemsPerBoard && errors.itemsPerBoard}
+                          value={values.itemsPerBoard}
+                          setFieldValue={setFieldValue}
+                        />
+                      </Grid.Column>
 
-  }*/
+                      <Grid.Column>
+                        <InputDropdown
+                          id="duration"
+                          label="Seconds"
+                          icon="timer"
+                          selection
+                          compact
+                          options={durationOptions}
+                          error={touched.duration && errors.duration}
+                          value={values.duration}
+                          onChange={handleChange}
+                        />
+                      </Grid.Column>
+                    </Grid.Row>
+                  </Grid>
+                </Segment>
+              </Accordion.Content>
+              <Accordion.Title active={optionIdx['1'].active} index={1} onClick={this.handleAccordionClick}>Game Options</Accordion.Title>
+              <Accordion.Content active={optionIdx['1'].active}>
+                <Segment placeholder padded>
+                  <Grid columns={2} stackable textAlign='center'>
+                    <Divider vertical>Options</Divider>
+                    <Grid.Row verticalAlign='middle'>
+                      <Grid.Column>
+                        <InputDropdown
+                          id="itemsPerBoard"
+                          label="Game Tiles"
+                          icon="tiles"
+                          selection
+                          compact
+                          options={itemsPerBoardOptions}
+                          error={touched.itemsPerBoard && errors.itemsPerBoard}
+                          value={values.itemsPerBoard}
+                          setFieldValue={setFieldValue}
+                        />
+                      </Grid.Column>
 
-  const itemsPerBoardOptions = [
-    { text: '4', value: 4 },
-    { text: '5', value: 5 },
-    { text: '6', value: 6 },
-    { text: '7', value: 7 },
-    { text: '8', value: 8 },
-    { text: '9', value: 9 },
-  ];
+                      <Grid.Column>
+                        <InputDropdown
+                          id="duration"
+                          label="Seconds"
+                          icon="timer"
+                          selection
+                          compact
+                          options={durationOptions}
+                          error={touched.duration && errors.duration}
+                          value={values.duration}
+                          onChange={handleChange}
+                        />
+                      </Grid.Column>
+                    </Grid.Row>
+                  </Grid>
+                </Segment>
+              </Accordion.Content>
+            </Accordion>
+          </Grid.Column>
+          <Grid.Column computer={8} mobile={16} tablet={16}>
 
-  const durationOptions = [
-    { text: '60', value: 60 },
-    { text: '90', value: 90 },
-    { text: '120', value: 120 },
-    { text: '180', value: 180 },
-    { text: '240', value: 240 },
-    { text: '300', value: 300 },
-  ];
-
-  return (
-    <form onSubmit={handleSubmit}>
-      <fieldset>
-        <legend>Configuration</legend>
-        <button type="submit" disabled={isSubmitting} className="btn btn-primary float-right">Save</button>
-      </fieldset>
-      <br />
-      <Grid columns={2} stackable>
-        <Grid.Column computer={8} mobile={16} tablet={16}>
-          <Segment.Group>
-            <InputText
-              id="title"
-              type="text"
-              label="Title"
-              labelPosition="left"
-              placeholder="Legends of Computer Science"
-              error={touched.title && errors.title}
-              maxlength={40}
-              value={values.title}
-              onChange={handleChange}
-              tabIndex={1}
-            />
-            <InputText
-              id="instructions"
-              type="text"
-              label="Instructions"
-              labelPosition="left"
-              placeholder="Match each legend with their accomplishment"
-              error={touched.instructions && errors.instructions}
-              maxlength={60}
-              value={values.instructions}
-              onChange={handleChange}
-              tabIndex={2}
-            />
-          </Segment.Group>
-        </Grid.Column>
-        <Grid.Column computer={8} mobile={16} tablet={16}>
-          <Segment placeholder padded>
-          <Grid columns={2} stackable textAlign='center'>
-            <Divider vertical>Options</Divider>
-            <Grid.Row verticalAlign='middle'>
-              <Grid.Column>
-                <InputDropdown
-                  id="itemsPerBoard"
-                  label="Game Tiles"
-                  icon="tiles"
-                  selection
-                  compact
-                  options={itemsPerBoardOptions}
-                  error={touched.itemsPerBoard && errors.itemsPerBoard}
-                  value={values.itemsPerBoard}
-                  setFieldValue={setFieldValue}
-                />
-              </Grid.Column>
-
-              <Grid.Column>
-                <InputDropdown
-                  id="duration"
-                  label="Seconds"
-                  icon="timer"
-                  selection
-                  compact
-                  options={durationOptions}
-                  error={touched.duration && errors.duration}
-                  value={values.duration}
-                  onChange={handleChange}
-                />
-              </Grid.Column>
-            </Grid.Row>
-           </Grid>
-          </Segment>
-      
-        </Grid.Column>
+          </Grid.Column>
         </Grid>
-    <MatchBulkEditor
-      id="matchText"
-      rows={10}
-      cols={30}
-      label="Knowledge Bank"
-      placeholder="Konrad Zuse, German Computer Inventor\nShawn Fanning, Created Napster"
-      value={values.matchText}
-      setFieldValue={setFieldValue}
-    />
-    <MatchEditor
-      id="term"
-      initialValue='<p>Hello World!</p>'
-      placeholder="Enter term..." />
-    <MatchEditor
-      id="definition"
-      initialValue='<p>Deez Nutz</p>'
-      placeholder="Enter definition..." />
-    <MatchList
-      matches={values.matches}
-    />
-    <DisplayFormikState {...props} />
-    </form >
-  );
+        <MatchBulkEditor
+          id="matchText"
+          rows={10}
+          cols={30}
+          label="Knowledge Bank"
+          placeholder="Konrad Zuse, German Computer Inventor\nShawn Fanning, Created Napster"
+          value={values.matchText}
+          setFieldValue={setFieldValue}
+        />
+        <MatchEditor
+          id="term"
+          initialValue='<p>Hello World!</p>'
+          placeholder="Enter term..." />
+        <MatchEditor
+          id="definition"
+          initialValue='<p>Deez Nutz</p>'
+          placeholder="Enter definition..." />
+        <MatchList
+          matches={values.matches}
+        />
+        <DisplayFormikState {...this.props} />
+      </form >
+    );
+  }
 }
 
 export default withFormik({

@@ -23,6 +23,9 @@ This project is the teacher front-end for Quizdini 2.0
 * Add Control/Cmd keys for clear formatting and insert pi
 * Work on Icon system guided roughly by [this article](https://medium.com/@david.gilbertson/icons-as-react-components-de3e33cb8792)
 * Figure out how to represent matches on the screen, e.g., table, cards, etc.
+* Comment handleAccordionClick function in MatchForm
+* Create stackable table component
+* Add stackable table component to MatchForm for matches
 
 ## React Router
 

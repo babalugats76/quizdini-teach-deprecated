@@ -2,7 +2,9 @@ This project is the teacher front-end for Quizdini 2.0
 
 ## To-Do List
 
-
+* General Cleanup
+   * Migrate components to `components` folder
+   * Remove redundant components, e.g, Accordian
 * Add addition webfonts, including those related to logo's font
 * Create custom TextArea component
    * Convert instructions to use this
@@ -34,7 +36,7 @@ This project is the teacher front-end for Quizdini 2.0
 * Match Editor
    * Add Control/Cmd keys for clear formatting and insert pi
    * Trouble shoot problem with clear formatting button; currently posting page
-~~* Work on Icon system guided roughly by [this article](https://medium.com/@david.gilbertson/icons-as-react-components-de3e33cb8792)~~
+* ~~Work on Icon system guided roughly by [this article](https://medium.com/@david.gilbertson/icons-as-react-components-de3e33cb8792)~~
 * Figure out how to represent matches on the screen, e.g., table, cards, etc.
 * handleAccordionClick function in MatchForm
   * Comment

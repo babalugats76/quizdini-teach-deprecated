@@ -8,13 +8,11 @@ This project is the teacher front-end for Quizdini 2.0
 * Work on adding validation message/notification component
 * Investigate onPointerDown and alternatives that support mobile events, in React for use with the Toolbar Buttons
 * Continuing to customize semantic ui components
-   * Dropdown component needs its own `onChange` function to call `setFieldValue` based on `data` object, etc.
-* Add instance of Dropdown to MatchForm
-* Label for Dropdown component
 * Work on semantic ui layout
   * Header (fixed)
   * Footer
   * Navbar
+* Work on user list of games
 * Semantic ui custom stylesheet; instead of CDN; rough instructions can be found [here](https://react.semantic-ui.com/usage) but I am sure will be needed beyond that
   * Custom colors
   * Custom fonts
@@ -24,6 +22,7 @@ This project is the teacher front-end for Quizdini 2.0
 * Investigate redirects, etc.
 * Add Control/Cmd keys for clear formatting and insert pi
 * Work on Icon system guided roughly by [this article](https://medium.com/@david.gilbertson/icons-as-react-components-de3e33cb8792)
+* Figure out how to represent matches on the screen, e.g., table, cards, etc.
 
 ## React Router
 

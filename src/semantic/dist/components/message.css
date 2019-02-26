@@ -25,7 +25,7 @@
   transition: opacity 0.1s ease, color 0.1s ease, background 0.1s ease, -webkit-box-shadow 0.1s ease;
   transition: opacity 0.1s ease, color 0.1s ease, background 0.1s ease, box-shadow 0.1s ease;
   transition: opacity 0.1s ease, color 0.1s ease, background 0.1s ease, box-shadow 0.1s ease, -webkit-box-shadow 0.1s ease;
-  border-radius: 0.28571429rem;
+  border-radius: 0.26666667rem;
   -webkit-box-shadow: 0 0 0 1px rgba(34, 36, 38, 0.22) inset, 0 0 0 0 rgba(0, 0, 0, 0);
           box-shadow: 0 0 0 1px rgba(34, 36, 38, 0.22) inset, 0 0 0 0 rgba(0, 0, 0, 0);
 }
@@ -51,7 +51,7 @@
 
 /* Default font size */
 .ui.message .header:not(.ui) {
-  font-size: 1.14285714em;
+  font-size: 1.13333333em;
 }
 
 /* Paragraph */
@@ -190,7 +190,7 @@
 
 .ui.attached.message {
   margin-bottom: -1px;
-  border-radius: 0.28571429rem 0.28571429rem 0 0;
+  border-radius: 0.26666667rem 0.26666667rem 0 0;
   -webkit-box-shadow: 0 0 0 1px rgba(34, 36, 38, 0.15) inset;
           box-shadow: 0 0 0 1px rgba(34, 36, 38, 0.15) inset;
   margin-left: -1px;
@@ -202,7 +202,7 @@
 }
 .ui.bottom.attached.message {
   margin-top: -1px;
-  border-radius: 0 0 0.28571429rem 0.28571429rem;
+  border-radius: 0 0 0.26666667rem 0.26666667rem;
   -webkit-box-shadow: 0 0 0 1px rgba(34, 36, 38, 0.15) inset, 0 1px 2px 0 rgba(34, 36, 38, 0.15);
           box-shadow: 0 0 0 1px rgba(34, 36, 38, 0.15) inset, 0 1px 2px 0 rgba(34, 36, 38, 0.15);
 }
@@ -371,12 +371,12 @@
 }
 .ui.primary.message,
 .ui.attached.primary.message {
-  -webkit-box-shadow: 0 0 0 1px #2185D0 inset, 0 0 0 0 rgba(0, 0, 0, 0);
-          box-shadow: 0 0 0 1px #2185D0 inset, 0 0 0 0 rgba(0, 0, 0, 0);
+  -webkit-box-shadow: 0 0 0 1px #1a1c57 inset, 0 0 0 0 rgba(0, 0, 0, 0);
+          box-shadow: 0 0 0 1px #1a1c57 inset, 0 0 0 0 rgba(0, 0, 0, 0);
 }
 .ui.floating.primary.message {
-  -webkit-box-shadow: 0 0 0 1px #2185D0 inset, 0 2px 4px 0 rgba(34, 36, 38, 0.12), 0 2px 10px 0 rgba(34, 36, 38, 0.15);
-          box-shadow: 0 0 0 1px #2185D0 inset, 0 2px 4px 0 rgba(34, 36, 38, 0.12), 0 2px 10px 0 rgba(34, 36, 38, 0.15);
+  -webkit-box-shadow: 0 0 0 1px #1a1c57 inset, 0 2px 4px 0 rgba(34, 36, 38, 0.12), 0 2px 10px 0 rgba(34, 36, 38, 0.15);
+          box-shadow: 0 0 0 1px #1a1c57 inset, 0 2px 4px 0 rgba(34, 36, 38, 0.12), 0 2px 10px 0 rgba(34, 36, 38, 0.15);
 }
 .ui.primary.message .header {
   color: rgba(242, 242, 242, 0.9);
@@ -387,12 +387,12 @@
 }
 .ui.secondary.message,
 .ui.attached.secondary.message {
-  -webkit-box-shadow: 0 0 0 1px #1B1C1D inset, 0 0 0 0 rgba(0, 0, 0, 0);
-          box-shadow: 0 0 0 1px #1B1C1D inset, 0 0 0 0 rgba(0, 0, 0, 0);
+  -webkit-box-shadow: 0 0 0 1px #1a1c57 inset, 0 0 0 0 rgba(0, 0, 0, 0);
+          box-shadow: 0 0 0 1px #1a1c57 inset, 0 0 0 0 rgba(0, 0, 0, 0);
 }
 .ui.floating.secondary.message {
-  -webkit-box-shadow: 0 0 0 1px #1B1C1D inset, 0 2px 4px 0 rgba(34, 36, 38, 0.12), 0 2px 10px 0 rgba(34, 36, 38, 0.15);
-          box-shadow: 0 0 0 1px #1B1C1D inset, 0 2px 4px 0 rgba(34, 36, 38, 0.12), 0 2px 10px 0 rgba(34, 36, 38, 0.15);
+  -webkit-box-shadow: 0 0 0 1px #1a1c57 inset, 0 2px 4px 0 rgba(34, 36, 38, 0.12), 0 2px 10px 0 rgba(34, 36, 38, 0.15);
+          box-shadow: 0 0 0 1px #1a1c57 inset, 0 2px 4px 0 rgba(34, 36, 38, 0.12), 0 2px 10px 0 rgba(34, 36, 38, 0.15);
 }
 .ui.secondary.message .header {
   color: rgba(242, 242, 242, 0.9);
@@ -495,19 +495,19 @@
 }
 .ui.blue.message {
   background-color: #DFF0FF;
-  color: #2185D0;
+  color: #014ce4;
 }
 .ui.blue.message,
 .ui.attached.blue.message {
-  -webkit-box-shadow: 0 0 0 1px #2185D0 inset, 0 0 0 0 rgba(0, 0, 0, 0);
-          box-shadow: 0 0 0 1px #2185D0 inset, 0 0 0 0 rgba(0, 0, 0, 0);
+  -webkit-box-shadow: 0 0 0 1px #014ce4 inset, 0 0 0 0 rgba(0, 0, 0, 0);
+          box-shadow: 0 0 0 1px #014ce4 inset, 0 0 0 0 rgba(0, 0, 0, 0);
 }
 .ui.floating.blue.message {
-  -webkit-box-shadow: 0 0 0 1px #2185D0 inset, 0 2px 4px 0 rgba(34, 36, 38, 0.12), 0 2px 10px 0 rgba(34, 36, 38, 0.15);
-          box-shadow: 0 0 0 1px #2185D0 inset, 0 2px 4px 0 rgba(34, 36, 38, 0.12), 0 2px 10px 0 rgba(34, 36, 38, 0.15);
+  -webkit-box-shadow: 0 0 0 1px #014ce4 inset, 0 2px 4px 0 rgba(34, 36, 38, 0.12), 0 2px 10px 0 rgba(34, 36, 38, 0.15);
+          box-shadow: 0 0 0 1px #014ce4 inset, 0 2px 4px 0 rgba(34, 36, 38, 0.12), 0 2px 10px 0 rgba(34, 36, 38, 0.15);
 }
 .ui.blue.message .header {
-  color: #1e77ba;
+  color: #0144cb;
 }
 .ui.violet.message {
   background-color: #EAE7FF;
@@ -606,28 +606,28 @@
 ---------------*/
 
 .ui.mini.message {
-  font-size: 0.78571429em;
+  font-size: 0.8em;
 }
 .ui.tiny.message {
-  font-size: 0.85714286em;
+  font-size: 0.86666667em;
 }
 .ui.small.message {
-  font-size: 0.92857143em;
+  font-size: 0.93333333em;
 }
 .ui.message {
   font-size: 1em;
 }
 .ui.large.message {
-  font-size: 1.14285714em;
+  font-size: 1.13333333em;
 }
 .ui.big.message {
-  font-size: 1.28571429em;
+  font-size: 1.26666667em;
 }
 .ui.huge.message {
-  font-size: 1.42857143em;
+  font-size: 1.4em;
 }
 .ui.massive.message {
-  font-size: 1.71428571em;
+  font-size: 1.73333333em;
 }
 
 

@@ -68,7 +68,7 @@
   height: 17px;
   content: '';
   background: #FFFFFF;
-  border-radius: 0.21428571rem;
+  border-radius: 0.2rem;
   -webkit-transition: border 0.1s ease, opacity 0.1s ease, -webkit-transform 0.1s ease, -webkit-box-shadow 0.1s ease;
   transition: border 0.1s ease, opacity 0.1s ease, -webkit-transform 0.1s ease, -webkit-box-shadow 0.1s ease;
   transition: border 0.1s ease, opacity 0.1s ease, transform 0.1s ease, box-shadow 0.1s ease;
@@ -385,7 +385,7 @@
   top: 0.4rem;
   background-color: rgba(0, 0, 0, 0.05);
   width: 3.5rem;
-  height: 0.21428571rem;
+  height: 0.2rem;
   border-radius: 500rem;
   -webkit-transition: background 0.3s ease;
   transition: background 0.3s ease;
@@ -549,7 +549,7 @@
 }
 .ui.toggle.checkbox input:checked ~ .box:before,
 .ui.toggle.checkbox input:checked ~ label:before {
-  background-color: #2185D0 !important;
+  background-color: #1a1c57 !important;
 }
 .ui.toggle.checkbox input:checked ~ .box:after,
 .ui.toggle.checkbox input:checked ~ label:after {
@@ -565,7 +565,7 @@
 }
 .ui.toggle.checkbox input:focus:checked ~ .box:before,
 .ui.toggle.checkbox input:focus:checked ~ label:before {
-  background-color: #0d71bb !important;
+  background-color: #0d0e3b !important;
 }
 
 
@@ -664,7 +664,7 @@
 }
 .ui.inverted.toggle.checkbox input:checked ~ .box:before,
 .ui.inverted.toggle.checkbox input:checked ~ label:before {
-  background-color: #2185D0 !important;
+  background-color: #1a1c57 !important;
 }
 
 /* Toggle Active Focus */
@@ -674,7 +674,7 @@
 }
 .ui.inverted.toggle.checkbox input:focus:checked ~ .box:before,
 .ui.inverted.toggle.checkbox input:focus:checked ~ label:before {
-  background-color: #0d71bb !important;
+  background-color: #0d0e3b !important;
 }
 
 

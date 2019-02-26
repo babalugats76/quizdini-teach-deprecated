@@ -330,7 +330,7 @@
 .ui.primary.statistics .statistic > .value,
 .ui.statistics .primary.statistic > .value,
 .ui.primary.statistic > .value {
-  color: #2185D0;
+  color: #1a1c57;
 }
 .ui.inverted.primary.statistics .statistic > .value,
 .ui.statistics .inverted.primary.statistic > .value,
@@ -340,7 +340,7 @@
 .ui.secondary.statistics .statistic > .value,
 .ui.statistics .secondary.statistic > .value,
 .ui.secondary.statistic > .value {
-  color: #1B1C1D;
+  color: #1a1c57;
 }
 .ui.inverted.secondary.statistics .statistic > .value,
 .ui.statistics .inverted.secondary.statistic > .value,
@@ -410,7 +410,7 @@
 .ui.blue.statistics .statistic > .value,
 .ui.statistics .blue.statistic > .value,
 .ui.blue.statistic > .value {
-  color: #2185D0;
+  color: #014ce4;
 }
 .ui.inverted.blue.statistics .statistic > .value,
 .ui.statistics .inverted.blue.statistic > .value,

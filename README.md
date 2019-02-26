@@ -93,3 +93,7 @@ Due to lack of development, we will be using a community fork of Semantic UI, ca
 1. Install using `install fomantic-ui` using `Express (Set components and output folder)`; `Yes`; `src/semantic`; select all components; `No` to set permissions; `No` to RTL; `dist/` for output location
 2. Customize by following the [theming documentation](https://fomantic-ui.com/usage/theming.html)
 3. Check out [this video](https://www.youtube.com/watch?v=a9mUH1EWp40)
+
+## As Development Continues
+
+Check out [this article](https://medium.com/styled-components/component-folder-pattern-ee42df37ec68) for *folder structure* and data loading 

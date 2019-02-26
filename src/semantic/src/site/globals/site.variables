@@ -12,3 +12,8 @@
 @glossyGrape: #a499b3;
 @primaryColor: @spaceCadet;
 @secondaryColor: @spaceCadet;
+
+@emSize   : 15px;
+
+/* The size of page text  */
+@fontSize : 15px;

@@ -2,6 +2,17 @@ This project is the teacher front-end for Quizdini 2.0
 
 ## To-Do List
 
+
+* Add addition webfonts, including those related to logo's font
+* Create custom TextArea component
+   * Convert instructions to use this
+* Buttons
+   * Create custom Button component that wraps semantic
+      * Loading?
+   * Create button group for Match Form
+      * Save
+      * Delete
+      * Cancel
 * Mock up of MatchGameCreator using Formik
 * Examine this [codepen](https://codesandbox.io/s/qJR4ykJk) to see how to create custom input controls, etc.
 * Work on validation schema, etc. for MatchForm
@@ -21,11 +32,19 @@ This project is the teacher front-end for Quizdini 2.0
 * Mock up Login Component / Page
 * Investigate redirects, etc.
 * Add Control/Cmd keys for clear formatting and insert pi
-* Work on Icon system guided roughly by [this article](https://medium.com/@david.gilbertson/icons-as-react-components-de3e33cb8792)
+~~* Work on Icon system guided roughly by [this article](https://medium.com/@david.gilbertson/icons-as-react-components-de3e33cb8792)~~
 * Figure out how to represent matches on the screen, e.g., table, cards, etc.
-* Comment handleAccordionClick function in MatchForm
-* Create stackable table component
-* Add stackable table component to MatchForm for matches
+* handleAccordionClick function in MatchForm
+  * Comment
+  * Refine/shorten accordian toggle
+* Create table component
+* Add table component to MatchForm for matches
+* Update Input Text Component
+  * Inline style such that a text input's max-width, specified in ch, is equal to its maxLength
+  * Change label to float, instead of being attached right
+  * Change label to a more simplified, e.g., 13/50
+  * Disposition label coloring, green-yellow-red, does semantic have something? 
+
 
 ## React Router
 

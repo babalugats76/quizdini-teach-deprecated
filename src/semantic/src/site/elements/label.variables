@@ -1,5 +1,5 @@
 /*******************************
     User Variable Overrides
 *******************************/
-@backgroundColor: @glossyGrape;
-@color: @white;
+@backgroundColor: @navyPurple;
+@color: #ffffff;

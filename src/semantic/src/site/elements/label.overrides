@@ -2,5 +2,5 @@
          Site Overrides
 *******************************/
 .ui.label {
-  font-family: @jaywalker;
+  font-family: @hkgrotesk;
 }

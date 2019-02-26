@@ -31,7 +31,9 @@ This project is the teacher front-end for Quizdini 2.0
 * Match form submission
 * Mock up Login Component / Page
 * Investigate redirects, etc.
-* Add Control/Cmd keys for clear formatting and insert pi
+* Match Editor
+   * Add Control/Cmd keys for clear formatting and insert pi
+   * Trouble shoot problem with clear formatting button; currently posting page
 ~~* Work on Icon system guided roughly by [this article](https://medium.com/@david.gilbertson/icons-as-react-components-de3e33cb8792)~~
 * Figure out how to represent matches on the screen, e.g., table, cards, etc.
 * handleAccordionClick function in MatchForm

@@ -34,6 +34,8 @@ This project is the teacher front-end for Quizdini 2.0
 * Match form submission
 * Mock up Login Component / Page
 * Investigate redirects, etc.
+* Format Toolbar
+   * Find out what is causing `title` attribute on icon buttons to have spaces and be upper case, should be all lowercase with dashes for spaces
 * Match Editor
    * Add Control/Cmd keys for clear formatting and insert pi
    * Trouble shoot problem with clear formatting button; currently posting page

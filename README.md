@@ -25,6 +25,7 @@ This project is the teacher front-end for Quizdini 2.0
   * Header (fixed)
   * Footer
   * Navbar
+    * Figure out how to make NavBar fixed
 * Work on user list of games
 * Semantic ui custom stylesheet; instead of CDN; rough instructions can be found [here](https://react.semantic-ui.com/usage) but I am sure will be needed beyond that
   * Custom colors
@@ -38,9 +39,10 @@ This project is the teacher front-end for Quizdini 2.0
    * Trouble shoot problem with clear formatting button; currently posting page
 * ~~Work on Icon system guided roughly by [this article](https://medium.com/@david.gilbertson/icons-as-react-components-de3e33cb8792)~~
 * Figure out how to represent matches on the screen, e.g., table, cards, etc.
-* handleAccordionClick function in MatchForm
+* Accordion Component
   * Comment
   * Refine/shorten accordian toggle
+  * Add Icon functionality
 * Create table component
 * Add table component to MatchForm for matches
 * Update Input Text Component

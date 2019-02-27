@@ -25,13 +25,15 @@ This project is the teacher front-end for Quizdini 2.0
   * Header (fixed)
   * Footer
   * Navbar
-    * Figure out how to make NavBar fixed
+    * <mark style="background-color: yellow">Figure out how to make NavBar fixed</mark>
 * Work on user list of games
 * Semantic ui custom stylesheet; instead of CDN; rough instructions can be found [here](https://react.semantic-ui.com/usage) but I am sure will be needed beyond that
   * Custom colors
   * Custom fonts
-* Match form validation
-* Match form submission
+* MatchForm
+   * Validation
+   * Form submission
+   * Tab stops
 * Mock up Login Component / Page
 * Investigate redirects, etc.
 * Format Toolbar
@@ -51,7 +53,7 @@ This project is the teacher front-end for Quizdini 2.0
   * Inline style such that a text input's max-width, specified in ch, is equal to its maxLength
   * Change label to float, instead of being attached right
   * Change label to a more simplified, e.g., 13/50
-  * Disposition label coloring, green-yellow-red, does semantic have something? 
+  * Disposition label coloring, green-yellow-red, does semantic have something?
 
 
 ## React Router

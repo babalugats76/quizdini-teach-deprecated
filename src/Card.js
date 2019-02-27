@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import classNames from 'classnames';
-import Accordian from './Accordian';
+import Accordian from './Accordion';
 
 class Card extends Component {
 

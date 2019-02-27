@@ -12,7 +12,8 @@ import DisplayFormikState from './FormikHelper';
 import * as Yup from 'yup';
 import InputDropdown from './InputDropdown';
 // eslint-disable-next-line
-import { Grid, SegmentGroup, Segment, Divider, Accordion } from 'semantic-ui-react';
+import { Grid, SegmentGroup, Segment } from 'semantic-ui-react';
+import { Accordion } from './Accordion';
 
 const MatchSchema = Yup.object().shape(
   {
@@ -51,30 +52,30 @@ const durationOptions = [
 
 class MatchForm extends Component {
 
-  constructor(props) {
+  /*constructor(props) {
     super(props);
     this.state = {
       optionIdx: {
-        0: { active: false } ,
+        0: { active: false },
         1: { active: false }
       }
     }
-  }
-  
-  handleAccordionClick = (event, titleProps) => {
+  }*/
+
+  /*handleAccordionClick = (event, titleProps) => {
     const { index } = titleProps;
     this.setState((state, props) => {
       let newOptionIdx = state.optionIdx;
-      newOptionIdx[index].active = ! newOptionIdx[index].active;
-      return { optionIdx: newOptionIdx } 
-    }); 
-  }
+      newOptionIdx[index].active = !newOptionIdx[index].active;
+      return { optionIdx: newOptionIdx }
+    });
+  }*/
 
   render() {
 
     // eslint-disable-next-line
     const { values, touched, errors, handleChange, isSubmitting, handleSubmit, setFieldValue, onSubmit } = this.props;
-    const { optionIdx } = this.state;
+   /* const { optionIdx } = this.state;*/
 
 
     return (
@@ -112,82 +113,41 @@ class MatchForm extends Component {
                 tabIndex={2}
               />
             </Segment.Group>
-            <Accordion fluid styled>
-              <Accordion.Title active={optionIdx['0'].active} index={0} onClick={this.handleAccordionClick}>Game Options</Accordion.Title>
-              <Accordion.Content active={optionIdx['0'].active}>
-                <Segment placeholder padded>
-                  <Grid columns={2} stackable textAlign='center'>
-                    <Divider vertical>Options</Divider>
-                    <Grid.Row verticalAlign='middle'>
-                      <Grid.Column>
-                        <InputDropdown
-                          id="itemsPerBoard"
-                          label="Game Tiles"
-                          icon="tiles"
-                          selection
-                          compact
-                          options={itemsPerBoardOptions}
-                          error={touched.itemsPerBoard && errors.itemsPerBoard}
-                          value={values.itemsPerBoard}
-                          setFieldValue={setFieldValue}
-                        />
-                      </Grid.Column>
+            <Accordion openOnStart={false} >
+              <Segment placeholder padded>
+                <Grid columns={2} stackable textAlign='center'>
+                  <Grid.Row verticalAlign='middle'>
+                    <Grid.Column>
+                      <InputDropdown
+                        id="itemsPerBoard"
+                        label="Game Tiles"
+                        icon="tiles"
+                        selection
+                        compact
+                        options={itemsPerBoardOptions}
+                        error={touched.itemsPerBoard && errors.itemsPerBoard}
+                        value={values.itemsPerBoard}
+                        setFieldValue={setFieldValue}
+                      />
+                    </Grid.Column>
 
-                      <Grid.Column>
-                        <InputDropdown
-                          id="duration"
-                          label="Seconds"
-                          icon="timer"
-                          selection
-                          compact
-                          options={durationOptions}
-                          error={touched.duration && errors.duration}
-                          value={values.duration}
-                          onChange={handleChange}
-                        />
-                      </Grid.Column>
-                    </Grid.Row>
-                  </Grid>
-                </Segment>
-              </Accordion.Content>
-              <Accordion.Title active={optionIdx['1'].active} index={1} onClick={this.handleAccordionClick}>Game Options</Accordion.Title>
-              <Accordion.Content active={optionIdx['1'].active}>
-                <Segment placeholder padded>
-                  <Grid columns={2} stackable textAlign='center'>
-                    <Divider vertical>Options</Divider>
-                    <Grid.Row verticalAlign='middle'>
-                      <Grid.Column>
-                        <InputDropdown
-                          id="itemsPerBoard"
-                          label="Game Tiles"
-                          icon="tiles"
-                          selection
-                          compact
-                          options={itemsPerBoardOptions}
-                          error={touched.itemsPerBoard && errors.itemsPerBoard}
-                          value={values.itemsPerBoard}
-                          setFieldValue={setFieldValue}
-                        />
-                      </Grid.Column>
-
-                      <Grid.Column>
-                        <InputDropdown
-                          id="duration"
-                          label="Seconds"
-                          icon="timer"
-                          selection
-                          compact
-                          options={durationOptions}
-                          error={touched.duration && errors.duration}
-                          value={values.duration}
-                          onChange={handleChange}
-                        />
-                      </Grid.Column>
-                    </Grid.Row>
-                  </Grid>
-                </Segment>
-              </Accordion.Content>
-            </Accordion>
+                    <Grid.Column>
+                      <InputDropdown
+                        id="duration"
+                        label="Seconds"
+                        icon="timer"
+                        selection
+                        compact
+                        options={durationOptions}
+                        error={touched.duration && errors.duration}
+                        value={values.duration}
+                        onChange={handleChange}
+                      />
+                    </Grid.Column>
+                  </Grid.Row>
+                </Grid>
+              </Segment>
+            </ Accordion>
           </Grid.Column>
           <Grid.Column computer={8} mobile={16} tablet={16}>
 

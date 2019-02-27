@@ -141,7 +141,7 @@ class MatchForm extends Component {
                         options={durationOptions}
                         error={touched.duration && errors.duration}
                         value={values.duration}
-                        onChange={handleChange}
+                        setFieldValue={setFieldValue}
                       />
                     </Grid.Column>
                   </Grid.Row>

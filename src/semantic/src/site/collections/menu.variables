@@ -1,3 +1,7 @@
 /*******************************
     User Variable Overrides
 *******************************/
+@fontName: @hkgrotesk;
+
+@headerFont        : @fontName, sans-serif;
+@pageFont          : @fontName, sans-serif;

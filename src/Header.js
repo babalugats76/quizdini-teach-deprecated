@@ -8,8 +8,8 @@ import {
 export default class extends Component {
   render() {
     return (
-      <Container>
-        <Header>Content of Header goes in here</Header>
+      <Container style={{'marginTop': '1em'}}>
+        <Header as='h1'>Content of Header goes in here</Header>
       </Container>
     );
   }

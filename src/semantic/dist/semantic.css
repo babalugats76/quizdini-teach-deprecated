@@ -463,7 +463,7 @@ body {
   overflow-x: hidden;
   min-width: 320px;
   background: #FFFFFF;
-  font-family: 'Lato', 'Helvetica Neue', Arial, Helvetica, sans-serif;
+  font-family: 'hk_groteskmedium', sans-serif;
   font-size: 15px;
   line-height: 1.4285em;
   color: rgba(0, 0, 0, 0.87);
@@ -479,7 +479,7 @@ h2,
 h3,
 h4,
 h5 {
-  font-family: 'Lato', 'Helvetica Neue', Arial, Helvetica, sans-serif;
+  font-family: 'hk_groteskmedium', sans-serif;
   line-height: 1.28571429em;
   margin: calc(2rem - 0.1428571428571429em) 0 1rem;
   font-weight: bold;
@@ -5802,7 +5802,7 @@ body .ui.inverted:not(.dimmer)::-webkit-scrollbar-thumb:hover {
 /* Text Container */
 
 .ui.text.container {
-  font-family: 'Lato', 'Helvetica Neue', Arial, Helvetica, sans-serif;
+  font-family: 'hk_groteskmedium', sans-serif;
   max-width: 700px !important;
   line-height: 1.5;
   font-size: 1.13333333rem;
@@ -28518,7 +28518,7 @@ span.ui.massive.text {
   display: -ms-flexbox;
   display: flex;
   margin: 1rem 0;
-  font-family: 'Lato', 'Helvetica Neue', Arial, Helvetica, sans-serif;
+  font-family: 'hk_groteskmedium', sans-serif;
   background: #FFFFFF;
   font-weight: normal;
   border: 1px solid rgba(34, 36, 38, 0.15);

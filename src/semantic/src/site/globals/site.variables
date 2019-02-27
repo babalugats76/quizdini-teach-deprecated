@@ -17,3 +17,8 @@
 
 /* The size of page text  */
 @fontSize : 15px;
+
+@fontName: @hkgrotesk;
+
+@headerFont        : @fontName, sans-serif;
+@pageFont          : @fontName, sans-serif;

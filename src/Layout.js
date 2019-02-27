@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
-import NavBar from './NavBar';
+import FixedMenu from './FixedMenu';
 import Header from './Header';
 import Main from './Main';
-export default class extends Component {
+export default class Layout extends Component {
+
   render() {
     return (
       <div>
-        <NavBar />
         <Header />
+        <FixedMenu />
         <Main />
       </div>);
   }

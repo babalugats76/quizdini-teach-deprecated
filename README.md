@@ -25,7 +25,7 @@ This project is the teacher front-end for Quizdini 2.0
   * Header (fixed)
   * Footer
   * Navbar
-    * <mark style="color: yellow">Figure out how to make NavBar fixed</mark>
+    * **Figure out how to make NavBar fixed**
 * Work on user list of games
 * Semantic ui custom stylesheet; instead of CDN; rough instructions can be found [here](https://react.semantic-ui.com/usage) but I am sure will be needed beyond that
   * Custom colors

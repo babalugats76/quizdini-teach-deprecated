@@ -12,7 +12,7 @@ import DisplayFormikState from './FormikHelper';
 import * as Yup from 'yup';
 import InputDropdown from './InputDropdown';
 // eslint-disable-next-line
-import { Grid, SegmentGroup, Segment } from 'semantic-ui-react';
+import { Grid, SegmentGroup, Segment, Form } from 'semantic-ui-react';
 import { Accordion } from './Accordion';
 
 const MatchSchema = Yup.object().shape(
@@ -79,7 +79,7 @@ class MatchForm extends Component {
 
 
     return (
-      <form onSubmit={onSubmit}>
+      <Form onSubmit={onSubmit}>
         <fieldset>
           <legend>Configuration</legend>
           <button type="submit" disabled={isSubmitting} className="btn btn-primary float-right">Save</button>
@@ -87,12 +87,10 @@ class MatchForm extends Component {
         <br />
         <Grid columns={2} stackable>
           <Grid.Column computer={8} mobile={16} tablet={16}>
-            <Segment.Group>
               <InputText
                 id="title"
                 type="text"
                 label="Title"
-                labelPosition="left"
                 placeholder="Legends of Computer Science"
                 error={touched.title && errors.title}
                 maxlength={40}
@@ -104,7 +102,6 @@ class MatchForm extends Component {
                 id="instructions"
                 type="text"
                 label="Instructions"
-                labelPosition="left"
                 placeholder="Match each legend with their accomplishment"
                 error={touched.instructions && errors.instructions}
                 maxlength={60}
@@ -112,7 +109,6 @@ class MatchForm extends Component {
                 onChange={handleChange}
                 tabIndex={2}
               />
-            </Segment.Group>
             <Accordion openOnStart={false} >
               <Segment placeholder padded>
                 <Grid columns={2} stackable textAlign='center'>
@@ -174,7 +170,7 @@ class MatchForm extends Component {
           matches={values.matches}
         />
         <DisplayFormikState {...this.props} />
-      </form >
+      </Form >
     );
   }
 }

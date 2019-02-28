@@ -4,3 +4,9 @@
 .ui.label {
   font-family: @hkgrotesk;
 }
+
+.ui.floating.label {
+  font-size: @tiny !important;
+  padding: 0 5px !important;
+  line-height: @tiny * 2;
+}

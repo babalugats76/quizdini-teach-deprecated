@@ -2079,3 +2079,8 @@ a.ui.ui.ui.inverted.basic.black.label:hover {
 .ui.label {
   font-family: 'hk_groteskmedium';
 }
+.ui.floating.label {
+  font-size: 0.66666667rem !important;
+  padding: 0 5px !important;
+  line-height: 1.33333333rem;
+}

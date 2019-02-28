@@ -8,7 +8,7 @@ import {
 export default class extends Component {
   render() {
     return (
-      <Container style={{'marginTop': '1em'}}>
+      <Container style={{'marginTop': '1em'}} fluid>
         <Header as='h1'>Content of Header goes in here</Header>
       </Container>
     );

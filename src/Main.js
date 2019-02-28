@@ -9,7 +9,7 @@ import MatchGame from './MatchGame';
 import { Switch, Route, Link } from "react-router-dom";
 
 const Main = () => (
-  <Container text>
+  <Container>
     <Switch>
       <Route path="/hello" component={Hello} />
       <Route exact path="/match" component={MatchGame} />

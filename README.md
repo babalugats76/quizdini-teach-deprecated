@@ -4,7 +4,6 @@ This project is the teacher front-end for Quizdini 2.0
 
 * General Cleanup
    * Migrate components to `components` folder
-   * Remove redundant components, e.g, Accordian
 * Add addition webfonts, including those related to logo's font
 * Create custom TextArea component
    * Convert instructions to use this
@@ -15,21 +14,15 @@ This project is the teacher front-end for Quizdini 2.0
       * Save
       * Delete
       * Cancel
-* Mock up of MatchGameCreator using Formik
-* Examine this [codepen](https://codesandbox.io/s/qJR4ykJk) to see how to create custom input controls, etc.
 * Work on validation schema, etc. for MatchForm
 * Work on adding validation message/notification component
 * Investigate onPointerDown and alternatives that support mobile events, in React for use with the Toolbar Buttons
-* Continuing to customize semantic ui components
 * Work on semantic ui layout
   * Header (fixed)
   * Footer
   * Navbar
-    * **Figure out how to make NavBar fixed**
+    * ~~Figure out how to make NavBar fixed~~
 * Work on user list of games
-* Semantic ui custom stylesheet; instead of CDN; rough instructions can be found [here](https://react.semantic-ui.com/usage) but I am sure will be needed beyond that
-  * Custom colors
-  * Custom fonts
 * MatchForm
    * Validation
    * Form submission
@@ -37,11 +30,10 @@ This project is the teacher front-end for Quizdini 2.0
 * Mock up Login Component / Page
 * Investigate redirects, etc.
 * Format Toolbar
-   * Find out what is causing `title` attribute on icon buttons to have spaces and be upper case, should be all lowercase with dashes for spaces
+   * Find out what is causing `title` attribute on icon buttons to have spaces and be uppercase, should be all lowercase with dashes for spaces
 * Match Editor
    * Add Control/Cmd keys for clear formatting and insert pi
    * Trouble shoot problem with clear formatting button; currently posting page
-* ~~Work on Icon system guided roughly by [this article](https://medium.com/@david.gilbertson/icons-as-react-components-de3e33cb8792)~~
 * Figure out how to represent matches on the screen, e.g., table, cards, etc.
 * Accordion Component
   * Comment
@@ -49,11 +41,9 @@ This project is the teacher front-end for Quizdini 2.0
   * Add Icon functionality
 * Create table component
 * Add table component to MatchForm for matches
-* Update Input Text Component
-  * Inline style such that a text input's max-width, specified in ch, is equal to its maxLength
-  * Change label to float, instead of being attached right
-  * Change label to a more simplified, e.g., 13/50
-  * Disposition label coloring, green-yellow-red, does semantic have something?
+* Create Floating Label Component
+  * Refine floating label style
+  * Remove color-switching logic; replace with warning/danger prop; wrap Label with `floating` prop
 
 
 ## React Router
@@ -103,3 +93,5 @@ Due to lack of development, we will be using a community fork of Semantic UI, ca
 ## As Development Continues
 
 Check out [this article](https://medium.com/styled-components/component-folder-pattern-ee42df37ec68) for *folder structure* and data loading 
+Examine this [codepen](https://codesandbox.io/s/qJR4ykJk) to see how to create custom input controls, etc.
+Work on Icon system guided roughly by [this article](https://medium.com/@david.gilbertson/icons-as-react-components-de3e33cb8792)

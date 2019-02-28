@@ -1,8 +1,6 @@
 import React from 'react';
-import classNames from 'classnames';
-// eslint-disable-next-line 
-//import Label from './Label';
-import { Segment, Input, Label } from 'semantic-ui-react';
+// eslint-disable-next-line
+import { Segment, Form, Input, Label } from 'semantic-ui-react';
 
 import InputFeedback from './InputFeedback';
 
@@ -10,26 +8,57 @@ const InputText = ({ type, id, label, maxlength, error, value, onChange, ...prop
 
   const txtPct = ((maxlength - value.length) / maxlength) * 100;
 
-  const txtClass = classNames(
-    'input-group-text',
-    'text-white',
-    { 'bg-danger': txtPct <= 10, 'bg-warning': txtPct <= 30, 'bg-success': txtPct > 30 }
-  );
+  const floatingLabel = {
+    position: 'absolute',
+    top: '-10px',
+    right: '-20px',
+    'fontSize': '.8em',
+    'backgroundColor': 'rgba(128, 128, 128, .8)',
+    'borderRadius': '3px',
+    'padding': '3px',
+    'color': 'white',
+    'lineHeight': '1.1',
+    'textAlign': 'right',
+    'fontWeight': 'bold'
+  }
+  
+
+  const warningStyle = {
+    'backgroundColor': 'yellow',
+    'color': 'grey'
+  }
+
+  const dangerStyle = {
+    'backgroundColor': 'red',
+    'color': 'white'
+  }
 
   return (
-      <Segment padded>
-        <Input
-          id={id}
-          type="text"
-          label={label}
-          maxLength={maxlength}
-          value={value}
-          onChange={onChange}
-          {...props}
-        />
-        <InputFeedback error={error} />
-        <Label className={txtClass} attached='top right'>{maxlength - value.length} characters left</Label>
-      </Segment>
+    <Form.Field>
+      <Input
+        id={id}
+        type="text"
+        maxLength={maxlength}
+        value={value}
+        label={label}
+        labelPosition="left"
+        onChange={onChange}
+        {...props}
+      >
+        <Label>{label}</Label>
+        <span
+          style={{
+            ...floatingLabel,
+            ...(txtPct <= 30 ? warningStyle : {}),
+            ...(txtPct <= 10 ? dangerStyle : {}),
+          }}>
+          {value.length}/{maxlength}
+        </span>
+        <Label floating size="small" color='grey'>{value.length}/{maxlength}</Label>
+        <input />
+      </Input>
+      <InputFeedback error={error} />
+    </Form.Field>
   );
 }
 

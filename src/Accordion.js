@@ -1,13 +1,11 @@
 import React, { Component } from 'react';
 import { Accordion } from 'semantic-ui-react';
+import Icon from './Icon';
 
 export class MyAccordion extends Component {
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      active: props.openOnStart
-    }
+  state = {
+    active: this.props.openOnStart
   }
 
   handleClick = (event, titleProps) => {
@@ -16,7 +14,6 @@ export class MyAccordion extends Component {
     });
   }
 
-
   render() {
 
     const { children } = this.props;
@@ -24,7 +21,10 @@ export class MyAccordion extends Component {
 
     return (
       <Accordion fluid styled>
-        <Accordion.Title active={active} onClick={(event, titleProps) => this.handleClick(event, titleProps)}>Game Options</Accordion.Title>
+        <Accordion.Title as='h1' active={active} onClick={(event, titleProps) => this.handleClick(event, titleProps)}>
+          <Icon icon='cog' size='20' styles={{ 'margin': '5px' }} />
+          Game Options
+        </Accordion.Title>
         <Accordion.Content active={active}>
           {children}
         </Accordion.Content>

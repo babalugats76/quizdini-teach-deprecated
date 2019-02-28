@@ -21,7 +21,7 @@ export class MyAccordion extends Component {
 
     return (
       <Accordion fluid styled>
-        <Accordion.Title as='h1' active={active} onClick={(event, titleProps) => this.handleClick(event, titleProps)}>
+        <Accordion.Title active={active} onClick={(event, titleProps) => this.handleClick(event, titleProps)}>
           <Icon icon='cog' size='20' styles={{ 'margin': '5px' }} />
           Game Options
         </Accordion.Title>

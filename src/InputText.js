@@ -1,7 +1,6 @@
 import React from 'react';
 // eslint-disable-next-line
-import { Segment, Form, Input, Label } from 'semantic-ui-react';
-
+import { Form, Input, Label } from 'semantic-ui-react';
 import InputFeedback from './InputFeedback';
 
 const InputText = ({ type, id, label, maxlength, error, value, onChange, ...props }) => {
@@ -21,7 +20,6 @@ const InputText = ({ type, id, label, maxlength, error, value, onChange, ...prop
     'textAlign': 'right',
     'fontWeight': 'bold'
   }
-  
 
   const warningStyle = {
     'backgroundColor': 'yellow',
@@ -37,12 +35,13 @@ const InputText = ({ type, id, label, maxlength, error, value, onChange, ...prop
     <Form.Field>
       <Input
         id={id}
+        style={{ 'maxWidth': `${maxlength}ch`}}
         type="text"
         maxLength={maxlength}
         value={value}
-        label={label}
-        labelPosition="left"
         onChange={onChange}
+        labelPosition='left'
+        focus
         {...props}
       >
         <Label>{label}</Label>

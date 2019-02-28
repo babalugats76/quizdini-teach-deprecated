@@ -1,9 +1,6 @@
 import React, { Component } from 'react';
-// eslint-disable-next-line
-import Label from './Label';
+
 import InputText from './InputText';
-// eslint-disable-next-line
-import RangeInput from './RangeInput';
 import MatchEditor from './MatchEditor';
 import MatchBulkEditor from './MatchBulkEditor';
 import MatchList from './MatchList';
@@ -110,7 +107,7 @@ class MatchForm extends Component {
                 tabIndex={2}
               />
             <Accordion openOnStart={false} >
-              <Segment placeholder padded>
+              <Segment basic>
                 <Grid columns={2} stackable textAlign='center'>
                   <Grid.Row verticalAlign='middle'>
                     <Grid.Column>

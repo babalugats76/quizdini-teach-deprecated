@@ -43,7 +43,7 @@ This project is the teacher front-end for Quizdini 2.0
 * Add table component to MatchForm for matches
 * Create Floating Label Component
   * Refine floating label style
-  * Remove color-switching logic; replace with warning/danger prop; wrap Label with `floating` prop
+  * Remove color-switching logic; replace with warning/danger prop; wrap Label with `floating` prop; perhaps pull out into own component based upon what happens with textarea
 
 
 ## React Router

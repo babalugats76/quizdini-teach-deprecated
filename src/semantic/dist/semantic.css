@@ -17761,7 +17761,7 @@ img.ui.bordered.image {
   line-height: 1;
   vertical-align: baseline;
   margin: 0 0.13333333em;
-  background-color: #aa54ff;
+  background-color: #A333C8;
   background-image: none;
   padding: 0.5833em 0.833em;
   color: #ffffff;
@@ -17930,7 +17930,7 @@ a.ui.label {
   max-width: 9999px;
   vertical-align: baseline;
   text-transform: none;
-  background: #aa54ff;
+  background: #A333C8;
   padding: 0.5833em 0.833em 0.5833em 0.5em;
   border-radius: 0.26666667rem;
   -webkit-box-shadow: none;
@@ -18023,7 +18023,7 @@ a.ui.label {
   margin: 0;
   padding: 0;
   text-align: center;
-  border-color: #aa54ff;
+  border-color: #A333C8;
   width: 4em;
   height: 4em;
   z-index: 1;
@@ -18372,15 +18372,15 @@ a.ui.basic.label:hover {
 .ui.inverted.labels .label,
 .ui.inverted.label {
   color: rgba(255, 255, 255, 0.9);
-  background-color: #7700ed;
+  background-color: #611e77;
 }
 
 .ui.inverted.corner.label {
-  border-color: #7700ed;
+  border-color: #611e77;
 }
 
 .ui.inverted.corner.label:hover {
-  border-color: #aa54ff;
+  border-color: #A333C8;
   -webkit-transition: none;
   transition: none;
 }

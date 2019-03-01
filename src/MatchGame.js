@@ -19,9 +19,9 @@ class MatchGame extends Component {
 
   }
 
-  handleSubmit(match) {
-    console.log('Saving game...');
-    console.log(match);
+  handleSubmit = (payload, setSubmitting) => {
+    console.log('submitting...wait 10 secs...');
+    setTimeout(() => { console.log(payload); setSubmitting(false); }, 10000);
   }
 
   render() {
@@ -32,7 +32,7 @@ class MatchGame extends Component {
       matches: [],
       matchText: '',
       config: {
-        itemsPerBoard: 9,
+        itemsPerBoard: 4,
         duration: 180
       }
     };
@@ -49,7 +49,7 @@ class MatchGame extends Component {
         </ul>
         <MatchForm
           match={match}
-          onSubmit={(payload) => this.handleSubmit(payload)}
+          onSubmit={(payload, setSubmitting ) => this.handleSubmit(payload, setSubmitting)}
         />
       </div>
     );

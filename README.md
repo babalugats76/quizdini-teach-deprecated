@@ -44,6 +44,7 @@ This project is the teacher front-end for Quizdini 2.0
 * Create Floating Label Component
   * Refine floating label style
   * Remove color-switching logic; replace with warning/danger prop; wrap Label with `floating` prop; perhaps pull out into own component based upon what happens with textarea
+  * Investigate controlling line-height, especially in input field; some fonts will require adjustment and we need to figure out where to put that style override
 
 
 ## React Router

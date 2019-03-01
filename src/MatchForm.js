@@ -22,9 +22,9 @@ const MatchSchema = Yup.object().shape(
       .max(60, 'Instructions are too long'),
     itemsPerBoard: Yup.number()
       .min(4, 'You must have at least 4 items per board')
-      .max(3, 'You may have no more than 9 items per board'),
+      .max(9, 'You may have no more than 9 items per board'),
     duration: Yup.number()
-      .min(60, 'Games must last at least a minute')
+      .min(60, 'Games must last at 1 minute long')
       .max(300, 'Game may last no more than 5 minutes')
   }
 );
@@ -49,38 +49,14 @@ const durationOptions = [
 
 class MatchForm extends Component {
 
-  /*constructor(props) {
-    super(props);
-    this.state = {
-      optionIdx: {
-        0: { active: false },
-        1: { active: false }
-      }
-    }
-  }*/
-
-  /*handleAccordionClick = (event, titleProps) => {
-    const { index } = titleProps;
-    this.setState((state, props) => {
-      let newOptionIdx = state.optionIdx;
-      newOptionIdx[index].active = !newOptionIdx[index].active;
-      return { optionIdx: newOptionIdx }
-    });
-  }*/
-
   render() {
 
     // eslint-disable-next-line
-    const { values, touched, errors, handleChange, isSubmitting, handleSubmit, setFieldValue, onSubmit } = this.props;
-   /* const { optionIdx } = this.state;*/
-
-
+    const { values, touched, errors, handleChange, isSubmitting, handleSubmit, setFieldValue } = this.props;
+    
     return (
-      <Form onSubmit={onSubmit}>
-        <fieldset>
-          <legend>Configuration</legend>
+      <Form onSubmit={handleSubmit}>
           <button type="submit" disabled={isSubmitting} className="btn btn-primary float-right">Save</button>
-        </fieldset>
         <br />
         <Grid columns={2} stackable>
           <Grid.Column computer={8} mobile={16} tablet={16}>
@@ -89,7 +65,7 @@ class MatchForm extends Component {
                 type="text"
                 label="Title"
                 placeholder="Legends of Computer Science"
-                error={touched.title && errors.title}
+                error={errors.title}
                 maxlength={40}
                 value={values.title}
                 onChange={handleChange}
@@ -100,13 +76,15 @@ class MatchForm extends Component {
                 type="text"
                 label="Instructions"
                 placeholder="Match each legend with their accomplishment"
-                error={touched.instructions && errors.instructions}
+                error={errors.instructions}
                 maxlength={60}
                 value={values.instructions}
                 onChange={handleChange}
                 tabIndex={2}
               />
-            <Accordion openOnStart={false} >
+            <Accordion 
+               openOnStart={false} 
+               childErrors={(!!errors.itemsPerBoard) || (!!errors.duration)} >
               <Segment basic>
                 <Grid columns={2} stackable textAlign='center'>
                   <Grid.Row verticalAlign='middle'>
@@ -118,7 +96,7 @@ class MatchForm extends Component {
                         selection
                         compact
                         options={itemsPerBoardOptions}
-                        error={touched.itemsPerBoard && errors.itemsPerBoard}
+                        error={errors.itemsPerBoard}
                         value={values.itemsPerBoard}
                         setFieldValue={setFieldValue}
                       />
@@ -132,7 +110,7 @@ class MatchForm extends Component {
                         selection
                         compact
                         options={durationOptions}
-                        error={touched.duration && errors.duration}
+                        error={errors.duration}
                         value={values.duration}
                         setFieldValue={setFieldValue}
                       />
@@ -174,6 +152,8 @@ class MatchForm extends Component {
 
 export default withFormik({
   enableReinitialize: true,
+  validateOnChange: false,
+  validateOnBlur: false,
   mapPropsToValues: ({ match }) => ({
     title: match.title,
     instructions: match.instructions,
@@ -183,8 +163,10 @@ export default withFormik({
     matches: match.matches
   }),
   validationSchema: MatchSchema,
-  handleSubmit: (payload, { props, setSubmitting }) => {
-    setSubmitting(false);
-    props.onSubmit(payload);
+  handleSubmit: (payload, otherProps) => {
+    // eslint-disable-next-line
+    const { onSubmit } = otherProps.props;
+    const { setSubmitting } = otherProps;
+    onSubmit(payload, setSubmitting);
   },
 })(MatchForm);

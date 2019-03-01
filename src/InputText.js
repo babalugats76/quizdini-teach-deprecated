@@ -40,6 +40,7 @@ const InputText = ({ type, id, label, maxlength, error, value, onChange, ...prop
         maxLength={maxlength}
         value={value}
         onChange={onChange}
+        error={!!error}
         labelPosition='left'
         focus
         {...props}

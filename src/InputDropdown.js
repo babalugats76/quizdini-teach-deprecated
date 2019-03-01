@@ -19,9 +19,9 @@ const InputDropdown = ({ id, label, icon, options, error, value, setFieldValue, 
       <Dropdown
         id={id}
         options={options}
-        error={error}
         value={value}
         onChange={(event, data) => onChange(event, data)}
+        error={!!error}
         {...props}
       />
     </React.Fragment>

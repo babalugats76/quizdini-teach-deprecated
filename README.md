@@ -108,6 +108,10 @@ Due to lack of development, we will be using a community fork of Semantic UI, ca
 2. Customize by following the [theming documentation](https://fomantic-ui.com/usage/theming.html)
 3. Check out [this video](https://www.youtube.com/watch?v=a9mUH1EWp40)
 
+## Typechecking with PropTypes
+
+Refer to [Typechecking with PropTypes](https://reactjs.org/docs/typechecking-with-proptypes.html) in order to self-document components, implement quality controls, etc.
+
 ## As Development Continues
 
 Check out [this article](https://medium.com/styled-components/component-folder-pattern-ee42df37ec68) for *folder structure* and data loading 

@@ -37,8 +37,11 @@ This project is the teacher front-end for Quizdini 2.0
   * Figure out how to implement mobile friendly menu (hamburger)
 * Work on user list of games
 * MatchForm
+   * Loading
    * Validation
-   * Form submission
+     * High-level messages/errors; how to pass back from onSubmit/expire
+   * Form submission 
+   * Mock up tabs to toggle between `MatchEditor` and `MatchBulkEditor` (expert mode)
    * Continue to refine Tab stops
 * Mock up Login Component / Page
 * Investigate redirects, etc.

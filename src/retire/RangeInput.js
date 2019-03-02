@@ -1,7 +1,7 @@
 import React from 'react';
 
 import Label from './Label';
-import InputFeedback from './InputFeedback';
+import InputFeedback from '../InputFeedback';
 
 const RangeInput = ({id, label, min, max, step, error, value, onChange, ...props}) => {
 

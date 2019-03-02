@@ -37,21 +37,22 @@ class MatchGame extends Component {
       }
     };
 
+    /*<div className="container">
+      <h2>Match Game</h2>
+      <p>Rise above traditional 'drill and kill' drudgery by providing your students with an opportunity to practice and learn that is sure to engage them! The 'match game' is a frenetic test of wits in which students race against the clock and earn points while demonstrating both content knowledge and comprehension.</p>
+      <h4>Step-by-Step</h4>
+      <ul>
+        <li>Build a bank of knowledge, known as 'matches'</li>
+        <li>(Optional) Customize the game, e.g., duration</li>
+        <li>Share the URL with your students</li>
+      </ul>
+            </div>*/
+
     return (
-      <div className="container">
-        <h2>Match Game</h2>
-        <p>Rise above traditional 'drill and kill' drudgery by providing your students with an opportunity to practice and learn that is sure to engage them! The 'match game' is a frenetic test of wits in which students race against the clock and earn points while demonstrating both content knowledge and comprehension.</p>
-        <h4>Step-by-Step</h4>
-        <ul>
-          <li>Build a bank of knowledge, known as 'matches'</li>
-          <li>(Optional) Customize the game, e.g., duration</li>
-          <li>Share the URL with your students</li>
-        </ul>
         <MatchForm
           match={match}
           onSubmit={(payload, setSubmitting ) => this.handleSubmit(payload, setSubmitting)}
         />
-      </div>
     );
   }
 

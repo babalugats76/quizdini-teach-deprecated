@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Label from './Label';
+import Label from './retire/Label';
 
 class MatchBulkEditor extends Component {
 

@@ -35,7 +35,7 @@ const InputText = ({ type, id, label, maxlength, error, value, onChange, ...prop
     <Form.Field>
       <Input
         id={id}
-        style={{ 'maxWidth': `${maxlength}ch`}}
+        style={{ 'boxSizing': 'inherit', 'maxWidth': `${maxlength}ch` }}
         type="text"
         maxLength={maxlength}
         value={value}

@@ -65,8 +65,8 @@ export default class FixedMenu extends Component {
             borderless
             size="massive">
           <Container>
-            <Menu.Item as={Link} to='/hello'>Hello, World!</Menu.Item>
-            <Menu.Item as={Link} to='/match'>New Match Game</Menu.Item>
+            <Menu.Item as={Link} to='/hello' tabIndex={-1} >Hello, World!</Menu.Item>
+            <Menu.Item as={Link} to='/match' tabIndex={-1} >New Match Game</Menu.Item>
           </Container>
         </Menu>
       </Visibility>);

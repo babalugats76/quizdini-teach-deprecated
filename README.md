@@ -18,10 +18,9 @@ This project is the teacher front-end for Quizdini 2.0
 * Work on adding validation message/notification component
 * Investigate onPointerDown and alternatives that support mobile events, in React for use with the Toolbar Buttons
 * Work on semantic ui layout
-  * Header (fixed)
+  * Style fixed menu
   * Footer
-  * Navbar
-    * ~~Figure out how to make NavBar fixed~~
+  * Figure out how to implement mobile friendly menu (hamburger)
 * Work on user list of games
 * MatchForm
    * Validation
@@ -29,7 +28,11 @@ This project is the teacher front-end for Quizdini 2.0
    * Tab stops
 * Mock up Login Component / Page
 * Investigate redirects, etc.
+* Icon System
+   * Investigate taking `fill` as argument
 * Format Toolbar
+   * Convert to use SUI's `IconGroup`
+   * Consider renaming
    * Find out what is causing `title` attribute on icon buttons to have spaces and be uppercase, should be all lowercase with dashes for spaces
 * Match Editor
    * Add Control/Cmd keys for clear formatting and insert pi
@@ -37,14 +40,15 @@ This project is the teacher front-end for Quizdini 2.0
 * Figure out how to represent matches on the screen, e.g., table, cards, etc.
 * Accordion Component
   * Comment
-  * Refine/shorten accordian toggle
+  * ~~Refine/shorten accordian toggle~~
   * Add Icon functionality
 * Create table component
 * Add table component to MatchForm for matches
 * Create Floating Label Component
-  * Refine floating label style
-  * Remove color-switching logic; replace with warning/danger prop; wrap Label with `floating` prop; perhaps pull out into own component based upon what happens with textarea
-  * Investigate controlling line-height, especially in input field; some fonts will require adjustment and we need to figure out where to put that style override
+  * Refine floating label style; use dynamic inline style to substitute yellow, red, grey, but with opacity
+  * Consider using a constants file with colors?
+  * Reexamine whether floating label should be pulled out into its own Component
+* Investigate controlling line-height, especially in input field; some fonts will require adjustment and we need to figure out where to put that style override
 
 
 ## React Router

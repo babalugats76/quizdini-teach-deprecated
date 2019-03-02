@@ -4404,6 +4404,10 @@
 .ui.icon.button {
   background-color: #ddd;
 }
-.ui.icon.button > svg > path {
-  fill: green;
+.ui.icon.button > svg {
+  fill: white;
+}
+.ui.labeled.icon.button > svg.icon {
+  background-color: rgba(255, 255, 255, 0.25);
+  fill: white;
 }

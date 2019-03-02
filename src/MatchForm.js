@@ -1,15 +1,17 @@
 import React, { Component } from 'react';
 
+import Button from './Button';
 import InputText from './InputText';
+import InputDropdown from './InputDropdown';
 import MatchEditor from './MatchEditor';
 import MatchBulkEditor from './MatchBulkEditor';
 import MatchList from './MatchList';
 import { withFormik } from 'formik';
 import DisplayFormikState from './FormikHelper';
 import * as Yup from 'yup';
-import InputDropdown from './InputDropdown';
+
 // eslint-disable-next-line
-import { Grid, SegmentGroup, Segment, Form } from 'semantic-ui-react';
+import { Grid, SegmentGroup, Divider, Segment, Form } from 'semantic-ui-react';
 import { Accordion } from './Accordion';
 
 const MatchSchema = Yup.object().shape(
@@ -53,38 +55,49 @@ class MatchForm extends Component {
 
     // eslint-disable-next-line
     const { values, touched, errors, handleChange, isSubmitting, handleSubmit, setFieldValue } = this.props;
-    
+
     return (
       <Form onSubmit={handleSubmit}>
-          <button type="submit" disabled={isSubmitting} className="btn btn-primary float-right">Save</button>
-        <br />
+        <Button
+          secondary
+          loading={isSubmitting}
+          active
+          title="Save Game"
+          icon="save"
+          size="small"
+          type="submit"
+          tabIndex={3}
+          disabled={isSubmitting}>
+          Save
+          </Button>
+        <Divider hidden />
         <Grid columns={2} stackable>
           <Grid.Column computer={8} mobile={16} tablet={16}>
-              <InputText
-                id="title"
-                type="text"
-                label="Title"
-                placeholder="Legends of Computer Science"
-                error={errors.title}
-                maxlength={40}
-                value={values.title}
-                onChange={handleChange}
-                tabIndex={1}
-              />
-              <InputText
-                id="instructions"
-                type="text"
-                label="Instructions"
-                placeholder="Match each legend with their accomplishment"
-                error={errors.instructions}
-                maxlength={60}
-                value={values.instructions}
-                onChange={handleChange}
-                tabIndex={2}
-              />
-            <Accordion 
-               openOnStart={false} 
-               childErrors={(!!errors.itemsPerBoard) || (!!errors.duration)} >
+            <InputText
+              id="title"
+              type="text"
+              label="Title"
+              placeholder="Legends of Computer Science"
+              error={errors.title}
+              maxlength={40}
+              value={values.title}
+              onChange={handleChange}
+              tabIndex={1}
+            />
+            <InputText
+              id="instructions"
+              type="text"
+              label="Instructions"
+              placeholder="Match each legend with their accomplishment"
+              error={errors.instructions}
+              maxlength={60}
+              value={values.instructions}
+              onChange={handleChange}
+              tabIndex={2}
+            />
+            <Accordion
+              openOnStart={false}
+              childErrors={(!!errors.itemsPerBoard) || (!!errors.duration)} >
               <Segment basic>
                 <Grid columns={2} stackable textAlign='center'>
                   <Grid.Row verticalAlign='middle'>

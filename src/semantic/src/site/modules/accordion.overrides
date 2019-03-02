@@ -1,3 +1,36 @@
 /*******************************
         User Overrides
 *******************************/
+
+/* Position accordion arrow to right; leave a little space */
+.ui.accordion > .title > .icon.arrow {
+  position: absolute;
+  right: 10px;
+  -webkit-transition: -webkit-transform .3s ease-in-out;
+  -ms-transition: -ms-transform .3s ease-in-out;
+  transition: transform .3s ease-in-out;
+
+  &.open { 
+    transform: rotate(0deg);
+    -ms-transform: rotate(0deg);   
+    -webkit-transform: rotate(0deg);
+  }
+
+  &.closed {
+    transform: rotate(180deg); 
+    -ms-transform: rotate(180deg);   
+    -webkit-transform: rotate(180deg);   
+  }
+
+}
+
+/* Provide space for leading accordion icon */
+.ui.accordion > .title > .icon:first-child {
+  vertical-align: middle;
+  margin: 0px 5px;
+}
+
+/* Title must be relative so arrow can be successfully absolutely positioned */
+.ui.accordion > .title {
+  position: relative;        
+}

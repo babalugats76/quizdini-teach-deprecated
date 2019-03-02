@@ -36968,6 +36968,42 @@ a.inverted.ui.card:hover,
 /*******************************
         User Overrides
 *******************************/
+
+/* Position accordion arrow to right; leave a little space */
+
+.ui.accordion > .title > .icon.arrow {
+  position: absolute;
+  right: 10px;
+  -webkit-transition: -webkit-transform 0.3s ease-in-out;
+  transition: -webkit-transform 0.3s ease-in-out;
+  transition: transform 0.3s ease-in-out;
+  transition: transform 0.3s ease-in-out, -webkit-transform 0.3s ease-in-out;
+}
+
+.ui.accordion > .title > .icon.arrow.open {
+  transform: rotate(0deg);
+  -ms-transform: rotate(0deg);
+  -webkit-transform: rotate(0deg);
+}
+
+.ui.accordion > .title > .icon.arrow.closed {
+  transform: rotate(180deg);
+  -ms-transform: rotate(180deg);
+  -webkit-transform: rotate(180deg);
+}
+
+/* Provide space for leading accordion icon */
+
+.ui.accordion > .title > .icon:first-child {
+  vertical-align: middle;
+  margin: 0px 5px;
+}
+
+/* Title must be relative so arrow can be successfully absolutely positioned */
+
+.ui.accordion > .title {
+  position: relative;
+}
 /*!
  * # Semantic UI 2.7.2 - Calendar
  * http://github.com/semantic-org/semantic-ui/

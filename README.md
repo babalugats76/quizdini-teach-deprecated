@@ -4,19 +4,33 @@ This project is the teacher front-end for Quizdini 2.0
 
 * General Cleanup
    * Migrate components to `components` folder
+   * **Move defunct components to `retire` folder** 
+* Document and add `PropTypes` to the following Components
+   * Button
+   * FixedMenu
+   * FormatToolbar
+   * Header
+   * Icon
+   * InputDropown
+   * InputFeedback
+   * Layout
+   * Main
+   * MatchBulkEditor
+   * MatchEditor
+   * MatchForm
+   * MatchGame
 * Add addition webfonts, including those related to logo's font
 * Create custom TextArea component
-   * Convert instructions to use this
+   * Convert instructions to use
 * Buttons
-   * Create custom Button component that wraps semantic
-      * Loading?
-   * Create button group for Match Form
-      * Save
-      * Delete
-      * Cancel
+   * Continue to refine custom Button component
+   * Create button group atop MatchForm
+   * Create additional buttons 
+     * Delete
+     * Cancel
 * Work on validation schema, etc. for MatchForm
-* Work on adding validation message/notification component
-* Investigate onPointerDown and alternatives that support mobile events, in React for use with the Toolbar Buttons
+* Work on InputFeedback validation message/notification component
+  * Incorporate into custom Input* components
 * Work on semantic ui layout
   * Style fixed menu
   * Footer
@@ -25,31 +39,27 @@ This project is the teacher front-end for Quizdini 2.0
 * MatchForm
    * Validation
    * Form submission
-   * Tab stops
+   * Continue to refine Tab stops
 * Mock up Login Component / Page
 * Investigate redirects, etc.
 * Icon System
-   * Investigate taking `fill` as argument
+   * Update CSS as appropriate with `fill`
 * Format Toolbar
    * Convert to use SUI's `IconGroup`
    * Consider renaming
    * Find out what is causing `title` attribute on icon buttons to have spaces and be uppercase, should be all lowercase with dashes for spaces
+   * Investigate onPointerDown and alternatives that support mobile events, in React for use with the Toolbar Buttons
 * Match Editor
    * Add Control/Cmd keys for clear formatting and insert pi
    * Trouble shoot problem with clear formatting button; currently posting page
-* Figure out how to represent matches on the screen, e.g., table, cards, etc.
-* Accordion Component
-  * Comment
-  * ~~Refine/shorten accordian toggle~~
-  * Add Icon functionality
-* Create table component
-* Add table component to MatchForm for matches
+* Figure out how to represent matches on the screen
+   * Create basic table component for Matches as POC
+   * Move `MatchList` to `retired` once anything has been put in its place
 * Create Floating Label Component
-  * Refine floating label style; use dynamic inline style to substitute yellow, red, grey, but with opacity
-  * Consider using a constants file with colors?
+  * Refine floating label style; add `className` dynamically
+  * Add appropriate CSS definitions
   * Reexamine whether floating label should be pulled out into its own Component
 * Investigate controlling line-height, especially in input field; some fonts will require adjustment and we need to figure out where to put that style override
-
 
 ## React Router
 

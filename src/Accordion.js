@@ -10,24 +10,24 @@ import PropTypes from 'prop-types';
  * Custom inline SVG icons are used in lieu of Semantic's
  */
 
-export default class MyAccordion extends Component {
+class MyAccordion extends Component {
 
   state = {
     open: this.props.openOnStart,
-    errors: this.props.childErrors
+    forceOpen: this.props.forceOpen
   }
 
   /**
-  * Check for change in childErrors prop
-  * If child components are in error, force accordion open
+  * Check for change in forceOpen prop
+  * If true, force accordion open
   */
   componentDidUpdate(oldProps) {
     const newProps = this.props
-    if (oldProps.childErrors !== newProps.childErrors) {
+    if (oldProps.forceOpen !== newProps.forceOpen) {
       this.setState((state) => {
         return {
-          errors: !!newProps.childErrors,
-          open: state.open || !!newProps.childErrors
+          forceOpen: !!newProps.forceOpen,
+          open: state.open || !!newProps.forceOpen
         }
       });
     }
@@ -40,7 +40,7 @@ export default class MyAccordion extends Component {
    */
   handleClick = (e, titleProps) => {
     this.setState((state, props) => {
-      if (state.errors) return { open: true }
+      if (state.forceOpen) return { open: true }
       return { open: !state.open }
     });
   }
@@ -77,14 +77,15 @@ export default class MyAccordion extends Component {
 
 MyAccordion.propTypes = {
   openOnStart: PropTypes.bool.isRequired,
-  childErrors: PropTypes.bool.isRequired,
+  forceOpen: PropTypes.bool.isRequired,
   children: PropTypes.node
 };
 
 MyAccordion.defaultProps = {
   openOnStart: false,
-  childErrors: false
+  forceOpen: false
 };
 
 /* To get around namespace conflicts */
+export default MyAccordion;
 export { MyAccordion as Accordion };

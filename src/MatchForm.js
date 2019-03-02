@@ -24,7 +24,7 @@ const MatchSchema = Yup.object().shape(
       .max(60, 'Instructions are too long'),
     itemsPerBoard: Yup.number()
       .min(4, 'You must have at least 4 items per board')
-      .max(9, 'You may have no more than 9 items per board'),
+      .max(5, 'You may have no more than 5 items per board'),
     duration: Yup.number()
       .min(60, 'Games must last at 1 minute long')
       .max(300, 'Game may last no more than 5 minutes')
@@ -97,7 +97,7 @@ class MatchForm extends Component {
             />
             <Accordion
               openOnStart={false}
-              childErrors={(!!errors.itemsPerBoard) || (!!errors.duration)} >
+              forceOpen={(!!errors.itemsPerBoard) || (!!errors.duration)} >
               <Segment basic>
                 <Grid columns={2} stackable textAlign='center'>
                   <Grid.Row verticalAlign='middle'>

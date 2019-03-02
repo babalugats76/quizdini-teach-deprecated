@@ -1,6 +1,10 @@
 import React from 'react';
-
 import classNames from 'classnames';
+import PropTypes from 'prop-types';
+
+/**
+ * SVG path content for each icon
+ */
 
 const icons = {
   underline: 'M22 2h4v13c0 4.971-4.477 9-10 9s-10-4.029-10-9v-13h4v13c0 1.255 0.57 2.459 1.605 3.391 1.153 1.038 2.714 1.609 4.395 1.609s3.242-0.572 4.395-1.609c1.035-0.931 1.605-2.136 1.605-3.391v-13zM6 26h20v4h-20z',
@@ -16,7 +20,15 @@ const icons = {
   arrow: 'M9.313 13.313h13.375l-6.688 6.688z'
 };
 
-const Icon = ({ icon, size = '20', classes, ...props }) => {
+/**
+ * Dynamically generates inline SVG for icons 
+ * 
+ * SVG content from icomoon.io
+ * Every icon will have a class bearing its name
+ * Icon paths are listed above
+ */
+
+const Icon = ({ icon, size, classes }) => {
 
   const iconClass = classNames('icon', `${icon}`, classes);
 
@@ -31,5 +43,18 @@ const Icon = ({ icon, size = '20', classes, ...props }) => {
     </svg>
   );
 }
+
+Icon.propTypes = {
+  icon: PropTypes.string.isRequired,
+  size: PropTypes.number.isRequired,
+  classes: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.object
+  ])
+};
+
+Icon.defaultProps = {
+  size: 20
+};
 
 export default Icon;

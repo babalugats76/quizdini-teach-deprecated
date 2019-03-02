@@ -32,7 +32,7 @@ class MatchGame extends Component {
       matches: [],
       matchText: '',
       config: {
-        itemsPerBoard: 4,
+        itemsPerBoard: 5,
         duration: 180
       }
     };

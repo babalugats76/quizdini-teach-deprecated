@@ -10,7 +10,6 @@ This project is the teacher front-end for Quizdini 2.0
    * FixedMenu
    * FormatToolbar
    * Header
-   * Icon
    * InputDropown
    * InputFeedback
    * Layout

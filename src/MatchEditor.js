@@ -187,27 +187,38 @@ class MatchEditor extends Component {
    */
   onKeyDown = (event, editor, next) => {
 
-    let mark;
     const isUnderline = isKeyHotkey('mod+u');
     const isCode = isKeyHotkey('mod+`');
     const isSuperscript = isKeyHotkey('mod+ArrowUp');
     const isSubscript = isKeyHotkey('mod+ArrowDown');
+    const isClearFormatting = isKeyHotkey('mod+space');
+    const isPi = (event) => {
+      return isKeyHotkey('alt+p', event) 
+          || isKeyHotkey('opt+p', event);
+    }
 
     if (isUnderline(event)) {
-      mark = 'underline';
+      event.preventDefault();
+      editor.toggleMark('underline');
     } else if (isCode(event)) {
-      mark = 'code';
+      event.preventDefault();
+      editor.toggleMark('code');
     } else if (isSuperscript(event)) {
-      mark = 'superscript';
+      event.preventDefault();
+      editor.toggleMark('superscript');
     } else if (isSubscript(event)) {
-      mark = 'subscript';
+      event.preventDefault();
+      editor.toggleMark('subscript');
+    } else if (isClearFormatting(event)) {
+      event.preventDefault();
+      this.onClearFormatting(event);
+    } else if (isPi(event)) {
+      event.preventDefault();
+      this.onClickCharacter(event, 'pi'); 
     } else {
       return next();
     }
 
-    console.log('On key down!');
-    event.preventDefault();
-    editor.toggleMark(mark);
   }
 
   /**
@@ -307,7 +318,7 @@ class MatchEditor extends Component {
     {
       icon: 'clear',
       tooltip: 'Clear Formatting',
-      onClick: (event) => (event) => this.onClearFormatting(event)
+      onClick: (event) => this.onClearFormatting(event)
     },
     {
       icon: 'pi',

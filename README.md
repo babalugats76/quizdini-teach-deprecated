@@ -52,8 +52,6 @@ This project is the teacher front-end for Quizdini 2.0
    * Find out what is causing `title` attribute on icon buttons to have spaces and be uppercase, should be all lowercase with dashes for spaces
    * Investigate onPointerDown and alternatives that support mobile events, in React for use with the Toolbar Buttons
 * Match Editor
-   * Add Control/Cmd keys for clear formatting and insert pi
-   * Trouble shoot problem with clear formatting button; currently posting page
 * Figure out how to represent matches on the screen
    * Create basic table component for Matches as POC
    * Move `MatchList` to `retired` once anything has been put in its place

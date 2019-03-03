@@ -76,6 +76,7 @@ class MatchForm extends Component {
               id="term"
               initialValue='<p>Hello World!</p>'
               placeholder="Enter term..." />
+            <Divider />
             <MatchEditor
               id="definition"
               initialValue='<p>Deez Nutz</p>'

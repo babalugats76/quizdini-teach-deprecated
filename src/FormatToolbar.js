@@ -11,13 +11,13 @@ const FormatToolbar = ({ buttons, ...props }) => {
   const btns = buttons.map((btn, idx) => {
     const { icon, tooltip, onClick, ...props } = btn;
     return (
-      <button className="btn-toolbar" key={idx} icon title={tooltip} onClick={onClick} {...props}>
+      <button className="button-toolbar" key={idx} title={tooltip} onClick={onClick} {...props}>
         <Icon icon={icon} size={16} {...props} />
       </button>);
   });
 
   return (
-    <div class="format-toolbar">{btns}</div>
+    <div className="format-toolbar">{btns}</div>
   );
 
 }

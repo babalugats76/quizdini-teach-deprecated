@@ -5,7 +5,7 @@ import InputText from './InputText';
 import InputDropdown from './InputDropdown';
 import MatchEditor from './MatchEditor';
 import MatchBulkEditor from './MatchBulkEditor';
-import MatchList from './MatchList';
+import MatchTable from './MatchTable'
 import { withFormik } from 'formik';
 import DisplayFormikState from './FormikHelper';
 import * as Yup from 'yup';
@@ -74,16 +74,18 @@ class MatchForm extends Component {
           <Tab.Pane>
             <MatchEditor
               id="term"
-              initialValue='<p>Hello World!</p>'
-              placeholder="Enter term..." />
+              value={values.term}
+              placeholder="Enter term..." 
+              setFieldValue={setFieldValue}
+              />
             <Divider />
             <MatchEditor
               id="definition"
-              initialValue='<p>Deez Nutz</p>'
-              placeholder="Enter definition..." />
-            <MatchList
-              matches={values.matches}
-            /></Tab.Pane>
+              value={values.definition}
+              placeholder="Enter definition..." 
+              setFieldValue={setFieldValue}
+              />
+          </Tab.Pane>
       },
       {
         menuItem: 'Expert Mode', render: () =>
@@ -184,12 +186,12 @@ class MatchForm extends Component {
               renderActiveOnly={true} />
           </Grid.Column>
           <Grid.Column computer={8} mobile={16} tablet={16}>
-            <div>Matches will go here (in a table?)</div>
+            <MatchTable
+              id="table-match"
+              matches={values.matches}
+            />
           </Grid.Column>
         </Grid>
-        <MatchList
-          matches={values.matches}
-        />
         <DisplayFormikState {...this.props} />
       </Form >
     );
@@ -201,6 +203,8 @@ export default withFormik({
   validateOnChange: false,
   validateOnBlur: false,
   mapPropsToValues: ({ match }) => ({
+    term: '',
+    definition: '',
     title: match.title,
     instructions: match.instructions,
     itemsPerBoard: match.config.itemsPerBoard,

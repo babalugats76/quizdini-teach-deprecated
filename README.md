@@ -49,9 +49,9 @@ This project is the teacher front-end for Quizdini 2.0
 * Format Toolbar
    * Convert to use SUI's `IconGroup`
    * Consider renaming
-   * Find out what is causing `title` attribute on icon buttons to have spaces and be uppercase, should be all lowercase with dashes for spaces
    * Investigate onPointerDown and alternatives that support mobile events, in React for use with the Toolbar Buttons
 * Match Editor
+   * Figure out how to integrate [DOMPurify](https://www.npmjs.com/package/dompurify) or [html-react-parser](https://www.npmjs.com/package/html-react-parser)  
 * Figure out how to represent matches on the screen
    * Create basic table component for Matches as POC
    * Move `MatchList` to `retired` once anything has been put in its place

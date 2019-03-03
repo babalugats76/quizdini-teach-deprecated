@@ -3,13 +3,13 @@ import MatchForm from './MatchForm';
 
 class MatchGame extends Component {
 
-  state = {
+  /*state = {
     placeholder: "term, definition",
     text: '',
     json: '',
     terms: [],
     definitions: []
-  }
+  }*/
 
   componentDidMount() {
     //setTimeout(() => { this.setState({ text: '', json: ''}); }, 1000);

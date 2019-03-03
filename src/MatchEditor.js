@@ -109,19 +109,10 @@ const serializer = new Html({ rules: rules });
 
 class MatchEditor extends Component {
 
-  /**
-   * Initialize component.
-   * Set editor's initial state.
-   * 
-   * @param {Object} props 
-   */
-  constructor(props) {
-    super(props);
-    const { initialValue } = props;
-    this.state = {
-      value: serializer.deserialize(initialValue || ''),
-      output: 'Output will go here...'
-    };
+  /* Initialize component state */ 
+
+  state = {
+    value: serializer.deserialize(this.props.value || ''),
   }
 
   /* Used to reference instance of Editor component */
@@ -148,9 +139,11 @@ class MatchEditor extends Component {
   onChange = ({ value }) => {
     this.setState((state, props) => {
       const serialized = serializer.serialize(state.value);
-      console.log('Serializing...', serialized);
-      return { value, output: serialized };
+      this.props.setFieldValue(this.props.id, serialized);
+      console.log('Serialized', serialized);
+      return { value };
     });
+
   }
 
   /**
@@ -342,9 +335,7 @@ class MatchEditor extends Component {
           onKeyDown={this.onKeyDown}
           renderMark={this.renderMark}
         />
-        { /** <pre>
-          {this.state.output}
-        </pre> **/ }
+        <pre>{this.props.value}</pre>
         <FormatToolbar buttons={buttons} />
         </div>
     );

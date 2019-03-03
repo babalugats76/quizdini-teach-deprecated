@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+// eslint-disable-next-line
 import Label from './retire/Label';
 
 class MatchBulkEditor extends Component {
@@ -68,7 +69,7 @@ class MatchBulkEditor extends Component {
 
     return (
       <div className="form-group">
-        <Label htmlFor={id}>{label}</Label>
+        { /*<Label htmlFor={id}>{label}</Label> */ }
         <textarea
           id={id}
           placeholder={placeholder.split('\\n').join('\n')}

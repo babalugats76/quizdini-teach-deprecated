@@ -11,7 +11,7 @@ import DisplayFormikState from './FormikHelper';
 import * as Yup from 'yup';
 
 // eslint-disable-next-line
-import { Grid, SegmentGroup, Divider, Segment, Form } from 'semantic-ui-react';
+import { Grid, Tab, Divider, Segment, Form } from 'semantic-ui-react';
 import { Accordion } from './Accordion';
 
 const MatchSchema = Yup.object().shape(
@@ -51,10 +51,53 @@ const durationOptions = [
 
 class MatchForm extends Component {
 
+  state = {
+    activeEditorIndex: 0
+  }
+
+  handleTabChange = (event, props) => {
+    const { activeIndex } = props;
+    this.setState((state, props) => {
+      return { activeEditorIndex: activeIndex }
+    })
+  }
+
   render() {
 
     // eslint-disable-next-line
     const { values, touched, errors, handleChange, isSubmitting, handleSubmit, setFieldValue } = this.props;
+    const { activeEditorIndex } = this.state;
+
+    const editorPanes = [
+      {
+        menuItem: 'Matches', render: () =>
+          <Tab.Pane>
+            <MatchEditor
+              id="term"
+              initialValue='<p>Hello World!</p>'
+              placeholder="Enter term..." />
+            <MatchEditor
+              id="definition"
+              initialValue='<p>Deez Nutz</p>'
+              placeholder="Enter definition..." />
+            <MatchList
+              matches={values.matches}
+            /></Tab.Pane>
+      },
+      {
+        menuItem: 'Expert Mode', render: () =>
+          <Tab.Pane>
+            <MatchBulkEditor
+              id="matchText"
+              rows={10}
+              cols={30}
+              label="Knowledge Bank"
+              placeholder="Konrad Zuse, German Computer Inventor\nShawn Fanning, Created Napster"
+              value={values.matchText}
+              setFieldValue={setFieldValue}
+            /></Tab.Pane>
+      },
+    ];
 
     return (
       <Form onSubmit={handleSubmit}>
@@ -131,29 +174,18 @@ class MatchForm extends Component {
                   </Grid.Row>
                 </Grid>
               </Segment>
-            </ Accordion>
+            </Accordion>
+            <Divider hidden />
+            <Tab
+              panes={editorPanes}
+              activeIndex={activeEditorIndex}
+              onTabChange={(event, props) => this.handleTabChange(event, props)}
+              renderActiveOnly={true} />
           </Grid.Column>
           <Grid.Column computer={8} mobile={16} tablet={16}>
-
+            <div>Matches will go here (in a table?)</div>
           </Grid.Column>
         </Grid>
-        <MatchBulkEditor
-          id="matchText"
-          rows={10}
-          cols={30}
-          label="Knowledge Bank"
-          placeholder="Konrad Zuse, German Computer Inventor\nShawn Fanning, Created Napster"
-          value={values.matchText}
-          setFieldValue={setFieldValue}
-        />
-        <MatchEditor
-          id="term"
-          initialValue='<p>Hello World!</p>'
-          placeholder="Enter term..." />
-        <MatchEditor
-          id="definition"
-          initialValue='<p>Deez Nutz</p>'
-          placeholder="Enter definition..." />
         <MatchList
           matches={values.matches}
         />

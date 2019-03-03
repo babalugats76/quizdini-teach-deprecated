@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { Editor } from 'slate-react';
 import { isKeyHotkey } from 'is-hotkey';
 import Html from 'slate-html-serializer'
+// eslint-disable-next-line
+import { Segment, Label } from 'semantic-ui-react'
 import FormatToolbar from './FormatToolbar';
 
 const schema = {
@@ -327,8 +329,7 @@ class MatchEditor extends Component {
     }];
 
     return (
-      <div className="rich-text-editor-container">
-        <FormatToolbar buttons={buttons} />
+      <div className='match-editor'>
         <Editor
           id={id}
           schema={schema}
@@ -341,10 +342,11 @@ class MatchEditor extends Component {
           onKeyDown={this.onKeyDown}
           renderMark={this.renderMark}
         />
-        <pre>
+        { /** <pre>
           {this.state.output}
-        </pre>
-      </div>
+        </pre> **/ }
+        <FormatToolbar buttons={buttons} />
+        </div>
     );
   }
 }

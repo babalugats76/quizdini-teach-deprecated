@@ -61,11 +61,11 @@ class MyAccordion extends Component {
           onClick={(event, titleProps) => this.handleClick(event, titleProps)}>
           <Icon 
             icon='cog' 
-            size='20' />
+            size={20} />
           Game Options
           <Icon
             icon='arrow'
-            size='20'
+            size={20}
             classes={open ? "open" : "closed"} />
         </Accordion.Title>
         <Accordion.Content active={open}>{children}</Accordion.Content>

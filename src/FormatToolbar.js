@@ -1,4 +1,5 @@
 import React from 'react';
+// eslint-disable-next-line
 import { Button } from 'semantic-ui-react';
 import Icon from './Icon';
 // eslint-disable-next-line
@@ -10,13 +11,13 @@ const FormatToolbar = ({ buttons, ...props }) => {
   const btns = buttons.map((btn, idx) => {
     const { icon, tooltip, onClick, ...props } = btn;
     return (
-      <Button key={idx} icon title={tooltip} onClick={onClick} {...props}>
-        <Icon icon={icon} {...props} />
-      </Button>);
+      <button className="btn-toolbar" key={idx} icon title={tooltip} onClick={onClick} {...props}>
+        <Icon icon={icon} size={16} {...props} />
+      </button>);
   });
 
   return (
-    <Button.Group>{btns}</Button.Group>
+    <div class="format-toolbar">{btns}</div>
   );
 
 }

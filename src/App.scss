@@ -28,39 +28,75 @@ textarea#matchText {
 
 .rich-text-editor {
   font-family: 'Roboto', sans-serif;
+  background-color: rgba(128,128,128,.01);
   color: #000000;
-  font-size: 1.6em;
-  line-height: 1.4;
+  font-size: 1.3rem;
+  line-height: 1.5rem;
+  border: 1px solid #ddd;
+  border-radius: 0.26666667rem;
+  padding: 1rem 1rem 2.5rem;
+  margin-bottom: 1rem;
   outline: none;
+  width: 100;
+  display: block;
+  height: auto;
 }
 
-.format-toolbar {
+/*.format-toolbar {
   display: flex;
   position: relative;
   padding: 1px 18px 17px;
   margin: 0px -20px 20px;
   border-bottom: 2px solid rgb(238, 238, 238);
-}
+}*/
 
-.format-toolbar button {
-  background-color: transparent;
-  padding: 3px 6px;
-  border: none;
-  color: #4e4e4e;
-  margin-right: 3px;
-  border-radius: 3px;
-  font-size: 1rem;
-}
 
-.format-toolbar button:hover {
-  cursor: pointer;
-  background-color: #eae8e8;
-}
-
-.rich-text-editor-container {
+/*.rich-text-editor-container {
   display: inline-block;
   max-width: calc(50% - 20px);
   margin: 20px 10px;
   padding: 20px;
   background: white;
+}*/
+
+.match-editor {
+   position: relative;
+}
+
+.format-toolbar {
+  position: absolute;
+  bottom: 5px;
+  right: 5px;
+} 
+
+.format-toolbar button {
+  background-color: white;
+  padding: 3px 6px;
+  color: #4e4e4e;
+  border: 1px solid rgba(0,0,0,.15);
+  margin-right: 3px;
+  border-radius: 3px;
+  font-size: 1rem;
+}
+
+.format-toolbar button svg {
+  fill: #d5d5d5;
+}
+
+.format-toolbar button:hover, .format-toolbar button:focus {
+  cursor: pointer;
+  background-color: red;
+  border-color: #222222;
+}
+
+.format-toolbar button:hover svg {
+  fill: #222222;
+}
+
+.btn-toolbar {  
+  background-color: transparent;
+  background-repeat:no-repeat;
+  border: none;
+  cursor:pointer;
+  overflow: hidden;        
 }

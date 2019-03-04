@@ -4,7 +4,7 @@ import Icon from './Icon';
 
 const MyButton = ({ children, icon, ...props }) => {
   return (
-    <Button icon labelPosition='left' {...props}>
+    <Button icon labelPosition='left' {...props} >
       Save
       <Icon icon={icon} size={15} />
     </Button>);

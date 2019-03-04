@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
+import { withFormik } from 'formik';
+import * as Yup from 'yup';
 
 import Button from './Button';
 import InputText from './InputText';
 import InputDropdown from './InputDropdown';
-import MatchEditor from './MatchEditor';
+import MatchEditorSubform from './MatchEditorSubform';
 import MatchBulkEditor from './MatchBulkEditor';
-import MatchTable from './MatchTable'
-import { withFormik } from 'formik';
+import MatchTable from './MatchTable';
 import DisplayFormikState from './FormikHelper';
-import * as Yup from 'yup';
 
 // eslint-disable-next-line
 import { Grid, Tab, Divider, Segment, Form } from 'semantic-ui-react';
@@ -62,6 +62,16 @@ class MatchForm extends Component {
     })
   }
 
+  handleEditorSubmit = (payload, setSubmitting) => {
+    console.log('Match Editor submitting...wait 1 sec...');
+    console.log('Payload', payload);
+    const { matches} = this.props.values;
+    const { setFieldValue } = this.props;
+    const updatedMatches = [{ term: payload.term , definition: payload.definition }, ...matches];
+    setFieldValue('matches',updatedMatches);
+    setTimeout(() => { console.log(payload); setSubmitting(false); }, 1000);
+  }
+
   render() {
 
     // eslint-disable-next-line
@@ -70,21 +80,10 @@ class MatchForm extends Component {
 
     const editorPanes = [
       {
-        menuItem: 'Matches', render: () =>
+        menuItem: 'Knowledge Bank', render: () =>
           <Tab.Pane>
-            <MatchEditor
-              id="term"
-              value={values.term}
-              placeholder="Enter term..." 
-              setFieldValue={setFieldValue}
-              />
-            <Divider />
-            <MatchEditor
-              id="definition"
-              value={values.definition}
-              placeholder="Enter definition..." 
-              setFieldValue={setFieldValue}
-              />
+            <MatchEditorSubform
+              onSubmit={(payload, setSubmitting) => this.handleEditorSubmit(payload, setSubmitting)} />
           </Tab.Pane>
       },
       {
@@ -105,7 +104,7 @@ class MatchForm extends Component {
     return (
       <Form onSubmit={handleSubmit}>
         <Button
-          secondary
+          primary
           loading={isSubmitting}
           active
           title="Save Game"
@@ -114,8 +113,8 @@ class MatchForm extends Component {
           type="submit"
           tabIndex={3}
           disabled={isSubmitting}>
-          Save
-          </Button>
+        Save
+        </Button>
         <Divider hidden />
         <Grid columns={2} stackable>
           <Grid.Column computer={8} mobile={16} tablet={16}>
@@ -152,6 +151,7 @@ class MatchForm extends Component {
                         id="itemsPerBoard"
                         label="Game Tiles"
                         icon="tiles"
+                        tabIndex={-1}
                         selection
                         compact
                         options={itemsPerBoardOptions}
@@ -166,6 +166,7 @@ class MatchForm extends Component {
                         id="duration"
                         label="Seconds"
                         icon="timer"
+                        tabIndex={-1}
                         selection
                         compact
                         options={durationOptions}
@@ -203,8 +204,6 @@ export default withFormik({
   validateOnChange: false,
   validateOnBlur: false,
   mapPropsToValues: ({ match }) => ({
-    term: '',
-    definition: '',
     title: match.title,
     instructions: match.instructions,
     itemsPerBoard: match.config.itemsPerBoard,

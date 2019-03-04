@@ -20,7 +20,7 @@ class MatchGame extends Component {
   }
 
   handleSubmit = (payload, setSubmitting) => {
-    console.log('submitting...wait 10 secs...');
+    console.log('Match form submitting...wait 10 secs...');
     setTimeout(() => { console.log(payload); setSubmitting(false); }, 10000);
   }
 

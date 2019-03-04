@@ -10,18 +10,21 @@ import PropTypes from 'prop-types';
 
 // eslint-disable-next-line
 const createMarkup = (html) => {
-  return {__html: html};
+  return {__html: '<strong>Hello World</strong>'};
 }
 
-        /*<Table.Cell>dangerouslySetInnerHTML={createMarkup(val.term)}</Table.Cell>
-        <Table.Cell>dangerouslySetInnerHTML={createMarkup(val.definition)}</Table.Cell>*/
+// eslint-disable-next-line
+const renderCell = (value) => (<span dangerouslySetInnerHTML={ {__html: value} } />)
+
+        /*<Table.Cell>{val.term}</Table.Cell>
+        <Table.Cell>{val.definition}</Table.Cell>*/
 
 const renderRows = (matches) => {
   return matches.map((val, idx) => {
     return (
-      <Table.Row key={idx}>
-        <Table.Cell>{val.term}</Table.Cell>
-        <Table.Cell>{val.definition}</Table.Cell>
+      <Table.Row key={val.term}>
+        <Table.Cell>{renderCell(val.term)}</Table.Cell>
+        <Table.Cell>{renderCell(val.definition)}</Table.Cell>
       </Table.Row>
     );
   });

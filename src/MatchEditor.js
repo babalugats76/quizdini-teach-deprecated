@@ -109,7 +109,7 @@ const serializer = new Html({ rules: rules });
 
 class MatchEditor extends Component {
 
-  /* Initialize component state */ 
+  /* Initialize component state */
 
   state = {
     value: serializer.deserialize(this.props.value || ''),
@@ -139,11 +139,9 @@ class MatchEditor extends Component {
   onChange = ({ value }) => {
     this.setState((state, props) => {
       const serialized = serializer.serialize(state.value);
-      this.props.setFieldValue(this.props.id, serialized);
-      console.log('Serialized', serialized);
+      props.setFieldValue(props.id, serialized);
       return { value };
     });
-
   }
 
   /**
@@ -188,8 +186,8 @@ class MatchEditor extends Component {
     const isSubscript = isKeyHotkey('mod+ArrowDown');
     const isClearFormatting = isKeyHotkey('mod+space');
     const isPi = (event) => {
-      return isKeyHotkey('alt+p', event) 
-          || isKeyHotkey('opt+p', event);
+      return isKeyHotkey('alt+p', event)
+        || isKeyHotkey('opt+p', event);
     }
 
     if (isUnderline(event)) {
@@ -209,7 +207,7 @@ class MatchEditor extends Component {
       this.onClearFormatting(event);
     } else if (isPi(event)) {
       event.preventDefault();
-      this.onClickCharacter(event, 'pi'); 
+      this.onClickCharacter(event, 'pi');
     } else {
       return next();
     }
@@ -337,7 +335,7 @@ class MatchEditor extends Component {
         />
         <pre>{this.props.value}</pre>
         <FormatToolbar buttons={buttons} />
-        </div>
+      </div>
     );
   }
 }

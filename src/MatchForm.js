@@ -5,7 +5,7 @@ import * as Yup from 'yup';
 import Button from './Button';
 import InputText from './InputText';
 import InputDropdown from './InputDropdown';
-import MatchEditorSubform from './MatchEditorSubform';
+import MatchBank from './MatchBank';
 import MatchBulkEditor from './MatchBulkEditor';
 import MatchTable from './MatchTable';
 import DisplayFormikState from './FormikHelper';
@@ -13,6 +13,8 @@ import DisplayFormikState from './FormikHelper';
 // eslint-disable-next-line
 import { Grid, Tab, Divider, Segment, Form } from 'semantic-ui-react';
 import { Accordion } from './Accordion';
+
+
 
 const MatchSchema = Yup.object().shape(
   {
@@ -62,14 +64,14 @@ class MatchForm extends Component {
     })
   }
 
-  handleEditorSubmit = (payload, setSubmitting) => {
-    console.log('Match Editor submitting...wait 1 sec...');
-    console.log('Payload', payload);
-    const { matches} = this.props.values;
+  handleNewMatch = ({ termHtml, definitionHtml }) => {
+    console.log('Adding new match');
+    const { matches } = this.props.values;
     const { setFieldValue } = this.props;
-    const updatedMatches = [{ term: payload.term , definition: payload.definition }, ...matches];
-    setFieldValue('matches',updatedMatches);
-    setTimeout(() => { console.log(payload); setSubmitting(false); }, 1000);
+    const updatedMatches = [{ term: termHtml, definition: definitionHtml }, ...matches];
+    setFieldValue('matches', updatedMatches);
+    // Used to slow down for more detailed testing
+    //setTimeout(() => { console.log(values); setSubmitting(false); }, 1000);
   }
 
   render() {
@@ -82,8 +84,9 @@ class MatchForm extends Component {
       {
         menuItem: 'Knowledge Bank', render: () =>
           <Tab.Pane>
-            <MatchEditorSubform
-              onSubmit={(payload, setSubmitting) => this.handleEditorSubmit(payload, setSubmitting)} />
+            <MatchBank 
+               matches={values.matches}
+               onNewMatch={this.handleNewMatch} />
           </Tab.Pane>
       },
       {
@@ -212,10 +215,8 @@ export default withFormik({
     matches: match.matches
   }),
   validationSchema: MatchSchema,
-  handleSubmit: (payload, otherProps) => {
-    // eslint-disable-next-line
-    const { onSubmit } = otherProps.props;
-    const { setSubmitting } = otherProps;
-    onSubmit(payload, setSubmitting);
+  handleSubmit: (values, formikBag) => {
+    const { onSubmit } = formikBag.props;
+    onSubmit(values, formikBag);
   },
 })(MatchForm);

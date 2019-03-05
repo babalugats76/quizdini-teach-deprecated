@@ -19,9 +19,10 @@ class MatchGame extends Component {
 
   }
 
-  handleSubmit = (payload, setSubmitting) => {
+  handleMatchFormSubmit = (values, formikBag) => {
     console.log('Match form submitting...wait 10 secs...');
-    setTimeout(() => { console.log(payload); setSubmitting(false); }, 10000);
+    const { setSubmitting } = formikBag;
+    setTimeout(() => { console.log(values); setSubmitting(false); }, 10000);
   }
 
   render() {
@@ -51,7 +52,7 @@ class MatchGame extends Component {
     return (
         <MatchForm
           match={match}
-          onSubmit={(payload, setSubmitting ) => this.handleSubmit(payload, setSubmitting)}
+          onSubmit={(values, setSubmitting ) => this.handleMatchFormSubmit(values, setSubmitting)}
         />
     );
   }

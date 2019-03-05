@@ -1,9 +1,6 @@
 import React, { Component } from 'react';
 import { Editor } from 'slate-react';
 import { isKeyHotkey } from 'is-hotkey';
-import Html from 'slate-html-serializer'
-// eslint-disable-next-line
-import { Segment, Label } from 'semantic-ui-react'
 import FormatToolbar from './FormatToolbar';
 
 const schema = {
@@ -31,89 +28,7 @@ const schema = {
   }
 };
 
-const BLOCK_TAGS = {
-  p: 'paragraph'
-};
-
-// Add a dictionary of mark tags.
-const MARK_TAGS = {
-  u: 'underline',
-  code: 'code',
-  sup: 'superscript',
-  sub: 'subscript'
-};
-
-const rules = [
-  {
-    deserialize(el, next) {
-      if (BLOCK_TAGS[el.tagName.toLowerCase()] === 'p') {
-        return {
-          object: 'block',
-          type: 'paragraph',
-          data: {
-            className: el.getAttribute('class'),
-          },
-          nodes: next(el.childNodes),
-        }
-      }
-    },
-    // Add a serializing function property to our rule...
-    serialize(obj, children) {
-      if (obj.object === 'block') {
-        switch (obj.type) {
-          case 'paragraph':
-            /**
-             * In this case, do not wrap in <p>
-             * Return plain text, coupled with HTML mark for styling only
-             * (of the children)
-             */
-            return (<React.Fragment>{children}</React.Fragment>);
-          default:
-            break;
-        }
-      }
-    },
-  },
-  {
-    deserialize(el, next) {
-      /* whitelist of tags */
-      const type = MARK_TAGS[el.tagName.toLowerCase()];
-      if (type) {
-        return {
-          object: 'mark',
-          type: type,
-          nodes: next(el.childNodes),
-        }
-      }
-    },
-    serialize(obj, children) {
-      if (obj.object === 'mark') {
-        switch (obj.type) {
-          case 'underline':
-            return <u>{children}</u>;
-          case 'code':
-            return <code>{children}</code>;
-          case 'superscript':
-            return <sup>{children}</sup>;
-          case 'subscript':
-            return <sub>{children}</sub>;
-          default:
-            break;
-        }
-      }
-    }
-  }
-];
-
-const serializer = new Html({ rules: rules });
-
 class MatchEditor extends Component {
-
-  /* Initialize component state */
-
-  state = {
-    value: serializer.deserialize(this.props.value || ''),
-  }
 
   /* Used to reference instance of Editor component */
   ref = (editor) => {
@@ -129,19 +44,6 @@ class MatchEditor extends Component {
   hasMark = (type) => {
     const { value } = this.state;
     return value.activeMarks.some(mark => mark.type === type);
-  }
-
-  /**
-   * On change, save the new `value` to state
-   *
-   * @param {Editor} editor
-   */
-  onChange = ({ value }) => {
-    this.setState((state, props) => {
-      const serialized = serializer.serialize(state.value);
-      props.setFieldValue(props.id, serialized);
-      return { value };
-    });
   }
 
   /**
@@ -284,8 +186,7 @@ class MatchEditor extends Component {
 
   render() {
 
-    const { value } = this.state;
-    const { id, placeholder } = this.props;
+    const { id, placeholder, value, onChange } = this.props;
 
     /* Tooltip buttons the formatting toolbar will have */
     const buttons = [{
@@ -329,11 +230,10 @@ class MatchEditor extends Component {
           placeholder={placeholder}
           ref={this.ref}
           value={value}
-          onChange={this.onChange}
+          onChange={(value, key) => onChange(value, id)}
           onKeyDown={this.onKeyDown}
           renderMark={this.renderMark}
         />
-        <pre>{this.props.value}</pre>
         <FormatToolbar buttons={buttons} />
       </div>
     );

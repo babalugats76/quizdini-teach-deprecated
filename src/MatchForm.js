@@ -5,6 +5,7 @@ import * as Yup from 'yup';
 import Button from './Button';
 import InputText from './InputText';
 import InputDropdown from './InputDropdown';
+import HtmlSerializer from './HtmlSerializer'
 import MatchBank from './MatchBank';
 import MatchBulkEditor from './MatchBulkEditor';
 import MatchTable from './MatchTable';
@@ -14,9 +15,7 @@ import DisplayFormikState from './FormikHelper';
 import { Grid, Tab, Divider, Segment, Form } from 'semantic-ui-react';
 import { Accordion } from './Accordion';
 
-
-
-const MatchSchema = Yup.object().shape(
+const matchSchema = Yup.object().shape(
   {
     title: Yup.string()
       .min(2, 'Title is too short')
@@ -32,6 +31,19 @@ const MatchSchema = Yup.object().shape(
       .max(300, 'Game may last no more than 5 minutes')
   }
 );
+
+const newMatchSchema = (matches) => {
+  return Yup.object().shape({
+    term: Yup.string()
+      .required('Term is required')
+      .test('duplicate term', 'Duplicate term',
+        function (value) {
+          const passed = !matches.some((element) => { return element.term === value; });  // check for duplicate terms
+          return passed;
+        }
+      )
+  });
+}
 
 const itemsPerBoardOptions = [
   { text: '4', value: 4 },
@@ -64,13 +76,46 @@ class MatchForm extends Component {
     })
   }
 
-  handleNewMatch = ({ termHtml, definitionHtml }) => {
-    console.log('Adding new match');
-    const { matches } = this.props.values;
-    const { setFieldValue } = this.props;
-    const updatedMatches = [{ term: termHtml, definition: definitionHtml }, ...matches];
-    setFieldValue('matches', updatedMatches);
-    // Used to slow down for more detailed testing
+  /**
+   * On editor change, save the new `value` (Map) to state
+   *
+   * @param {Editor} editor
+   */
+  handleEditorChange = ({ value }, key) => {
+    console.log('handleEditorCalled....');
+    const { setFieldValue, setTouched } = this.props;
+    setFieldValue(key, value);
+    setTouched({[key]: true});
+  }
+
+  handleNewMatch = (event) => {
+    event.preventDefault();
+    const { term, definition, matches } = this.props.values;
+    const { setErrors, setFieldValue, setTouched } = this.props;
+    const termHtml = HtmlSerializer.serialize(term);
+    const definitionHtml = HtmlSerializer.serialize(definition);
+
+    setTouched('term', false);
+    setTouched('definition', false);
+
+    newMatchSchema(matches)
+      .validate({ term: termHtml }, { abortEarly: true })
+      .then(function(valid) { // If valid, merge and reset values
+        const updatedMatches = [
+          {
+            term: termHtml,
+            definition: definitionHtml
+          }, ...matches];
+        setFieldValue('matches', updatedMatches);
+        setFieldValue('term', HtmlSerializer.deserialize(''));
+        setFieldValue('definition', HtmlSerializer.deserialize(''));
+      })
+      .catch(function (errors) { // Extract and manually set form errors
+        console.log(errors);
+        const { path, message } = errors;
+        setErrors({ [path]: message });
+      });
+
     //setTimeout(() => { console.log(values); setSubmitting(false); }, 1000);
   }
 
@@ -80,13 +125,20 @@ class MatchForm extends Component {
     const { values, touched, errors, handleChange, isSubmitting, handleSubmit, setFieldValue } = this.props;
     const { activeEditorIndex } = this.state;
 
+    console.log('Term touched', touched.term);
+
     const editorPanes = [
       {
         menuItem: 'Knowledge Bank', render: () =>
           <Tab.Pane>
-            <MatchBank 
-               matches={values.matches}
-               onNewMatch={this.handleNewMatch} />
+            <MatchBank
+              matches={values.matches}
+              term={values.term}
+              isSubmitting={isSubmitting}
+              error={ (!touched.term) ? errors.term : null}
+              definition={values.definition}
+              onEditorChange={(value, key) => this.handleEditorChange(value, key)}
+              onNewMatch={this.handleNewMatch} />
           </Tab.Pane>
       },
       {
@@ -116,7 +168,7 @@ class MatchForm extends Component {
           type="submit"
           tabIndex={3}
           disabled={isSubmitting}>
-        Save
+          Save
         </Button>
         <Divider hidden />
         <Grid columns={2} stackable>
@@ -211,10 +263,12 @@ export default withFormik({
     instructions: match.instructions,
     itemsPerBoard: match.config.itemsPerBoard,
     duration: match.config.duration,
+    term: HtmlSerializer.deserialize(''),
+    definition: HtmlSerializer.deserialize(''),
     matchText: match.matchText,
     matches: match.matches
   }),
-  validationSchema: MatchSchema,
+  validationSchema: matchSchema,
   handleSubmit: (values, formikBag) => {
     const { onSubmit } = formikBag.props;
     onSubmit(values, formikBag);

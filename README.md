@@ -2,9 +2,73 @@ This project is the teacher front-end for Quizdini 2.0
 
 ## To-Do List
 
-* General Cleanup
-   * Migrate components to `components` folder
-   * **Move defunct components to `retire` folder** 
+* Match Authoring
+   * Components
+      * **`MatchGame`**
+         * Fetch from API e.g., start with call to static `.json`
+         * Save to API 
+      * **`MatchForm`**
+         * Add high-level form-level validation 
+            * Not enough matches
+         * Refine `matchSchema`
+         * Add term-based `removeMatch` function (for use by `MatchTable`)
+         * Create button group (if necessary)
+         * Create additional buttons 
+            * Delete
+            * Cancel
+            * Back?
+         * Refine `newMatchSchema` validation functionality, including `touched`, etc.
+         * Add `parseMatches` function; pass down to `MatchBulkEditor`
+           * Figure out how to integrate [DOMPurify](https://www.npmjs.com/package/dompurify) or [html-react-parser](https://www.npmjs.com/package/html-react-parser)    
+         * Add `explodeMatches` function; pass down to `MatchBulkEditor` 
+           * Incorporate into `handleNewMatch`, updating `matchText`
+         * Conditional `MatchBulkEditor` loading
+      * **`MatchBulkEditor`**
+         * Convert to stateless functional component
+         * Convert to use `MatchForms` Formik `onChange` function
+         * Remove use of `setFieldValue`
+         * Create load button 
+      * **`MatchBank`**
+         * Refine tab stops
+      * **`MatchTable`**
+         * Add Delete Button
+         * Pass `removeMatch` function down as prop 
+      * **`FormatToolbar`**
+         * Consider converting to use SUI's `IconGroup`
+         * Consider renaming
+         * Investigate using `onPointerDown` and alternatives that support mobile events
+      * **`Button`**
+         * Continue to refine as used by other components
+      * **`InputFeedback`**
+         * Figure out which Semantic component to wrap
+         * Develop and incorporate as appropriate into other `Input*` components
+      * **`InputText`**
+         * Reexamine whether floating label should be pulled out into its own Component
+         * Remove inline floating label style; add appropriate CSS definitions
+         * Add floating label `className` dynamically
+      * **`InputTextarea`**
+         * Create using `InputText` as guide
+         * Retrofit for instructions
+         * Convert instructions to use
+      * **`Accordian`**
+         * Consider pushing `active` state up to parent component
+   
+* Global Styling
+   * Add addition webfonts, including those related to logo's font
+   * Add optimized SVG versions of Quizdini logo, see `Quizdini.zip`
+   * Update CSS `fill` style properties for all icons
+   * Investigate controlling line-height, especially in input field; some fonts will require adjustment and we need to figure out where to put that style override
+
+* Global Layout
+  * Style fixed menu
+  * Footer
+  * Figure out how to implement mobile friendly menu (hamburger)
+
+* Next BIG sub-projects
+   * `MatchGameTable`
+   * `LoginPage`
+   * Investigate and redirects using `react-router` or similar tool
+
 * Document and add `PropTypes` to the following Components
    * Button
    * FixedMenu
@@ -18,48 +82,10 @@ This project is the teacher front-end for Quizdini 2.0
    * MatchEditor
    * MatchForm
    * MatchGame
-* Add addition webfonts, including those related to logo's font
-* Create custom TextArea component
-   * Convert instructions to use
-* Buttons
-   * Continue to refine custom Button component
-   * Create button group atop MatchForm
-   * Create additional buttons 
-     * Delete
-     * Cancel
-* Work on validation schema, etc. for MatchForm
-* Work on InputFeedback validation message/notification component
-  * Incorporate into custom Input* components
-* Work on semantic ui layout
-  * Style fixed menu
-  * Footer
-  * Figure out how to implement mobile friendly menu (hamburger)
-* Work on user list of games
-* MatchForm
-   * Loading
-   * Validation
-     * High-level messages/errors; how to pass back from onSubmit/expire
-   * Form submission 
-   * Mock up tabs to toggle between `MatchEditor` and `MatchBulkEditor` (expert mode)
-   * Continue to refine Tab stops
-* Mock up Login Component / Page
-* Investigate redirects, etc.
-* Icon System
-   * Update CSS as appropriate with `fill`
-* Format Toolbar
-   * Convert to use SUI's `IconGroup`
-   * Consider renaming
-   * Investigate onPointerDown and alternatives that support mobile events, in React for use with the Toolbar Buttons
-* Match Editor
-   * Figure out how to integrate [DOMPurify](https://www.npmjs.com/package/dompurify) or [html-react-parser](https://www.npmjs.com/package/html-react-parser)  
-* Figure out how to represent matches on the screen
-   * Create basic table component for Matches as POC
-   * Move `MatchList` to `retired` once anything has been put in its place
-* Create Floating Label Component
-  * Refine floating label style; add `className` dynamically
-  * Add appropriate CSS definitions
-  * Reexamine whether floating label should be pulled out into its own Component
-* Investigate controlling line-height, especially in input field; some fonts will require adjustment and we need to figure out where to put that style override
+
+* General Cleanup
+   * **Move defunct components to `retire` folder**
+   * Remove unneeded components near end of initla phase of development 
 
 ## React Router
 

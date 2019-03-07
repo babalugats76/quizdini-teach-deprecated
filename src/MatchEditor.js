@@ -184,9 +184,27 @@ class MatchEditor extends Component {
 
   }
 
+  /**
+  * Implement slate's onFocus event handler
+  * Asynchronously call passed in onEditorTouch function
+  * This let's formik know that the field has been touched
+  * If not done asynchronously, focus is screwed up
+  *
+  * @param {Event} event
+  * @param {Editor} editor
+  * @return {Function} next
+  * @param {String} field Name of form element to mark touched
+  */
+  onFocus = (event, editor, next, field) => {
+    event.preventDefault();
+    const { onEditorTouch } = this.props;
+    setTimeout(() => { onEditorTouch(field, true) }, 250);
+    next();
+  }
+
   render() {
 
-    const { id, placeholder, value, onChange } = this.props;
+    const { name, placeholder, value, onChange } = this.props;
 
     /* Tooltip buttons the formatting toolbar will have */
     const buttons = [{
@@ -223,14 +241,16 @@ class MatchEditor extends Component {
     return (
       <div className='match-editor'>
         <Editor
-          id={id}
+          name={name}
+          autoFocus={false}
           schema={schema}
           spellCheck={false}
           className="rich-text-editor"
           placeholder={placeholder}
           ref={this.ref}
           value={value}
-          onChange={(value, key) => onChange(value, id)}
+          onFocus={(event, editor, next, field) => this.onFocus(event, editor, next, name)}
+          onChange={(value, field) => onChange(value, name)}
           onKeyDown={this.onKeyDown}
           renderMark={this.renderMark}
         />

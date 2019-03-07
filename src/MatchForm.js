@@ -41,7 +41,9 @@ const newMatchSchema = (matches) => {
           const passed = !matches.some((element) => { return element.term === value; });  // check for duplicate terms
           return passed;
         }
-      )
+      ),
+    definition: Yup.string()
+      .required('Definition is required')
   });
 }
 
@@ -66,7 +68,15 @@ const durationOptions = [
 class MatchForm extends Component {
 
   state = {
-    activeEditorIndex: 0
+    activeEditorIndex: 0,
+    term: {
+      value: HtmlSerializer.deserialize(''),
+      touched: false
+    },
+    definition: {
+      value: HtmlSerializer.deserialize(''),
+      touched: false
+    }
   }
 
   handleTabChange = (event, props) => {
@@ -77,53 +87,85 @@ class MatchForm extends Component {
   }
 
   /**
-   * On editor change, save the new `value` (Map) to state
+   * Update state with new `value` (Map) of the editor
    *
-   * @param {Editor} editor
+   * @param {Editor} editor Editor object to grab `value` from
+   * @param {String} field Name of the field
    */
-  handleEditorChange = ({ value }, key) => {
-    console.log('handleEditorCalled....');
-    const { setFieldValue, setTouched } = this.props;
-    setFieldValue(key, value);
-    setTouched({[key]: true});
+  handleEditorChange = ({ value }, field) => {
+    this.setState((state, props) => {
+      return { [field]: { ...state[field], value: value } }
+    });
+  }
+
+  /**
+   * Updated touched state of field
+   *
+   * @param {String} field Name of the field
+   * @param {bool} touched Whether field has been interacted with (or not)
+   */
+  handleEditorTouch = (field, touched) => {
+    this.setState((state, props) => {
+      return { [field]: { ...state[field], touched: touched } }
+    });
+  }
+
+  /**
+   * Updated error state of field
+   *
+   * @param {String} field Name of the field
+   * @param {bool} error Error message
+   */
+  setFieldError = (field, error) => {
+    this.setState((state, props) => {
+      return { [field]: { ...state[field], error: error } }
+    });
   }
 
   handleNewMatch = (event) => {
+
     event.preventDefault();
-    const { term, definition, matches } = this.props.values;
-    const { setErrors, setFieldValue, setTouched } = this.props;
-    const termHtml = HtmlSerializer.serialize(term);
+
+    const { matches } = this.props.values;                                                 // Get matches (from Formik)
+    const term = this.state.term.value;                                                    // Get editors' contents (from state)    
+    const definition = this.state.definition.value;
+
+    const termHtml = HtmlSerializer.serialize(term);                                       // Serialize editors' contents  
     const definitionHtml = HtmlSerializer.serialize(definition);
 
-    setTouched('term', false);
-    setTouched('definition', false);
+    const { setFieldValue } = this.props;                                                  // Get function used to update matches (in Formik)
 
     newMatchSchema(matches)
-      .validate({ term: termHtml }, { abortEarly: true })
-      .then(function(valid) { // If valid, merge and reset values
+      .validate({ term: termHtml, definition: definitionHtml }, { abortEarly: false })     // Validate serialized term and definition
+      .then((valid) => {                                                                   // If valid, merge into matches
         const updatedMatches = [
           {
             term: termHtml,
             definition: definitionHtml
           }, ...matches];
-        setFieldValue('matches', updatedMatches);
-        setFieldValue('term', HtmlSerializer.deserialize(''));
-        setFieldValue('definition', HtmlSerializer.deserialize(''));
+        setFieldValue('matches', updatedMatches);                                          // Update Formik state
+        this.handleEditorChange({ value: HtmlSerializer.deserialize('') }, 'term');        // Reset editors' contents
+        this.handleEditorChange({ value: HtmlSerializer.deserialize('') }, 'definition');
+        this.setFieldError('term', '');                                                    // Clear errors
+        this.setFieldError('definition', '');
       })
-      .catch(function (errors) { // Extract and manually set form errors
-        console.log(errors);
-        const { path, message } = errors;
-        setErrors({ [path]: message });
+      .catch((errors) => {                                                                 // If invalid, update state with errors
+        errors.inner.forEach((value, index) => {
+          let { path, message } = value;
+          this.setFieldError(path, message);
+        });
       });
-
-    //setTimeout(() => { console.log(values); setSubmitting(false); }, 1000);
+    this.handleEditorTouch('term', false);                                                 // Mark field untouched
+    this.handleEditorTouch('definition', false);
   }
 
   render() {
 
     // eslint-disable-next-line
-    const { values, touched, errors, handleChange, isSubmitting, handleSubmit, setFieldValue } = this.props;
+    const { values, touched, errors, handleChange, handleBlur, isSubmitting, handleSubmit, setFieldValue } = this.props;
     const { activeEditorIndex } = this.state;
+    const { term, definition } = this.state;
+
 
     console.log('Term touched', touched.term);
 
@@ -132,12 +174,11 @@ class MatchForm extends Component {
         menuItem: 'Knowledge Bank', render: () =>
           <Tab.Pane>
             <MatchBank
-              matches={values.matches}
-              term={values.term}
+              term={term}
+              definition={definition}
               isSubmitting={isSubmitting}
-              error={ (!touched.term) ? errors.term : null}
-              definition={values.definition}
-              onEditorChange={(value, key) => this.handleEditorChange(value, key)}
+              onEditorTouch={(key, touched) => this.handleEditorTouch(key, touched)}
+              onEditorChange={(key, value) => this.handleEditorChange(key, value)}
               onNewMatch={this.handleNewMatch} />
           </Tab.Pane>
       },
@@ -145,7 +186,7 @@ class MatchForm extends Component {
         menuItem: 'Expert Mode', render: () =>
           <Tab.Pane>
             <MatchBulkEditor
-              id="matchText"
+              name="matchText"
               rows={10}
               cols={30}
               label="Knowledge Bank"
@@ -174,24 +215,26 @@ class MatchForm extends Component {
         <Grid columns={2} stackable>
           <Grid.Column computer={8} mobile={16} tablet={16}>
             <InputText
-              id="title"
+              name="title"
               type="text"
               label="Title"
               placeholder="Legends of Computer Science"
               error={errors.title}
               maxlength={40}
               value={values.title}
+              onBlur={handleBlur}
               onChange={handleChange}
               tabIndex={1}
             />
             <InputText
-              id="instructions"
+              name="instructions"
               type="text"
               label="Instructions"
               placeholder="Match each legend with their accomplishment"
               error={errors.instructions}
               maxlength={60}
               value={values.instructions}
+              onBlur={handleBlur}
               onChange={handleChange}
               tabIndex={2}
             />
@@ -203,7 +246,7 @@ class MatchForm extends Component {
                   <Grid.Row verticalAlign='middle'>
                     <Grid.Column>
                       <InputDropdown
-                        id="itemsPerBoard"
+                        name="itemsPerBoard"
                         label="Game Tiles"
                         icon="tiles"
                         tabIndex={-1}
@@ -212,13 +255,14 @@ class MatchForm extends Component {
                         options={itemsPerBoardOptions}
                         error={errors.itemsPerBoard}
                         value={values.itemsPerBoard}
+                        onBlur={handleBlur}
                         setFieldValue={setFieldValue}
                       />
                     </Grid.Column>
 
                     <Grid.Column>
                       <InputDropdown
-                        id="duration"
+                        name="duration"
                         label="Seconds"
                         icon="timer"
                         tabIndex={-1}
@@ -227,6 +271,7 @@ class MatchForm extends Component {
                         options={durationOptions}
                         error={errors.duration}
                         value={values.duration}
+                        onBlur={handleBlur}
                         setFieldValue={setFieldValue}
                       />
                     </Grid.Column>
@@ -249,6 +294,7 @@ class MatchForm extends Component {
           </Grid.Column>
         </Grid>
         <DisplayFormikState {...this.props} />
+        <pre>{JSON.stringify(this.state, null, 2)}</pre>
       </Form >
     );
   }
@@ -263,8 +309,7 @@ export default withFormik({
     instructions: match.instructions,
     itemsPerBoard: match.config.itemsPerBoard,
     duration: match.config.duration,
-    term: HtmlSerializer.deserialize(''),
-    definition: HtmlSerializer.deserialize(''),
+
     matchText: match.matchText,
     matches: match.matches
   }),

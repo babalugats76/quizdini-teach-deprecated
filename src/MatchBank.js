@@ -7,22 +7,25 @@ import MatchEditor from './MatchEditor';
 import InputFeedback from './InputFeedback';
 import Button from './Button';
 
-const MatchBank = ({ term, definition, onEditorChange, onNewMatch, isSubmitting, error }) => {
+const MatchBank = ({ term, definition, onEditorChange, onEditorTouch, onNewMatch, isSubmitting, error }) => {
   return (
     <div>
-      <InputFeedback error={error} />
+      <InputFeedback error={(!term.touched) ? term.error : null} />
       <MatchEditor
-        id="term"
-        value={term}
+        name="term"
+        value={term.value}
         placeholder="Enter term..."
-        onChange={(value, key) => onEditorChange(value, key)}
+        onEditorTouch={(field, touched) => onEditorTouch(field, touched)}
+        onChange={(value, field) => onEditorChange(value, field)}
       />
       <Divider />
+      <InputFeedback error={(!definition.touched) ? definition.error : null} />
       <MatchEditor
-        id="definition"
-        value={definition}
+        name="definition"
+        value={definition.value}
         placeholder="Enter definition..."
-        onChange={(value, key) => onEditorChange(value, key)}
+        onEditorTouch={(field, touched) => onEditorTouch(field, touched)}
+        onChange={(value, field) => onEditorChange(value, field)}
       />
       <Button
         secondary

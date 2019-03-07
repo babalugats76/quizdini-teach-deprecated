@@ -3,11 +3,11 @@ import React from 'react';
 import { Dropdown, Image, Label, Segment, Header } from 'semantic-ui-react';
 import Icon from './Icon';
 
-const InputDropdown = ({ id, label, icon, options, error, value, setFieldValue, ...props }) => {
+const InputDropdown = ({ name, label, icon, options, error, value, setFieldValue, ...props }) => {
 
   const onChange = (event, data) => {
     event.preventDefault();
-    setFieldValue(id, data.value);
+    setFieldValue(name, data.value);
   } 
  
   return (
@@ -17,7 +17,8 @@ const InputDropdown = ({ id, label, icon, options, error, value, setFieldValue, 
          {label}
       </Header>
       <Dropdown
-        id={id}
+        id={name}
+        name={name}
         options={options}
         value={value}
         onChange={(event, data) => onChange(event, data)}

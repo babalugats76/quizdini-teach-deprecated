@@ -3,7 +3,7 @@ import React from 'react';
 import { Form, Input, Label } from 'semantic-ui-react';
 import InputFeedback from './InputFeedback';
 
-const InputText = ({ type, id, label, maxlength, error, value, onChange, ...props }) => {
+const InputText = ({ type, name, label, maxlength, error, value, onChange, ...props }) => {
 
   const txtPct = ((maxlength - value.length) / maxlength) * 100;
 
@@ -34,7 +34,7 @@ const InputText = ({ type, id, label, maxlength, error, value, onChange, ...prop
   return (
     <Form.Field>
       <Input
-        id={id}
+        name={name}
         style={{ 'boxSizing': 'inherit', 'maxWidth': `${maxlength}ch` }}
         type="text"
         maxLength={maxlength}

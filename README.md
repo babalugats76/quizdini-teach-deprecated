@@ -5,8 +5,15 @@ This project is the teacher front-end for Quizdini 2.0
 * Match Authoring
    * Components
       * **`MatchGame`**
+         * Convert to dumb functional component (if possible)
          * Fetch from API e.g., start with call to static `.json`
          * Save to API 
+         * Create Related Components/scripts
+            * View
+            * loadData
+            * index.js
+            * ~~Loading~~
+            * ~~Error~~
       * **`MatchForm`**
          * ~~Create references for `MatchEditor` and pass down to `MatchBank`, etc. using what we learned [here](https://codesandbox.io/s/vv110zn39l?fontsize=14)~~
          * Add high-level form-level validation 
@@ -138,6 +145,9 @@ Refer to [Typechecking with PropTypes](https://reactjs.org/docs/typechecking-wit
 
 ## As Development Continues
 
-Check out [this article](https://medium.com/styled-components/component-folder-pattern-ee42df37ec68) for *folder structure* and data loading 
-Examine this [codepen](https://codesandbox.io/s/qJR4ykJk) to see how to create custom input controls, etc.
-Work on Icon system guided roughly by [this article](https://medium.com/@david.gilbertson/icons-as-react-components-de3e33cb8792)
+* Check out [this article](https://medium.com/styled-components/component-folder-pattern-ee42df37ec68) for *folder structure* and data loading 
+* Examine this [codepen](https://codesandbox.io/s/qJR4ykJk) to see how to create custom input controls, etc.
+* Work on Icon system guided roughly by [this article](https://medium.com/@david.gilbertson/icons-as-react-components-de3e33cb8792)
+* Continue to develop more intelligently by using [ReactJS Code Snippets](https://www.cheatography.com/mend0za/cheat-sheets/vscode-reactjs-code-snippets/pdf/)
+* Refer to [The Giphy Search Example](https://codesandbox.io/s/nxqmqyxld) to attempt to create application without using Redux
+* Refer to [this guide](https://kentcdodds.com/blog/learn-react-fundamentals-and-advanced-patterns), especially when closer to publishing

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Editor } from 'slate-react';
 import { isKeyHotkey } from 'is-hotkey';
-import FormatToolbar from './FormatToolbar';
+import FormatToolbar from '../components/Toolbar';
 
 const schema = {
   document: {

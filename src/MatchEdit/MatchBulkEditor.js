@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 // eslint-disable-next-line
-import Label from './retire/Label';
+import Label from '../retire/Label';
 
 class MatchBulkEditor extends Component {
 

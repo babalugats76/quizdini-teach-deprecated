@@ -5,10 +5,6 @@ import {
   Visibility
 } from 'semantic-ui-react';
 // eslint-disable-next-line
-import Hello from './Hello';
-// eslint-disable-next-line
-import MatchGame from './MatchGame';
-// eslint-disable-next-line
 import { Switch, Route, Link } from "react-router-dom";
 
 // eslint-disable-next-line

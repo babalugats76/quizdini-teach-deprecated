@@ -1,43 +1,3 @@
-import React, { Component } from 'react';
-import MatchForm from './MatchForm';
-
-class MatchGame extends Component {
-
-  /*state = {
-    placeholder: "term, definition",
-    text: '',
-    json: '',
-    terms: [],
-    definitions: []
-  }*/
-
-  componentDidMount() {
-    //setTimeout(() => { this.setState({ text: '', json: ''}); }, 1000);
-  }
-
-  componentWillUnmount() {
-
-  }
-
-  handleMatchFormSubmit = (values, formikBag) => {
-    console.log('Match form submitting...wait 10 secs...');
-    const { setSubmitting } = formikBag;
-    setTimeout(() => { console.log(values); setSubmitting(false); }, 10000);
-  }
-
-  render() {
-
-    const match = {
-      title: '',
-      instructions: '',
-      matches: [],
-      matchText: '',
-      config: {
-        itemsPerBoard: 5,
-        duration: 180
-      }
-    };
-
     /*<div className="container">
       <h2>Match Game</h2>
       <p>Rise above traditional 'drill and kill' drudgery by providing your students with an opportunity to practice and learn that is sure to engage them! The 'match game' is a frenetic test of wits in which students race against the clock and earn points while demonstrating both content knowledge and comprehension.</p>
@@ -49,16 +9,7 @@ class MatchGame extends Component {
       </ul>
             </div>*/
 
-    return (
-        <MatchForm
-          match={match}
-          onSubmit={(values, setSubmitting ) => this.handleMatchFormSubmit(values, setSubmitting)}
-        />
-    );
-  }
-
-}
-
+            
 // eslint-disable-next-line
 class Editor extends React.Component {
   render() {
@@ -73,4 +24,25 @@ class JsonEditor extends React.Component {
   }
 }
 
-export default MatchGame;
+  /*state = {
+    placeholder: "term, definition",
+    text: '',
+    json: '',
+    terms: [],
+    definitions: []
+  }*/
+
+  componentDidMount() {
+    //setTimeout(() => { this.setState({ text: '', json: ''}); }, 1000);
+  }
+
+      /*const match = {
+      title: '',
+      instructions: '',
+      matches: [],
+      matchText: '',
+      config: {
+        itemsPerBoard: 5,
+        duration: 180
+      }
+    };*/

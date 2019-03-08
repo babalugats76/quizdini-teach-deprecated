@@ -2,9 +2,9 @@ import React from 'react';
 // eslint-disable-next-line
 import { Header, Table } from 'semantic-ui-react';
 // eslint-disable-next-line
-import Icon from './Icon';
+import Icon from '../components/Icon';
 // eslint-disable-next-line
-import Button from './Button';
+import Button from '../components/Button';
 // eslint-disable-next-line
 import PropTypes from 'prop-types';
 

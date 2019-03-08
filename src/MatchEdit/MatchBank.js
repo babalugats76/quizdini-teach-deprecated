@@ -1,13 +1,20 @@
-// eslint-disable-next-line
-import React, { Component } from 'react';
+import React from 'react';
 import { Divider } from 'semantic-ui-react';
 // eslint-disable-next-line
 import PropTypes from 'prop-types';
 import MatchEditor from './MatchEditor';
-import InputFeedback from './InputFeedback';
-import Button from './Button';
+import InputFeedback from '../components/InputFeedback';
+import Button from '../components/Button';
 
-const MatchBank = ({ term, definition, onEditorChange, onEditorTouch, onNewMatch, isSubmitting, termRef, definitionRef, error }) => {
+const MatchBank = ({
+  term,
+  definition,
+  onEditorChange,
+  onEditorTouch,
+  onNewMatch,
+  isSubmitting,
+  termRef,
+  definitionRef }) => {
   return (
     <div id="match-bank">
       <InputFeedback error={(!term.touched) ? term.error : null} />
@@ -45,7 +52,7 @@ const MatchBank = ({ term, definition, onEditorChange, onEditorTouch, onNewMatch
         disabled={isSubmitting}
         onClick={(event) => onNewMatch(event)}
       >
-      ADD
+        ADD
       </Button>
     </div>
   );

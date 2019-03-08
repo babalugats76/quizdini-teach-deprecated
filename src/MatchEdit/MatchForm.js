@@ -2,18 +2,18 @@ import React, { Component } from 'react';
 import { withFormik } from 'formik';
 import * as Yup from 'yup';
 
-import Button from './Button';
-import InputText from './InputText';
-import InputDropdown from './InputDropdown';
+import Button from '../components/Button';
+import InputText from '../components/InputText';
+import InputDropdown from '../components/InputDropdown';
 import HtmlSerializer from './HtmlSerializer'
 import MatchBank from './MatchBank';
 import MatchBulkEditor from './MatchBulkEditor';
 import MatchTable from './MatchTable';
-import DisplayFormikState from './FormikHelper';
+import DisplayFormikState from '../components/FormikHelper';
 
 // eslint-disable-next-line
 import { Grid, Tab, Divider, Segment, Form } from 'semantic-ui-react';
-import { Accordion } from './Accordion';
+import { Accordion } from '../components/Accordion';
 
 const matchSchema = Yup.object().shape(
   {
@@ -321,7 +321,6 @@ export default withFormik({
     instructions: match.instructions,
     itemsPerBoard: match.config.itemsPerBoard,
     duration: match.config.duration,
-
     matchText: match.matchText,
     matches: match.matches
   }),

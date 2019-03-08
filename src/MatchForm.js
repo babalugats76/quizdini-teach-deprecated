@@ -79,6 +79,10 @@ class MatchForm extends Component {
     }
   }
 
+  
+  termRef = React.createRef();
+  definitionRef = React.createRef();
+
   handleTabChange = (event, props) => {
     const { activeIndex } = props;
     this.setState((state, props) => {
@@ -175,6 +179,8 @@ class MatchForm extends Component {
           <Tab.Pane>
             <MatchBank
               term={term}
+              termRef={this.termRef}
+              definitionRef={this.definitionRef}
               definition={definition}
               isSubmitting={isSubmitting}
               onEditorTouch={(key, touched) => this.handleEditorTouch(key, touched)}
@@ -219,24 +225,26 @@ class MatchForm extends Component {
               type="text"
               label="Title"
               placeholder="Legends of Computer Science"
+              tabIndex={1}
+              disabled={isSubmitting}
               error={errors.title}
               maxlength={40}
               value={values.title}
               onBlur={handleBlur}
               onChange={handleChange}
-              tabIndex={1}
             />
             <InputText
               name="instructions"
               type="text"
               label="Instructions"
               placeholder="Match each legend with their accomplishment"
+              tabIndex={2}
+              disabled={isSubmitting}
               error={errors.instructions}
               maxlength={60}
               value={values.instructions}
               onBlur={handleBlur}
               onChange={handleChange}
-              tabIndex={2}
             />
             <Accordion
               openOnStart={false}
@@ -250,6 +258,7 @@ class MatchForm extends Component {
                         label="Game Tiles"
                         icon="tiles"
                         tabIndex={-1}
+                        disabled={isSubmitting}
                         selection
                         compact
                         options={itemsPerBoardOptions}
@@ -266,6 +275,7 @@ class MatchForm extends Component {
                         label="Seconds"
                         icon="timer"
                         tabIndex={-1}
+                        disabled={isSubmitting}
                         selection
                         compact
                         options={durationOptions}
@@ -289,6 +299,7 @@ class MatchForm extends Component {
           <Grid.Column computer={8} mobile={16} tablet={16}>
             <MatchTable
               id="table-match"
+              disabled={isSubmitting}
               matches={values.matches}
             />
           </Grid.Column>

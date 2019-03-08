@@ -7,14 +7,16 @@ import MatchEditor from './MatchEditor';
 import InputFeedback from './InputFeedback';
 import Button from './Button';
 
-const MatchBank = ({ term, definition, onEditorChange, onEditorTouch, onNewMatch, isSubmitting, error }) => {
+const MatchBank = ({ term, definition, onEditorChange, onEditorTouch, onNewMatch, isSubmitting, termRef, definitionRef, error }) => {
   return (
     <div>
       <InputFeedback error={(!term.touched) ? term.error : null} />
       <MatchEditor
         name="term"
+        ref={termRef}
         value={term.value}
         placeholder="Enter term..."
+        readOnly={isSubmitting}
         onEditorTouch={(field, touched) => onEditorTouch(field, touched)}
         onChange={(value, field) => onEditorChange(value, field)}
       />
@@ -22,14 +24,15 @@ const MatchBank = ({ term, definition, onEditorChange, onEditorTouch, onNewMatch
       <InputFeedback error={(!definition.touched) ? definition.error : null} />
       <MatchEditor
         name="definition"
+        ref={definitionRef}
         value={definition.value}
         placeholder="Enter definition..."
+        readOnly={isSubmitting}
         onEditorTouch={(field, touched) => onEditorTouch(field, touched)}
         onChange={(value, field) => onEditorChange(value, field)}
       />
       <Button
         secondary
-        loading={isSubmitting}
         active
         title="Add to the Knowledge Bank"
         icon="save"

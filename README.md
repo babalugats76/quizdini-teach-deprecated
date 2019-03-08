@@ -8,6 +8,7 @@ This project is the teacher front-end for Quizdini 2.0
          * Fetch from API e.g., start with call to static `.json`
          * Save to API 
       * **`MatchForm`**
+         * Create references for `MatchEditor` and pass down to `MatchBank`, etc. using what we learned [here](https://codesandbox.io/s/vv110zn39l?fontsize=14)
          * Add high-level form-level validation 
             * Not enough matches
          * Refine `matchSchema`

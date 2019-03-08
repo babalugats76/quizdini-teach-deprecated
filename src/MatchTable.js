@@ -19,10 +19,10 @@ const renderCell = (value) => (<span dangerouslySetInnerHTML={ {__html: value} }
         /*<Table.Cell>{val.term}</Table.Cell>
         <Table.Cell>{val.definition}</Table.Cell>*/
 
-const renderRows = (matches) => {
+const renderRows = (matches, disabled) => {
   return matches.map((val, idx) => {
     return (
-      <Table.Row key={val.term}>
+      <Table.Row key={val.term} disabled={disabled}>
         <Table.Cell>{renderCell(val.term)}</Table.Cell>
         <Table.Cell>{renderCell(val.definition)}</Table.Cell>
       </Table.Row>
@@ -30,8 +30,8 @@ const renderRows = (matches) => {
   });
 }
 
-const MatchTable = ({ id, matches }) => {
-  const rows = renderRows(matches);
+const MatchTable = ({ id, matches, disabled }) => {
+  const rows = renderRows(matches, disabled);
   return (
     <Table id={id} fixed compact>
       <Table.Header>
@@ -44,7 +44,7 @@ const MatchTable = ({ id, matches }) => {
         {
           matches.length > 0
             ? rows
-            : (<Table.Row>
+            : (<Table.Row disabled={disabled}>
                  <Table.Cell>No matches...</Table.Cell>
               </Table.Row>)
         }

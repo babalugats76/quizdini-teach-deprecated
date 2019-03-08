@@ -41,6 +41,11 @@ textarea#matchText {
   height: auto;
 }
 
+.rich-text-editor:not([contenteditable='true']) {
+  pointer-events: none;
+  color: rgba(40,40,40,0.3);
+}
+
 /*.format-toolbar {
   display: flex;
   position: relative;

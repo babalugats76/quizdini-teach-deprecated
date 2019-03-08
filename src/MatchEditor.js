@@ -31,8 +31,8 @@ const schema = {
 class MatchEditor extends Component {
 
   /* Used to reference instance of Editor component */
-  ref = (editor) => {
-    this.editor = editor
+  myRef = () => {
+    this.editor = this.ref
   }
 
   /**
@@ -124,7 +124,8 @@ class MatchEditor extends Component {
    */
   onClickMark = (event, type) => {
     event.preventDefault();
-    const editor = this.editor;
+    const editor = this.ref
+    console.log(editor);
     const { value } = editor;
     const originalSelection = value.selection;
     editor.toggleMark(type);
@@ -141,7 +142,7 @@ class MatchEditor extends Component {
 
     event.preventDefault();
 
-    const editor = this.editor;
+    const editor = this.ref;
     const { value } = editor;
     const originalSelection = value.selection;
 
@@ -165,7 +166,7 @@ class MatchEditor extends Component {
   onClickCharacter = (event, character) => {
 
     event.preventDefault();
-    const editor = this.editor;
+    const editor = this.ref;
     const { value } = editor;
     const originalSelection = value.selection;
 
@@ -260,4 +261,4 @@ class MatchEditor extends Component {
   }
 }
 
-export default MatchEditor;
+export default React.forwardRef((props, ref) => <MatchEditor ref={ref} {...props}/>);

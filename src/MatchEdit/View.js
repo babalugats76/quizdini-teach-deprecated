@@ -6,13 +6,24 @@ import MatchLoader from './MatchLoader';
 import Loading from '../components/Loading';
 import Error from '../components/Error';
 
-const View = ({ loading, initialQuery, data, onLoad, RenderMatchForm, RenderLoading, RenderError }) => (
+const View = ({ loading, initialQuery, data, error, onLoad, RenderMatchForm, RenderLoading, RenderError }) => (
   <div>
     <MatchLoader initialQuery={initialQuery} onLoad={onLoad} />
     <div>
-      {loading
-        ? <RenderLoading />
-        : <RenderMatchForm match={data} />
+      {
+        ((loading, data, error) => {
+          console.log(loading, data, error);
+          if (loading) {
+            console.log('loading...');
+            return <RenderLoading />
+          } else if (error) {
+            console.log('error...');
+            return <RenderError />
+          } else {
+            console.log('rendering form with...', data);
+            return <RenderMatchForm match={data} />
+          }
+        })(loading, data, error)
       }
     </div>
   </div>

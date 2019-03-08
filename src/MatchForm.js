@@ -79,9 +79,12 @@ class MatchForm extends Component {
     }
   }
 
-  
   termRef = React.createRef();
   definitionRef = React.createRef();
+
+  setFocus = (ref) => {
+    ref.current.focus();
+  };
 
   handleTabChange = (event, props) => {
     const { activeIndex } = props;
@@ -152,6 +155,7 @@ class MatchForm extends Component {
         this.handleEditorChange({ value: HtmlSerializer.deserialize('') }, 'definition');
         this.setFieldError('term', '');                                                    // Clear errors
         this.setFieldError('definition', '');
+        this.setFocus(this.termRef);                                                       // Move focus to term editor
       })
       .catch((errors) => {                                                                 // If invalid, update state with errors
         errors.inner.forEach((value, index) => {
@@ -170,12 +174,9 @@ class MatchForm extends Component {
     const { activeEditorIndex } = this.state;
     const { term, definition } = this.state;
 
-
-    console.log('Term touched', touched.term);
-
     const editorPanes = [
       {
-        menuItem: 'Knowledge Bank', render: () =>
+        menuItem: 'Match Bank', render: () =>
           <Tab.Pane>
             <MatchBank
               term={term}
@@ -183,8 +184,8 @@ class MatchForm extends Component {
               definitionRef={this.definitionRef}
               definition={definition}
               isSubmitting={isSubmitting}
-              onEditorTouch={(key, touched) => this.handleEditorTouch(key, touched)}
-              onEditorChange={(key, value) => this.handleEditorChange(key, value)}
+              onEditorTouch={(field, touched) => this.handleEditorTouch(field, touched)}
+              onEditorChange={(value, field) => this.handleEditorChange(value, field)}
               onNewMatch={this.handleNewMatch} />
           </Tab.Pane>
       },

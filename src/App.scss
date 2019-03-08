@@ -92,6 +92,19 @@ textarea#matchText {
   border-color: #222222;
 }
 
+/*#match-bank button:hover {
+  background-color: green;
+}*/
+
+#match-bank button:focus {
+  border: 1px solid red;
+
+}
+
+#match-bank button:active {
+  background-color: orange;
+}
+
 .format-toolbar button:hover svg {
   fill: #222222;
 }

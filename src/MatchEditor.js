@@ -31,19 +31,9 @@ const schema = {
 class MatchEditor extends Component {
 
   /* Used to reference instance of Editor component */
-  myRef = () => {
-    this.editor = this.ref
-  }
-
-  /**
-   * If any marks in selection match, return true
-   * 
-   * @param {String} type  Type of mark to search selection for
-   * @return {Boolean}    
-   */
-  hasMark = (type) => {
-    const { value } = this.state;
-    return value.activeMarks.some(mark => mark.type === type);
+  setRefs = (e) => {
+    this.editor = e;
+    this.props.forwardedRef.current = e;
   }
 
   /**
@@ -124,8 +114,7 @@ class MatchEditor extends Component {
    */
   onClickMark = (event, type) => {
     event.preventDefault();
-    const editor = this.ref
-    console.log(editor);
+    const editor = this.editor;
     const { value } = editor;
     const originalSelection = value.selection;
     editor.toggleMark(type);
@@ -141,8 +130,7 @@ class MatchEditor extends Component {
   onClearFormatting = (event) => {
 
     event.preventDefault();
-
-    const editor = this.ref;
+    const editor = this.editor;
     const { value } = editor;
     const originalSelection = value.selection;
 
@@ -166,7 +154,7 @@ class MatchEditor extends Component {
   onClickCharacter = (event, character) => {
 
     event.preventDefault();
-    const editor = this.ref;
+    const editor = this.editor;
     const { value } = editor;
     const originalSelection = value.selection;
 
@@ -205,7 +193,7 @@ class MatchEditor extends Component {
 
   render() {
 
-    const { name, placeholder, value, onChange } = this.props;
+    const { name, placeholder, value, onChange, readOnly } = this.props;
 
     /* Tooltip buttons the formatting toolbar will have */
     const buttons = [{
@@ -244,11 +232,12 @@ class MatchEditor extends Component {
         <Editor
           name={name}
           autoFocus={false}
+          readOnly={readOnly}
           schema={schema}
           spellCheck={false}
           className="rich-text-editor"
           placeholder={placeholder}
-          ref={this.ref}
+          ref={this.setRefs}
           value={value}
           onFocus={(event, editor, next, field) => this.onFocus(event, editor, next, name)}
           onChange={(value, field) => onChange(value, name)}
@@ -261,4 +250,4 @@ class MatchEditor extends Component {
   }
 }
 
-export default React.forwardRef((props, ref) => <MatchEditor ref={ref} {...props}/>);
+export default React.forwardRef((props, ref) => <MatchEditor forwardedRef={ref} {...props} />);

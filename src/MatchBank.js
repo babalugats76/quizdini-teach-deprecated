@@ -9,7 +9,7 @@ import Button from './Button';
 
 const MatchBank = ({ term, definition, onEditorChange, onEditorTouch, onNewMatch, isSubmitting, termRef, definitionRef, error }) => {
   return (
-    <div>
+    <div id="match-bank">
       <InputFeedback error={(!term.touched) ? term.error : null} />
       <MatchEditor
         name="term"
@@ -33,17 +33,17 @@ const MatchBank = ({ term, definition, onEditorChange, onEditorTouch, onNewMatch
       />
       <Button
         secondary
-        active
         title="Add to the Knowledge Bank"
         icon="save"
         size="small"
         type="submit"
         floated="right"
+        active
         disabled={isSubmitting}
         onClick={(event) => onNewMatch(event)}
       >
-        ADD
-        </Button>
+      ADD
+      </Button>
     </div>
   );
 }

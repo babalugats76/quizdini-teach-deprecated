@@ -30,7 +30,7 @@ This project is the teacher front-end for Quizdini 2.0
          * Remove use of `setFieldValue`
          * Create load button 
       * **`MatchBank`**
-         * Refine tab stops
+         * ~~Refine tab stops~~
       * **`MatchTable`**
          * Add Delete Button
          * Pass `removeMatch` function down as prop 

@@ -193,7 +193,7 @@ class MatchEditor extends Component {
 
   render() {
 
-    const { name, placeholder, value, onChange, readOnly } = this.props;
+    const { name, placeholder, value, tabIndex, onChange, readOnly } = this.props;
 
     /* Tooltip buttons the formatting toolbar will have */
     const buttons = [{
@@ -232,6 +232,7 @@ class MatchEditor extends Component {
         <Editor
           name={name}
           autoFocus={false}
+          tabIndex={tabIndex}
           readOnly={readOnly}
           schema={schema}
           spellCheck={false}

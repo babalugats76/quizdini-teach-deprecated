@@ -15,6 +15,7 @@ const MatchBank = ({ term, definition, onEditorChange, onEditorTouch, onNewMatch
         name="term"
         ref={termRef}
         value={term.value}
+        tabIndex={3}
         placeholder="Enter term..."
         readOnly={isSubmitting}
         onEditorTouch={(field, touched) => onEditorTouch(field, touched)}
@@ -26,6 +27,7 @@ const MatchBank = ({ term, definition, onEditorChange, onEditorTouch, onNewMatch
         name="definition"
         ref={definitionRef}
         value={definition.value}
+        tabIndex={4}
         placeholder="Enter definition..."
         readOnly={isSubmitting}
         onEditorTouch={(field, touched) => onEditorTouch(field, touched)}
@@ -39,6 +41,7 @@ const MatchBank = ({ term, definition, onEditorChange, onEditorTouch, onNewMatch
         type="submit"
         floated="right"
         active
+        tabIndex={5}
         disabled={isSubmitting}
         onClick={(event) => onNewMatch(event)}
       >

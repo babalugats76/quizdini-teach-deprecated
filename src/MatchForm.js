@@ -214,7 +214,7 @@ class MatchForm extends Component {
           icon="save"
           size="small"
           type="submit"
-          tabIndex={3}
+          tabIndex={6}
           disabled={isSubmitting}>
           Save
         </Button>
@@ -314,8 +314,8 @@ class MatchForm extends Component {
 
 export default withFormik({
   enableReinitialize: true,
-  validateOnChange: false,
-  validateOnBlur: false,
+  validateOnChange: true,
+  validateOnBlur: true,
   mapPropsToValues: ({ match }) => ({
     title: match.title,
     instructions: match.instructions,

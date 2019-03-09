@@ -2,6 +2,7 @@ import React from 'react';
 // eslint-disable-next-line
 import { Form, Input, Label } from 'semantic-ui-react';
 import InputFeedback from './InputFeedback';
+import PropTypes from 'prop-types';
 
 const InputText = ({ type, name, label, maxlength, error, value, onChange, ...props }) => {
 
@@ -61,5 +62,15 @@ const InputText = ({ type, name, label, maxlength, error, value, onChange, ...pr
     </Form.Field>
   );
 }
+
+InputText.propTypes = {
+  type: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
+  label: PropTypes.string.isRequired,
+  maxlength: PropTypes.number.isRequired,
+  error: PropTypes.string,
+  value: PropTypes.string.isRequired,
+  onChange: PropTypes.func.isRequired,
+};
 
 export default InputText;

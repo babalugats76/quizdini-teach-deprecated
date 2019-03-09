@@ -88,6 +88,7 @@ This project is the teacher front-end for Quizdini 2.0
    * Header
    * InputDropown
    * InputFeedback
+   * InputText - PropTypes done
    * Layout
    * Main
    * MatchBulkEditor

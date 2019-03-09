@@ -63,6 +63,9 @@ This project is the teacher front-end for Quizdini 2.0
          * Consider pushing `active` state up to parent component
    
 * Global Styling
+   * Once editors are complete, consider adding style rule for buttons, using rule similar to: ```#match-bank button.labeled:not(.active):not(:hover) {
+  background-color: rgba(40,40,40,0.3) !important;
+}```
    * Add addition webfonts, including those related to logo's font
    * Add optimized SVG versions of Quizdini logo, see `Quizdini.zip`
    * Update CSS `fill` style properties for all icons

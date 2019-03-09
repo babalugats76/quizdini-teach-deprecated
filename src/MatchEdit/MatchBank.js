@@ -15,6 +15,7 @@ const MatchBank = ({
   isSubmitting,
   termRef,
   definitionRef }) => {
+
   return (
     <div id="match-bank">
       <InputFeedback error={(!term.touched) ? term.error : null} />
@@ -47,7 +48,7 @@ const MatchBank = ({
         size="small"
         type="submit"
         floated="right"
-        active
+        active={term.touched && definition.touched}
         tabIndex={5}
         disabled={isSubmitting}
         onClick={(event) => onNewMatch(event)}

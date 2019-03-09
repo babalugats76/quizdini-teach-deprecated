@@ -98,7 +98,6 @@ textarea#matchText {
 
 #match-bank button:focus {
   border: 1px solid red;
-
 }
 
 #match-bank button:active {
@@ -115,4 +114,8 @@ textarea#matchText {
   border: none;
   cursor:pointer;
   overflow: hidden;        
+}
+
+#match-bank button.labeled:not(.active):not(:hover) {
+  background-color: rgba(40,40,40,0.3) !important;
 }

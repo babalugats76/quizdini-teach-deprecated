@@ -18,6 +18,7 @@
     "semantic-ui-react": "^0.85.0",
     "slate": "^0.44.10",
     "slate-html-serializer": "^0.7.34",
+    "slate-plain-serializer": "^0.6.36",
     "slate-react": "^0.21.16",
     "yup": "^0.26.10"
   },

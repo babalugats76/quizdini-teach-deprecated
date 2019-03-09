@@ -17,7 +17,8 @@ const View = ({ loading, initialQuery, data, error, onLoad, RenderMatchForm, Ren
             console.log('loading...');
             return <RenderLoading />
           } else if (error) {
-            console.log('error...');
+            console.log('there was an error...');
+            console.log(error);
             return <RenderError />
           } else {
             console.log('rendering form with...', data);

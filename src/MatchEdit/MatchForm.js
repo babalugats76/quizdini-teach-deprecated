@@ -15,6 +15,30 @@ import DisplayFormikState from '../components/FormikHelper';
 import { Grid, Tab, Divider, Segment, Form } from 'semantic-ui-react';
 import { Accordion } from '../components/Accordion';
 
+const apiSchema = Yup.object().shape({
+  title: Yup.string()
+      .min(2, 'Title is too short')
+      .max(40, 'Title is too long')
+      .required('Title is required'),
+  instructions: Yup.string()
+      .max(60, 'Instructions are too long'),
+  config: Yup.object({
+    itemsPerBoard: Yup.number()
+      .integer()
+      .positive()
+      .min(4, 'You must have at least 4 items per board')
+      .max(5, 'You may have no more than 5 items per board')
+      .default(9),
+    duration: Yup.number()
+      .integer()
+      .positive()
+      .min(60, 'Games must last at 1 minute long')
+      .max(300, 'Game may last no more than 5 minutes')
+      .default(180)
+    }),
+});
+
+// eslint-disable-next-line
 const matchSchema = Yup.object().shape(
   {
     title: Yup.string()
@@ -24,9 +48,13 @@ const matchSchema = Yup.object().shape(
     instructions: Yup.string()
       .max(60, 'Instructions are too long'),
     itemsPerBoard: Yup.number()
+      .integer()
+      .positive()
       .min(4, 'You must have at least 4 items per board')
       .max(5, 'You may have no more than 5 items per board'),
     duration: Yup.number()
+      .integer()
+      .positive()
       .min(60, 'Games must last at 1 minute long')
       .max(300, 'Game may last no more than 5 minutes')
   }
@@ -316,15 +344,18 @@ export default withFormik({
   enableReinitialize: true,
   validateOnChange: true,
   validateOnBlur: true,
-  mapPropsToValues: ({ match }) => ({
-    title: match.title,
-    instructions: match.instructions,
-    itemsPerBoard: match.config.itemsPerBoard,
-    duration: match.config.duration,
-    matchText: match.matchText,
-    matches: match.matches
-  }),
-  validationSchema: matchSchema,
+  mapPropsToValues: ({ match }) => {
+    const validated = apiSchema.cast({ match });
+    console.log('validated',validated);
+    return {
+      title: validated.match.title,
+      instructions: validated.match.instructions,
+      itemsPerBoard: validated.config.itemsPerBoard,
+      duration: validated.config.duration,
+      matches: match.matches
+    }
+  },
+  validationSchema: apiSchema,
   handleSubmit: (values, formikBag) => {
     const { onSubmit } = formikBag.props;
     onSubmit(values, formikBag);

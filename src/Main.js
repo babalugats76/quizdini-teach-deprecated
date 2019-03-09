@@ -12,7 +12,7 @@ const Main = () => (
   <Container>
     <Switch>
       <Route path="/hello" component={Hello} />
-      <Route path="/match" render={(props) => (<MatchEdit {...props} initialQuery='2' /> )} />
+      <Route path="/match" render={(props) => (<MatchEdit {...props} initialQuery='3' /> )} />
     </Switch>
   </Container>
 );

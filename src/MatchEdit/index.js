@@ -24,6 +24,9 @@ export default class extends Component {
       this.setState({ loading: false, data });
     } catch (ex) {
       console.log('There was an error');
+      /* Malformed JSON, for example, will yield SyntaxError: Unexpected token i in JSON at position 230
+    at getObjectFromJson (loadData.js:2) */
+      console.log(ex);
       this.setState({ loading: false, error: true });
     }
   }

@@ -15,13 +15,15 @@ import DisplayFormikState from '../components/FormikHelper';
 import { Grid, Tab, Divider, Segment, Form } from 'semantic-ui-react';
 import { Accordion } from '../components/Accordion';
 
-const apiSchema = Yup.object().shape({
+const transformMatch = Yup.object().shape({
   title: Yup.string()
       .min(2, 'Title is too short')
       .max(40, 'Title is too long')
-      .required('Title is required'),
+      .required('Title is required')
+      .default(''),
   instructions: Yup.string()
-      .max(60, 'Instructions are too long'),
+      .max(60, 'Instructions are too long')
+      .default(''),
   config: Yup.object({
     itemsPerBoard: Yup.number()
       .integer()
@@ -38,8 +40,7 @@ const apiSchema = Yup.object().shape({
     }),
 });
 
-// eslint-disable-next-line
-const matchSchema = Yup.object().shape(
+const validateMatch = Yup.object().shape(
   {
     title: Yup.string()
       .min(2, 'Title is too short')
@@ -345,17 +346,18 @@ export default withFormik({
   validateOnChange: true,
   validateOnBlur: true,
   mapPropsToValues: ({ match }) => {
-    const validated = apiSchema.cast({ match });
-    console.log('validated',validated);
+    // Cast and transform incoming data as appropriate
+    const data = transformMatch.cast({ match });
+    // Flatten and map (for use in `values`)
     return {
-      title: validated.match.title,
-      instructions: validated.match.instructions,
-      itemsPerBoard: validated.config.itemsPerBoard,
-      duration: validated.config.duration,
-      matches: match.matches
+      title: data.match.title,
+      instructions: data.match.instructions,
+      itemsPerBoard: data.config.itemsPerBoard,
+      duration: data.config.duration,
+      matches: data.match.matches
     }
   },
-  validationSchema: apiSchema,
+  validationSchema: validateMatch,
   handleSubmit: (values, formikBag) => {
     const { onSubmit } = formikBag.props;
     onSubmit(values, formikBag);

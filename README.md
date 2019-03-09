@@ -7,12 +7,12 @@ This project is the teacher front-end for Quizdini 2.0
       * **`MatchGame`**
          * ~~Create an up-to-date sample json file to use in testing~~
          * Convert to dumb functional component (if possible)
-         * Fetch from API e.g., start with call to static `.json`
+         * ~~Fetch from API e.g., start with call to static `.json`~~
          * Save to API 
          * Create Related Components/scripts
-            * View
-            * loadData
-            * index.js
+            * ~~View~~
+            * ~~loadData~~
+            * ~~index.js~~
             * ~~Loading~~
             * ~~Error~~
       * **`MatchForm`**

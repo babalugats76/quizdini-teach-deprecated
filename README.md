@@ -40,8 +40,8 @@ This project is the teacher front-end for Quizdini 2.0
       * **`MatchBank`**
          * ~~Refine tab stops~~
       * **`MatchTable`**
-         * Add Delete Button
-         * Pass `removeMatch` function down as prop 
+         * ~~Add Delete Button~~
+         * ~~Pass `removeMatch` function down as prop~~ 
       * **`FormatToolbar`**
          * Consider converting to use SUI's `IconGroup`
          * Consider renaming

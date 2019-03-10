@@ -1,9 +1,14 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
-const LoadError = () => {
+const LoadError = ({ error }) => {
   return (
-    <div>Error...</div>
+    <pre>{error}</pre>
   );
+};
+
+LoadError.propTypes = {
+  error: PropTypes.string
 };
 
 export default LoadError;

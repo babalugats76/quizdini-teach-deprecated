@@ -1,12 +1,11 @@
 import React from 'react';
-// eslint-disable-next-line
 import PropTypes from 'prop-types';
 import MatchForm from './MatchForm';
 import MatchLoader from './MatchLoader';
 import Loading from '../components/Loading';
 import Error from '../components/Error';
 
-const View = ({ loading, initialQuery, data, error, onLoad, RenderMatchForm, RenderLoading, RenderError }) => (
+const View = ({ loading, initialQuery, data, error, exception, onLoad, RenderMatchForm, RenderLoading, RenderError }) => (
   <div>
     <MatchLoader initialQuery={initialQuery} onLoad={onLoad} />
     <div>
@@ -14,12 +13,9 @@ const View = ({ loading, initialQuery, data, error, onLoad, RenderMatchForm, Ren
         ((loading, data, error) => {
           console.log(loading, data, error);
           if (loading) {
-            console.log('loading...');
             return <RenderLoading />
           } else if (error) {
-            console.log('there was an error...');
-            console.log(error);
-            return <RenderError />
+            return <RenderError error={exception} />
           } else {
             console.log('rendering form with...', data);
             return <RenderMatchForm match={data} />

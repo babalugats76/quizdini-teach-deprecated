@@ -20,7 +20,7 @@ This project is the teacher front-end for Quizdini 2.0
          * Add high-level form-level validation 
             * Not enough matches
          * Refine `matchSchema`
-         * Add term-based `removeMatch` function (for use by `MatchTable`)
+         * ~~Add term-based `removeMatch` function (for use by `MatchTable`)~~
          * Create button group (if necessary)
          * Create additional buttons 
             * Delete

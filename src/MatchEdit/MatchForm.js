@@ -196,6 +196,20 @@ class MatchForm extends Component {
     this.handleEditorTouch('definition', false);
   }
 
+/**
+ * Remove a match from the matches
+ * 
+ * @param {String} term The term to be removed from matches 
+ */
+  handleMatchDelete = (event, term) => {
+    console.log('handleMatchDelete fired...', term);
+    event.preventDefault();
+    const { setFieldValue } = this.props;    // Get function used to update matches (from Formik)
+    const { matches } = this.props.values;   // Get matches array (from Formik)    
+    const filteredMatches = matches.filter((match) => { return match.term !== term; }); // Filter out term
+    setFieldValue('matches', filteredMatches); // Update state (in Formik) with matches minus term
+  }
+
   render() {
 
     // eslint-disable-next-line
@@ -329,8 +343,9 @@ class MatchForm extends Component {
           <Grid.Column computer={8} mobile={16} tablet={16}>
             <MatchTable
               id="table-match"
-              disabled={isSubmitting}
               matches={values.matches}
+              disabled={isSubmitting}
+              onMatchDelete={(event, term) => this.handleMatchDelete(event, term)}
             />
           </Grid.Column>
         </Grid>

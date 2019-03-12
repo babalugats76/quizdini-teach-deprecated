@@ -44,6 +44,7 @@ This project is the teacher front-end for Quizdini 2.0
          * ~~Add Delete Button~~
          * ~~Pass `removeMatch` function down as prop~~ 
          * Add ability to disable delete button, e.g., based upon `isSubmitting`
+         * Consider wrapping in pagination component (depending upon space, etc.)
       * **`FormatToolbar`**
          * Consider converting to use SUI's `IconGroup`
          * Consider renaming

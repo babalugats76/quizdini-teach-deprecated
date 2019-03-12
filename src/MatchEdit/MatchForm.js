@@ -100,6 +100,48 @@ const matchToString = (matches) => {
   }, '' );
 }
 
+/**
+ * Converts bulk string of matches to a properly-formatted array
+ * Term and definition values should be comma-delimited
+ * Each "match" item should be newline-delimited
+ * 
+ * This function performs three major functions
+ *    Parsing - Splitting text into matches
+ *    Sanitizing - Insuring that all inline HTML is safe
+ *    Dedup - Enforcing the business rule that matches shall be unique
+ * 
+ * @param {String} bulkMatches Match content to parse.
+ * @return {Array} Parsed matches.
+ */
+const parseMatch = (bulkMatches) => {
+
+  let lines = bulkMatches.split('\n');       // Split text (into array) on newline
+  let matches = new Array(0).fill(null);     // Create empty array (to store matches)
+
+  lines.reduce((pairs, line) => {            // Reduce array of lines to valid ones
+    let vals = line.split(',') || [];        // Further split line based upon (,) comma
+    if (!Array.isArray(vals)                 // If NOT an array
+      || !vals.length                        // OR...if length property is NOT defined 
+      || vals.length < 2                     // OR...if array contains less than 2 items
+      || vals[0].trim().length === 0         // OR...if first item is empty (once whitespace is removed)
+      || vals[1].trim().length === 0) {      // OR...if second item is empty (once whitespace is removed)
+      return matches;                        // Skip processing by returning work-in-process matches array
+    }
+    
+    return matches.push({                    // Otherwise, add to work-in-progress array
+      "term": vals[0].trim(),                // Map first item to "term" and remove whitespace
+      "definition": vals[1].trim()           // Map second item to "definition" and remove whitespace
+    });
+
+  }, matches); // start by passing in newly-created, empty matches array
+  
+  // Add sanitize
+  
+  // Dedup array before returning
+
+  return matches;
+}
+
 class MatchForm extends Component {
 
   static MATCH_TAB = 0;
@@ -235,9 +277,22 @@ class MatchForm extends Component {
    * Update state with new `value` from textarea
    */
   handleBulkChange = (event, data) => {
+    console.log('Change to bulk matches detected...');
     event.preventDefault();
     const { setFieldValue } = this.props;
     setFieldValue('bulkMatches', data.value);
+  }
+
+  handleBulkPaste = (event) => {
+    console.log('Paste to bulk matches detected...');
+    event.preventDefault();                                  // Prevent default
+    const pasted = event.clipboardData.getData('text');      // Grab pasted value (consider adding try-catch here)
+    const { setFieldValue } = this.props;                    // Grab Formik function (to update state)
+    const parsed = parseMatch(pasted);                       // Split, Sanitize, Dedup -> array of matches
+    console.log(parsed);
+    setFieldValue('matches', parsed);                        // Update matches in Formik state
+    setFieldValue('bulkMatches', matchToString(parsed));     // Flatten parsed matches
+   // setFieldValue('bulkMatches', pasted);                  // Use During development while mucking stuff up
   }
 
   render() {
@@ -270,6 +325,7 @@ class MatchForm extends Component {
               value={values.bulkMatches}
               placeholder="Term, Definition"
               onChange={(event, data) => this.handleBulkChange(event, data)}
+              onPaste={(event) => this.handleBulkPaste(event)}
             />
           </Tab.Pane>
       },
@@ -283,7 +339,7 @@ class MatchForm extends Component {
           active
           title="Save Game"
           icon="save"
-          size="large"
+          size="small"
           type="submit"
           tabIndex={6}
           disabled={isSubmitting}>

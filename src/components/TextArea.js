@@ -5,7 +5,7 @@ import { TextArea } from 'semantic-ui-react';
 const MyTextArea = ({ value, placeholder, onChange, ...props }) => {
   return (  
     <TextArea
-      value={placeholder && value}
+      value={value || placeholder}
       onChange={(event, data) => onChange(event, data)}
       {...props}
     />

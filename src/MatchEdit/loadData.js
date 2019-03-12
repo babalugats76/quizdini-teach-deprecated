@@ -19,7 +19,7 @@ const loadMatch = (query) => {
   return fetch(url)
     .then(throwIfNotOk)
     .then(getObjectFromJson)
-    .then(sleep(10000));
+    .then(sleep(1000));
 };
 
 export default loadMatch;

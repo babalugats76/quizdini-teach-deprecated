@@ -7,7 +7,7 @@ import InputText from '../components/InputText';
 import InputDropdown from '../components/InputDropdown';
 import HtmlSerializer from './HtmlSerializer'
 import MatchBank from './MatchBank';
-import MatchBulkEditor from './MatchBulkEditor';
+import MatchBulk from './MatchBulk';
 import MatchTable from './MatchTable';
 import DisplayFormikState from '../components/FormikHelper';
 
@@ -96,8 +96,12 @@ const durationOptions = [
 
 class MatchForm extends Component {
 
+  static MATCH_TAB = 0;
+  static BULK_TAB = 1;
+
   state = {
-    activeEditorIndex: 0,
+    activeTab: MatchForm.MATCH_TAB,
+    bulkMatches: '',
     term: {
       value: HtmlSerializer.deserialize(''),
       touched: false
@@ -115,10 +119,19 @@ class MatchForm extends Component {
     ref.current.focus();
   };
 
-  handleTabChange = (event, props) => {
-    const { activeIndex } = props;
+  /**
+   * @param {Event} event Event to handle.
+   * @param {Object} data Contains all form data and props, including activeIndex
+   * Update state with new active editor tab
+   */
+  handleTabChange = (event, data) => {
+    event.preventDefault();
+    const activeTab = data.activeIndex;  // activeIndex is the current tab pane
     this.setState((state, props) => {
-      return { activeEditorIndex: activeIndex }
+      if (activeTab === MatchForm.BULK_TAB) {   
+        console.log('transform matches to BulkMatches...')
+      }
+      return { activeTab: activeTab }
     })
   }
 
@@ -196,11 +209,11 @@ class MatchForm extends Component {
     this.handleEditorTouch('definition', false);
   }
 
-/**
- * Remove a match from the matches
- * 
- * @param {String} term The term to be removed from matches 
- */
+ /** 
+  * Remove a match from the matches
+  * 
+  * @param {String} term The term to be removed from matches 
+  */
   handleMatchDelete = (event, term) => {
     console.log('handleMatchDelete fired...', term);
     event.preventDefault();
@@ -210,16 +223,31 @@ class MatchForm extends Component {
     setFieldValue('matches', filteredMatches); // Update state (in Formik) with matches minus term
   }
 
+  /**
+   * @param {Event} event Event to handle.
+   * @param {Object} data Contains all form data and props.
+   * Update state with new `value` from textarea
+   */
+  handleBulkChange = (event, data) => {
+    console.log('Updating bulk matches in state...');
+    console.log('Data', data.value);
+    event.preventDefault();
+    this.setState((state, props) => {
+      return { bulkMatches: data.value }
+    });
+  }
+
   render() {
 
     // eslint-disable-next-line
     const { values, touched, errors, handleChange, handleBlur, isSubmitting, handleSubmit, setFieldValue } = this.props;
-    const { activeEditorIndex } = this.state;
-    const { term, definition } = this.state;
+    const { activeTab } = this.state;
+    const { term, definition, bulkMatches } = this.state;
 
     const editorPanes = [
       {
-        menuItem: 'Match Bank', render: () =>
+        menuItem: 'Match Bank', 
+        render: () =>
           <Tab.Pane>
             <MatchBank
               term={term}
@@ -235,15 +263,12 @@ class MatchForm extends Component {
       {
         menuItem: 'Expert Mode', render: () =>
           <Tab.Pane>
-            <MatchBulkEditor
-              name="matchText"
-              rows={10}
-              cols={30}
-              label="Knowledge Bank"
-              placeholder="Konrad Zuse, German Computer Inventor\nShawn Fanning, Created Napster"
-              value={values.matchText}
-              setFieldValue={setFieldValue}
-            /></Tab.Pane>
+            <MatchBulk
+              value={bulkMatches}
+              placeholder="Term, Definition"
+              onChange={(event, data) => this.handleBulkChange(event, data)}
+            />
+          </Tab.Pane>
       },
     ];
 
@@ -271,7 +296,7 @@ class MatchForm extends Component {
               placeholder="Legends of Computer Science"
               tabIndex={1}
               disabled={isSubmitting}
-              error={errors.title}
+              error={touched.title && errors.title}
               maxlength={40}
               value={values.title}
               onBlur={handleBlur}
@@ -284,7 +309,7 @@ class MatchForm extends Component {
               placeholder="Match each legend with their accomplishment"
               tabIndex={2}
               disabled={isSubmitting}
-              error={errors.instructions}
+              error={touched.instructions && errors.instructions}
               maxlength={60}
               value={values.instructions}
               onBlur={handleBlur}
@@ -306,7 +331,7 @@ class MatchForm extends Component {
                         selection
                         compact
                         options={itemsPerBoardOptions}
-                        error={errors.itemsPerBoard}
+                        error={touched.itemsPerBoard && errors.itemsPerBoard}
                         value={values.itemsPerBoard}
                         onBlur={handleBlur}
                         setFieldValue={setFieldValue}
@@ -323,7 +348,7 @@ class MatchForm extends Component {
                         selection
                         compact
                         options={durationOptions}
-                        error={errors.duration}
+                        error={touched.duration && errors.duration}
                         value={values.duration}
                         onBlur={handleBlur}
                         setFieldValue={setFieldValue}
@@ -336,7 +361,7 @@ class MatchForm extends Component {
             <Divider hidden />
             <Tab
               panes={editorPanes}
-              activeIndex={activeEditorIndex}
+              activeIndex={activeTab}
               onTabChange={(event, props) => this.handleTabChange(event, props)}
               renderActiveOnly={true} />
           </Grid.Column>

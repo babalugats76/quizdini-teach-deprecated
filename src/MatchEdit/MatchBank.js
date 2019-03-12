@@ -1,5 +1,5 @@
 import React from 'react';
-import { Divider } from 'semantic-ui-react';
+import { Divider, Segment } from 'semantic-ui-react';
 // eslint-disable-next-line
 import PropTypes from 'prop-types';
 import MatchEditor from './MatchEditor';
@@ -41,20 +41,23 @@ const MatchBank = ({
         onEditorTouch={(field, touched) => onEditorTouch(field, touched)}
         onChange={(value, field) => onEditorChange(value, field)}
       />
-      <Button
-        secondary
-        title="Add to the Knowledge Bank"
-        icon="save"
-        size="small"
-        type="submit"
-        floated="right"
-        active={term.touched && definition.touched}
-        tabIndex={5}
-        disabled={isSubmitting}
-        onClick={(event) => onNewMatch(event)}
-      >
-        ADD
+      <Segment basic clearing>
+        <Button
+          secondary
+          floated="right"
+          title="Add to the Match Bank"
+          icon="plus"
+          positive={term.touched && definition.touched}
+          size="small"
+          type="submit"
+          active={term.touched && definition.touched}
+          tabIndex={5}
+          disabled={isSubmitting}
+          onClick={(event) => onNewMatch(event)}
+        >
+          ADD
       </Button>
+      </Segment>
     </div>
   );
 }

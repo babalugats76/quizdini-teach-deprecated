@@ -36995,8 +36995,10 @@ a.inverted.ui.card:hover,
 /* Provide space for leading accordion icon */
 
 .ui.accordion > .title > .icon:first-child {
+  position: relative;
   vertical-align: middle;
   margin: 0px 5px;
+  top: -2px;
 }
 
 /* Title must be relative so arrow can be successfully absolutely positioned */

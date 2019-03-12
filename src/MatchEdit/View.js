@@ -1,13 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import Match from './Match';
 import MatchForm from './MatchForm';
-import MatchLoader from './MatchLoader';
 import Loading from '../components/Loading';
 import Error from '../components/Error';
 
-const View = ({ loading, initialQuery, data, error, exception, onLoad, RenderMatchForm, RenderLoading, RenderError }) => (
+const View = ({ loading, initialQuery, data, error, exception, onLoad, onSave, RenderMatchForm, RenderLoading, RenderError }) => (
   <div>
-    <MatchLoader initialQuery={initialQuery} onLoad={onLoad} />
+    <Match initialQuery={initialQuery} onLoad={onLoad} />
     <div>
       {
         ((loading, data, error) => {
@@ -18,7 +18,7 @@ const View = ({ loading, initialQuery, data, error, exception, onLoad, RenderMat
             return <RenderError error={exception} />
           } else {
             console.log('rendering form with...', data);
-            return <RenderMatchForm match={data} />
+            return <RenderMatchForm match={data} onSave={onSave} />
           }
         })(loading, data, error)
       }

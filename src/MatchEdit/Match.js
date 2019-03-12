@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-class MatchLoader extends Component {
+class Match extends Component {
 
   componentDidMount() {
     const { onLoad, initialQuery } = this.props;
@@ -10,10 +10,9 @@ class MatchLoader extends Component {
   }
 
   render() {
-    return (
-      <div>Match Loader is running!</div>
-    );
+    return (<React.Fragment></React.Fragment>)
   }
+
 }
 
-export default MatchLoader;
+export default Match;

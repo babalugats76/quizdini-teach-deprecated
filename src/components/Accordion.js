@@ -61,7 +61,7 @@ class MyAccordion extends Component {
           onClick={(event, titleProps) => this.handleClick(event, titleProps)}>
           <Icon 
             icon='cog' 
-            size={20} />
+            size={15} />
           Game Options
           <Icon
             icon='arrow'

@@ -29,13 +29,12 @@ This project is the teacher front-end for Quizdini 2.0
          * Refine `newMatchSchema` validation functionality, including `touched`, etc.
          * Add `parseMatches` function; pass down to `MatchBulkEditor`
            * Figure out how to integrate [DOMPurify](https://www.npmjs.com/package/dompurify) or [html-react-parser](https://www.npmjs.com/package/html-react-parser)    
-         * Add `explodeMatches` function; pass down to `MatchBulkEditor` 
-           * Incorporate into `handleNewMatch`, updating `matchText`
-         * Conditional `MatchBulkEditor` loading
+         * ~~Add `matchToString` function~~
+           ~~Incorporate into `handleNewMatch`, updating `bulkMatches`~~
+         * ~~Conditional `MatchBulkEditor` loading~~
       * **`MatchBulkEditor`**
-         * Convert to stateless functional component
-         * Convert to use `MatchForms` Formik `onChange` function
-         * Remove use of `setFieldValue`
+         * ~~Convert to stateless functional component~~
+         * ~~Convert to use custom `onChange` function that calls `setFieldValue`, etc.~~
          * Create load button 
       * **`MatchBank`**
          * ~~Refine tab stops~~
@@ -56,11 +55,13 @@ This project is the teacher front-end for Quizdini 2.0
          * Remove inline floating label style; add appropriate CSS definitions
          * Add floating label `className` dynamically
       * **`InputTextarea`**
-         * Create using `InputText` as guide
+         * ~~Create child `TextArea` component~~
+         * Create using `InputText` as guide, i.e., include label, errors, etc.
          * Retrofit for instructions
          * Convert instructions to use
       * **`Accordian`**
          * Consider pushing `active` state up to parent component
+         * Parameterize so that things like the icon to show are passed in, etc.
    
 * Global Styling
    * Once editors are complete, consider adding style rule for buttons, using rule similar to: ```#match-bank button.labeled:not(.active):not(:hover) {
@@ -95,6 +96,7 @@ This project is the teacher front-end for Quizdini 2.0
    * MatchEditor
    * MatchForm
    * MatchGame
+   * TextArea
 
 * General Cleanup
    * **Move defunct components to `retire` folder**

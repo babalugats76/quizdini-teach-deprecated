@@ -17,13 +17,13 @@ import { Accordion } from '../components/Accordion';
 
 const transformMatch = Yup.object().shape({
   title: Yup.string()
-      .min(2, 'Title is too short')
-      .max(40, 'Title is too long')
-      .required('Title is required')
-      .default(''),
+    .min(2, 'Title is too short')
+    .max(40, 'Title is too long')
+    .required('Title is required')
+    .default(''),
   instructions: Yup.string()
-      .max(60, 'Instructions are too long')
-      .default(''),
+    .max(60, 'Instructions are too long')
+    .default(''),
   config: Yup.object({
     itemsPerBoard: Yup.number()
       .integer()
@@ -37,7 +37,7 @@ const transformMatch = Yup.object().shape({
       .min(60, 'Games must last at 1 minute long')
       .max(300, 'Game may last no more than 5 minutes')
       .default(180)
-    }),
+  }),
 });
 
 const validateMatch = Yup.object().shape(
@@ -52,7 +52,7 @@ const validateMatch = Yup.object().shape(
       .integer()
       .positive()
       .min(4, 'You must have at least 4 items per board')
-      .max(5, 'You may have no more than 5 items per board'),
+      .max(9, 'You may have no more than 9 items per board'),
     duration: Yup.number()
       .integer()
       .positive()
@@ -94,6 +94,12 @@ const durationOptions = [
   { text: '300', value: 300 },
 ];
 
+const matchToString = (matches) => {
+  return matches.reduce((accum, vals) => { 
+    return accum + vals.term + ', ' + vals.definition + '\n'; 
+  }, '' );
+}
+
 class MatchForm extends Component {
 
   static MATCH_TAB = 0;
@@ -101,7 +107,6 @@ class MatchForm extends Component {
 
   state = {
     activeTab: MatchForm.MATCH_TAB,
-    bulkMatches: '',
     term: {
       value: HtmlSerializer.deserialize(''),
       touched: false
@@ -128,10 +133,9 @@ class MatchForm extends Component {
     event.preventDefault();
     const activeTab = data.activeIndex;  // activeIndex is the current tab pane
     this.setState((state, props) => {
-      if (activeTab === MatchForm.BULK_TAB) {   
-        console.log('transform matches to BulkMatches...')
+      return {
+        activeTab: activeTab
       }
-      return { activeTab: activeTab }
     })
   }
 
@@ -187,12 +191,13 @@ class MatchForm extends Component {
     newMatchSchema(matches)
       .validate({ term: termHtml, definition: definitionHtml }, { abortEarly: false })     // Validate serialized term and definition
       .then((valid) => {                                                                   // If valid, merge into matches
-        const updatedMatches = [
+        const updated = [
           {
             term: termHtml,
             definition: definitionHtml
           }, ...matches];
-        setFieldValue('matches', updatedMatches);                                          // Update Formik state
+        setFieldValue('matches', updated);                                                 // Update Formik state
+        setFieldValue('bulkMatches', matchToString(updated));                              // Format bulkMatches then update Formik state
         this.handleEditorChange({ value: HtmlSerializer.deserialize('') }, 'term');        // Reset editors' contents
         this.handleEditorChange({ value: HtmlSerializer.deserialize('') }, 'definition');
         this.setFieldError('term', '');                                                    // Clear errors
@@ -209,18 +214,19 @@ class MatchForm extends Component {
     this.handleEditorTouch('definition', false);
   }
 
- /** 
-  * Remove a match from the matches
-  * 
-  * @param {String} term The term to be removed from matches 
-  */
+  /** 
+   * Remove a match from the matches
+   * 
+   * @param {String} term The term to be removed from matches 
+   */
   handleMatchDelete = (event, term) => {
     console.log('handleMatchDelete fired...', term);
     event.preventDefault();
     const { setFieldValue } = this.props;    // Get function used to update matches (from Formik)
     const { matches } = this.props.values;   // Get matches array (from Formik)    
-    const filteredMatches = matches.filter((match) => { return match.term !== term; }); // Filter out term
-    setFieldValue('matches', filteredMatches); // Update state (in Formik) with matches minus term
+    const filtered = matches.filter((match) => { return match.term !== term; }); // Filter out term
+    setFieldValue('matches', filtered); // Update state (in Formik) with matches minus term
+    setFieldValue('bulkMatches', matchToString(filtered)); // Format bulkMatches then update Formik state
   }
 
   /**
@@ -229,12 +235,9 @@ class MatchForm extends Component {
    * Update state with new `value` from textarea
    */
   handleBulkChange = (event, data) => {
-    console.log('Updating bulk matches in state...');
-    console.log('Data', data.value);
     event.preventDefault();
-    this.setState((state, props) => {
-      return { bulkMatches: data.value }
-    });
+    const { setFieldValue } = this.props;
+    setFieldValue('bulkMatches', data.value);
   }
 
   render() {
@@ -242,11 +245,11 @@ class MatchForm extends Component {
     // eslint-disable-next-line
     const { values, touched, errors, handleChange, handleBlur, isSubmitting, handleSubmit, setFieldValue } = this.props;
     const { activeTab } = this.state;
-    const { term, definition, bulkMatches } = this.state;
+    const { term, definition } = this.state;
 
     const editorPanes = [
       {
-        menuItem: 'Match Bank', 
+        menuItem: 'Match Bank',
         render: () =>
           <Tab.Pane>
             <MatchBank
@@ -264,7 +267,7 @@ class MatchForm extends Component {
         menuItem: 'Expert Mode', render: () =>
           <Tab.Pane>
             <MatchBulk
-              value={bulkMatches}
+              value={values.bulkMatches}
               placeholder="Term, Definition"
               onChange={(event, data) => this.handleBulkChange(event, data)}
             />
@@ -280,11 +283,11 @@ class MatchForm extends Component {
           active
           title="Save Game"
           icon="save"
-          size="small"
+          size="large"
           type="submit"
           tabIndex={6}
           disabled={isSubmitting}>
-          Save
+          SAVE
         </Button>
         <Divider hidden />
         <Grid columns={2} stackable>
@@ -331,7 +334,7 @@ class MatchForm extends Component {
                         selection
                         compact
                         options={itemsPerBoardOptions}
-                        error={touched.itemsPerBoard && errors.itemsPerBoard}
+                        error={errors.itemsPerBoard}
                         value={values.itemsPerBoard}
                         onBlur={handleBlur}
                         setFieldValue={setFieldValue}
@@ -348,7 +351,7 @@ class MatchForm extends Component {
                         selection
                         compact
                         options={durationOptions}
-                        error={touched.duration && errors.duration}
+                        error={errors.duration}
                         value={values.duration}
                         onBlur={handleBlur}
                         setFieldValue={setFieldValue}
@@ -386,6 +389,7 @@ export default withFormik({
   validateOnChange: true,
   validateOnBlur: true,
   mapPropsToValues: ({ match }) => {
+    console.log('Mapping props to values...');
     // Cast and transform incoming data as appropriate
     const data = transformMatch.cast({ match });
     // Flatten and map (for use in `values`)
@@ -394,12 +398,14 @@ export default withFormik({
       instructions: data.match.instructions,
       itemsPerBoard: data.config.itemsPerBoard,
       duration: data.config.duration,
-      matches: data.match.matches
+      matches: data.match.matches,
+      bulkMatches: matchToString(data.match.matches)
     }
   },
   validationSchema: validateMatch,
   handleSubmit: (values, formikBag) => {
-    const { onSubmit } = formikBag.props;
-    onSubmit(values, formikBag);
+    const { onSave } = formikBag.props;
+    const { setSubmitting } = formikBag;
+    onSave(values, setSubmitting);
   },
 })(MatchForm);

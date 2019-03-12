@@ -33,10 +33,11 @@ This project is the teacher front-end for Quizdini 2.0
          * ~~Add `matchToString` function~~
            ~~Incorporate into `handleNewMatch`, updating `bulkMatches`~~
          * ~~Conditional `MatchBulkEditor` loading~~
-      * **`MatchBulkEditor`**
+      * **`MatchBulk`**
          * ~~Convert to stateless functional component~~
          * ~~Convert to use custom `onChange` function that calls `setFieldValue`, etc.~~
-         * Create load button 
+         * Create load button
+         * Add ability to disable, e.g., make readonly based upon `isSubmitting` 
       * **`MatchBank`**
          * ~~Refine tab stops~~
       * **`MatchTable`**

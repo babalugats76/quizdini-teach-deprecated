@@ -27,16 +27,18 @@ This project is the teacher front-end for Quizdini 2.0
             * Cancel
             * Back?
          * Refine `newMatchSchema` validation functionality, including `touched`, etc.
-         * Add `parseMatches`and `handleBulkPaste` function; pass down to `MatchBulkEditor`
-           * Install `csv-parse` and consider adding using [Sync API](https://csv.js.org/parse/api/#sync-api) in order to allow for otherwise problematic parsing of string-enclosed data, etc.
-           * Figure out how to integrate [DOMPurify](https://www.npmjs.com/package/dompurify) or [html-react-parser](https://www.npmjs.com/package/html-react-parser)    
+         * Add de-duping functionality to `parseMatch`
+         * ~~Add `handleBulkPaste` function; pass down to `MatchBulkEditor` ~~
+           * ~~Install `csv-parse` and consider adding using [Sync API](https://csv.js.org/parse/api/#sync-api) in order to allow for otherwise problematic parsing of string-enclosed data, etc.~~
+           * ~~Figure out how to integrate [DOMPurify](https://www.npmjs.com/package/dompurify) or [html-react-parser](https://www.npmjs.com/package/html-react-parser)~~    
          * ~~Add `matchToString` function~~
            ~~Incorporate into `handleNewMatch`, updating `bulkMatches`~~
          * ~~Conditional `MatchBulkEditor` loading~~
       * **`MatchBulk`**
          * ~~Convert to stateless functional component~~
          * ~~Convert to use custom `onChange` function that calls `setFieldValue`, etc.~~
-         * Create load button
+         * Create UPDATE button
+         * Wire UPDATE function to some abstracted version of `parseMatch` 
          * Add ability to disable, e.g., make readonly based upon `isSubmitting` 
       * **`MatchBank`**
          * ~~Refine tab stops~~

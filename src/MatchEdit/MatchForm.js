@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { withFormik } from 'formik';
 import * as Yup from 'yup';
+import parse from 'csv-parse/lib/sync';
+import DOMPurify from 'dompurify';
 
 import Button from '../components/Button';
 import InputText from '../components/InputText';
@@ -94,10 +96,12 @@ const durationOptions = [
   { text: '300', value: 300 },
 ];
 
+const PURIFY_OPTS = { ALLOWED_TAGS: ['u', 'code', 'sup', 'sub'], ALLOWED_ATTR: [''] };
+
 const matchToString = (matches) => {
   return matches.reduce((accum, vals) => { 
     return accum + vals.term + ', ' + vals.definition + '\n'; 
-  }, '' );
+  }, '');
 }
 
 /**
@@ -114,32 +118,31 @@ const matchToString = (matches) => {
  * @return {Array} Parsed matches.
  */
 const parseMatch = (bulkMatches) => {
-
-  let lines = bulkMatches.split('\n');       // Split text (into array) on newline
-  let matches = new Array(0).fill(null);     // Create empty array (to store matches)
-
-  lines.reduce((pairs, line) => {            // Reduce array of lines to valid ones
-    let vals = line.split(',') || [];        // Further split line based upon (,) comma
-    if (!Array.isArray(vals)                 // If NOT an array
-      || !vals.length                        // OR...if length property is NOT defined 
-      || vals.length < 2                     // OR...if array contains less than 2 items
-      || vals[0].trim().length === 0         // OR...if first item is empty (once whitespace is removed)
-      || vals[1].trim().length === 0) {      // OR...if second item is empty (once whitespace is removed)
-      return matches;                        // Skip processing by returning work-in-process matches array
+  
+  const parsed = parse(bulkMatches, {           // Use csv-parse
+    columns: ['term', 'definition'],            // Give our two columns a name
+    skip_empty_lines: true,                     // Skip empty lines, e.g., \n
+    skip_lines_with_error: true,                // Ignore failed lines, e.g, misused quotes
+    rtrim: true,                                // Remove whitespace from the right         
+    ltrim: true,                                // Remove whitespace from the left
+    relax_column_count: true                    // Do not throw error on invalid # of columns
+  });
+  
+  // finally, sanitize both columns
+  let matches = new Array(0).fill(null);                               // Create empty array (to store matches)
+  parsed.reduce((accum, match) => {                                    // Reduce array of lines to valid ones
+    let t = DOMPurify.sanitize(match.term.trim(), PURIFY_OPTS);        // Trim and HTML sanitize term
+    let d = DOMPurify.sanitize(match.definition.trim(), PURIFY_OPTS);  // Trim and HTML sanizie definition
+    if (t.length !== 0 && d.length !== 0) {                            // Push if fields are non-empty
+      accum.push({"term": t, "definition": d}); 
     }
-    
-    return matches.push({                    // Otherwise, add to work-in-progress array
-      "term": vals[0].trim(),                // Map first item to "term" and remove whitespace
-      "definition": vals[1].trim()           // Map second item to "definition" and remove whitespace
-    });
+    return accum;                                                      // In all cases, pass back work-in-progress array
+  }, matches);                                                         // start with empty array (created earlier)
 
-  }, matches); // start by passing in newly-created, empty matches array
-  
-  // Add sanitize
-  
-  // Dedup array before returning
+  // Add de-duplication mechanism here
 
-  return matches;
+  return matches;  
+
 }
 
 class MatchForm extends Component {
@@ -273,12 +276,13 @@ class MatchForm extends Component {
 
   /**
    * @param {Event} event Event to handle.
-   * @param {Object} data Contains all form data and props.
-   * Update state with new `value` from textarea
+   * @param {Object} data Contains components data value and props.
+   * Update state with new `value` from textarea  
    */
   handleBulkChange = (event, data) => {
     console.log('Change to bulk matches detected...');
     event.preventDefault();
+    console.log(data);
     const { setFieldValue } = this.props;
     setFieldValue('bulkMatches', data.value);
   }
@@ -292,7 +296,7 @@ class MatchForm extends Component {
     console.log(parsed);
     setFieldValue('matches', parsed);                        // Update matches in Formik state
     setFieldValue('bulkMatches', matchToString(parsed));     // Flatten parsed matches
-   // setFieldValue('bulkMatches', pasted);                  // Use During development while mucking stuff up
+    //setFieldValue('bulkMatches', pasted);                  // Use During development while mucking stuff up
   }
 
   render() {

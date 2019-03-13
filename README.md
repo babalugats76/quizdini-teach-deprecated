@@ -28,7 +28,7 @@ This project is the teacher front-end for Quizdini 2.0
             * Back?
          * Refine `newMatchSchema` validation functionality, including `touched`, etc.
          * Add de-duping functionality to `parseMatch`
-         * ~~Add `handleBulkPaste` function; pass down to `MatchBulkEditor` ~~
+         * ~~Add `handleBulkPaste` function; pass down to `MatchBulkEditor`~~
            * ~~Install `csv-parse` and consider adding using [Sync API](https://csv.js.org/parse/api/#sync-api) in order to allow for otherwise problematic parsing of string-enclosed data, etc.~~
            * ~~Figure out how to integrate [DOMPurify](https://www.npmjs.com/package/dompurify) or [html-react-parser](https://www.npmjs.com/package/html-react-parser)~~    
          * ~~Add `matchToString` function~~

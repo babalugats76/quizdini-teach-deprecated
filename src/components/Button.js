@@ -24,8 +24,8 @@ MyButton.propTypes = {
 };
 
 MyButton.defaultProps = {
-  type: 'submit',  // Pass as="label" and provide events to simulate default type="button" behavior
-  labelPosition: 'left'
+  type: "submit",  // Pass as="label" and provide events to simulate default type="button" behavior
+  labelPosition: "left"
 };
 
 export default MyButton;

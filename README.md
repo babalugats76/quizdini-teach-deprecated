@@ -27,7 +27,7 @@ This project is the teacher front-end for Quizdini 2.0
             * Cancel
             * Back?
          * Refine `newMatchSchema` validation functionality, including `touched`, etc.
-         * Add de-duping functionality to `parseMatch`
+         * ~~Add de-duping functionality to `parseMatch`~~
          * ~~Add `handleBulkPaste` function; pass down to `MatchBulkEditor`~~
            * ~~Install `csv-parse` and consider adding using [Sync API](https://csv.js.org/parse/api/#sync-api) in order to allow for otherwise problematic parsing of string-enclosed data, etc.~~
            * ~~Figure out how to integrate [DOMPurify](https://www.npmjs.com/package/dompurify) or [html-react-parser](https://www.npmjs.com/package/html-react-parser)~~    
@@ -56,6 +56,11 @@ This project is the teacher front-end for Quizdini 2.0
       * **`InputFeedback`**
          * Figure out which Semantic component to wrap
          * Develop and incorporate as appropriate into other `Input*` components
+      * **`InputFile`**
+         * Test `onChange` function and accessing files' contents
+         * Add `accepts` and other attributes
+         * Investigate whether use of `ref` is necessary
+         * Move up to `MatchForm` (if appropriate) 
       * **`InputText`**
          * Reexamine whether floating label should be pulled out into its own Component
          * Remove inline floating label style; add appropriate CSS definitions

@@ -1,5 +1,4 @@
 import React from 'react';
-// eslint-disable-next-line
 import { Form, Input, Label } from 'semantic-ui-react';
 import InputFeedback from './InputFeedback';
 import PropTypes from 'prop-types';
@@ -46,7 +45,7 @@ const InputText = ({ type, name, label, maxlength, error, value, onChange, ...pr
         focus
         {...props}
       >
-        <Label>{label}</Label>
+        <Label as="label">{label}</Label>
         <span
           style={{
             ...floatingLabel,

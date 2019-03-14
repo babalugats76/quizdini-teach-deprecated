@@ -99,8 +99,8 @@ const durationOptions = [
 const PURIFY_OPTS = { ALLOWED_TAGS: ['u', 'code', 'sup', 'sub'], ALLOWED_ATTR: [''] };
 
 const matchToString = (matches) => {
-  return matches.reduce((accum, vals) => { 
-    return accum + vals.term + ', ' + vals.definition + '\n'; 
+  return matches.reduce((accum, vals) => {
+    return accum + vals.term + ', ' + vals.definition + '\n';
   }, '');
 }
 
@@ -118,7 +118,7 @@ const matchToString = (matches) => {
  * @return {Array} Parsed matches.
  */
 const parseMatch = (bulkMatches) => {
-  
+
   const parsed = parse(bulkMatches, {           // Use csv-parse
     columns: ['term', 'definition'],            // Give our two columns a name
     skip_empty_lines: true,                     // Skip empty lines, e.g., \n
@@ -127,21 +127,23 @@ const parseMatch = (bulkMatches) => {
     ltrim: true,                                // Remove whitespace from the left
     relax_column_count: true                    // Do not throw error on invalid # of columns
   });
-  
-  // finally, sanitize both columns
-  let matches = new Array(0).fill(null);                               // Create empty array (to store matches)
-  parsed.reduce((accum, match) => {                                    // Reduce array of lines to valid ones
-    let t = DOMPurify.sanitize(match.term.trim(), PURIFY_OPTS);        // Trim and HTML sanitize term
-    let d = DOMPurify.sanitize(match.definition.trim(), PURIFY_OPTS);  // Trim and HTML sanizie definition
-    if (t.length !== 0 && d.length !== 0) {                            // Push if fields are non-empty
-      accum.push({"term": t, "definition": d}); 
+
+  // finally, sanitize, dedup both columns
+  let matches = new Array(0).fill(null);                                          // Create empty array (to store matches)
+  let uniqueTerms = new Map();                                                    // Create empty map (to store terms seen thus far)
+  parsed.reduce((accum, match) => {                                               // Reduce array of lines to valid ones
+    const term = DOMPurify.sanitize(match.term.trim(), PURIFY_OPTS);              // Trim and HTML sanitize term
+    const definition = DOMPurify.sanitize(match.definition.trim(), PURIFY_OPTS);  // Trim and HTML sanizie definition
+    if (term.length !== 0                                                         // Push if fields are non-empty
+      && definition.length !== 0
+      && !uniqueTerms.has(term)) {                                                // Skip if term is a duplicate          
+      uniqueTerms.set(term, true);                                                // Keep track of terms seen so far
+      accum.push({ term, definition });                                           // Add to results
     }
-    return accum;                                                      // In all cases, pass back work-in-progress array
-  }, matches);                                                         // start with empty array (created earlier)
+    return accum;                                                                 // In all cases, pass back work-in-progress array
+  }, matches);                                                                    // start with empty array (created earlier)
 
-  // Add de-duplication mechanism here
-
-  return matches;  
+  return matches;                                                                 // Return results
 
 }
 

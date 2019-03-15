@@ -17,6 +17,7 @@ This project is the teacher front-end for Quizdini 2.0
             * ~~Error~~
       * **`MatchForm`**
          * ~~Create references for `MatchEditor` and pass down to `MatchBank`, etc. using what we learned [here](https://codesandbox.io/s/vv110zn39l?fontsize=14)~~
+         * **Pull out common code to `updateMatches` function and refactor**
          * Add high-level form-level validation 
             * Not enough matches
          * Refine `matchSchema`
@@ -57,10 +58,12 @@ This project is the teacher front-end for Quizdini 2.0
          * Figure out which Semantic component to wrap
          * Develop and incorporate as appropriate into other `Input*` components
       * **`InputFile`**
-         * Test `onChange` function and accessing files' contents
-         * Add `accepts` and other attributes
+         * ~~Test `onChange` function and accessing files' contents~~
+         * ~~Add `accepts` and other attributes~~
          * Investigate whether use of `ref` is necessary
-         * Move up to `MatchForm` (if appropriate) 
+         * ~~Move up to `MatchForm` (if appropriate)~~
+         * **Cleanup and comment `handleFileChange` function**
+         * Test adding `progress` event and printing out to console; see [this article](https://stackoverflow.com/questions/16443440/how-to-implement-progress-bar-and-callbacks-with-async-nature-of-the-filereader)
       * **`InputText`**
          * Reexamine whether floating label should be pulled out into its own Component
          * Remove inline floating label style; add appropriate CSS definitions

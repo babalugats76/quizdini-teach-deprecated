@@ -132,8 +132,9 @@ const parseMatch = (bulkMatches) => {
   let matches = new Array(0).fill(null);                                          // Create empty array (to store matches)
   let uniqueTerms = new Map();                                                    // Create empty map (to store terms seen thus far)
   parsed.reduce((accum, match) => {                                               // Reduce array of lines to valid ones
+    if (!match.term || !match.definition) { return accum; }                       // Do not attempt to parse if contents do not exist
     const term = DOMPurify.sanitize(match.term.trim(), PURIFY_OPTS);              // Trim and HTML sanitize term
-    const definition = DOMPurify.sanitize(match.definition.trim(), PURIFY_OPTS);  // Trim and HTML sanizie definition
+    const definition = DOMPurify.sanitize(match.definition.trim(), PURIFY_OPTS);  // Trim and HTML sanitize definition
     if (term.length !== 0                                                         // Push if fields are non-empty
       && definition.length !== 0
       && !uniqueTerms.has(term)) {                                                // Skip if term is a duplicate          
@@ -289,6 +290,10 @@ class MatchForm extends Component {
     setFieldValue('bulkMatches', data.value);
   }
 
+  /**
+   * @param {Event} event Event to handle.
+   * Process bulk matches, updating Formik state  
+   */
   handleBulkPaste = (event) => {
     console.log('Paste to bulk matches detected...');
     event.preventDefault();                                  // Prevent default
@@ -298,7 +303,34 @@ class MatchForm extends Component {
     console.log(parsed);
     setFieldValue('matches', parsed);                        // Update matches in Formik state
     setFieldValue('bulkMatches', matchToString(parsed));     // Flatten parsed matches
-    //setFieldValue('bulkMatches', pasted);                  // Use During development while mucking stuff up
+  }
+
+  handleFileChange = (event) => {
+
+    event.preventDefault();
+
+    if (event.target.files.length) { // Assumes single file processing
+      const file = event.target.files[0];
+      const contents = event.target.files[0].slice(0, file.size, '');  // 0, size, '' are defaults
+      let reader = new FileReader();
+      const { setFieldValue } = this.props;                    // Grab Formik function (to update state)
+
+      reader.onload = (function (file, setFieldValue, parseMatch, matchToString) { // Closure which allows access to file and results
+        return function (event) {
+          console.log(`Loaded ${file.size} bytes from ${file.name}...`);
+          if (event.target.result) {                    
+            const parsed = parseMatch(event.target.result);          // Split, Sanitize, Dedup -> array of matches
+            console.log(event.target.result);
+            setFieldValue('matches', parsed);                        // Update matches in Formik state
+            setFieldValue('bulkMatches', matchToString(parsed));     // Flatten parsed matches
+          }
+        }
+      })(file, setFieldValue, parseMatch, matchToString);
+
+      reader.readAsText(contents, 'UTF-8');
+
+    }
+
   }
 
   render() {
@@ -330,8 +362,9 @@ class MatchForm extends Component {
             <MatchBulk
               value={values.bulkMatches}
               placeholder="Term, Definition"
-              onChange={(event, data) => this.handleBulkChange(event, data)}
-              onPaste={(event) => this.handleBulkPaste(event)}
+              onBulkChange={(event, data) => this.handleBulkChange(event, data)}
+              onBulkPaste={(event) => this.handleBulkPaste(event)}
+              onFileChange={(event) => this.handleFileChange(event)}
             />
           </Tab.Pane>
       },

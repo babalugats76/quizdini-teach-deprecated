@@ -155,6 +155,8 @@ class MatchForm extends Component {
 
   state = {
     activeTab: MatchForm.MATCH_TAB,
+    activePage: 1,
+    itemsPerPage: 11,
     term: {
       value: HtmlSerializer.deserialize(''),
       touched: false
@@ -184,7 +186,17 @@ class MatchForm extends Component {
       return {
         activeTab: activeTab
       }
-    })
+    });
+  }
+
+  handlePageChange = (event, data) => {
+    event.preventDefault();
+    const activePage = data.activePage;
+    this.setState((state, props) => {
+      return {
+        activePage: activePage
+      }
+    });
   }
 
   /**
@@ -337,7 +349,7 @@ class MatchForm extends Component {
 
     // eslint-disable-next-line
     const { values, touched, errors, handleChange, handleBlur, isSubmitting, handleSubmit, setFieldValue } = this.props;
-    const { activeTab } = this.state;
+    const { activeTab, activePage, itemsPerPage } = this.state;
     const { term, definition } = this.state;
 
     const editorPanes = [
@@ -460,15 +472,18 @@ class MatchForm extends Component {
             <Tab
               panes={editorPanes}
               activeIndex={activeTab}
-              onTabChange={(event, props) => this.handleTabChange(event, props)}
+              onTabChange={(event, data) => this.handleTabChange(event, data)}
               renderActiveOnly={true} />
           </Grid.Column>
           <Grid.Column computer={8} mobile={16} tablet={16}>
             <MatchTable
               id="table-match"
               matches={values.matches}
+              activePage={activePage}
+              itemsPerPage={itemsPerPage}
               disabled={isSubmitting}
               onMatchDelete={(event, term) => this.handleMatchDelete(event, term)}
+              onPageChange={(event, data) => this.handlePageChange(event, data)}
             />
           </Grid.Column>
         </Grid>

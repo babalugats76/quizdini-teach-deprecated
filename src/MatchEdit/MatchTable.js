@@ -1,6 +1,6 @@
 import React from 'react';
 // eslint-disable-next-line
-import { Header, Table } from 'semantic-ui-react';
+import { Table, Pagination } from 'semantic-ui-react';
 // eslint-disable-next-line
 import Icon from '../components/Icon';
 // eslint-disable-next-line
@@ -16,17 +16,18 @@ const createMarkup = (html) => {
 // eslint-disable-next-line
 const renderCell = (value) => (<span dangerouslySetInnerHTML={{ __html: value }} />)
 
-/*<Table.Cell>{val.term}</Table.Cell>
-<Table.Cell>{val.definition}</Table.Cell>*/
-
-const renderRows = (matches, disabled, onMatchDelete) => {
-  return matches.map((val, idx) => {
+const renderRows = (matches, disabled, activePage, itemsPerPage, onMatchDelete) => {
+  return matches.filter((element, index) => {
+    const start = (activePage * itemsPerPage) - itemsPerPage;
+    const end = (activePage * itemsPerPage) - 1;
+    return index >= start && index <= end;
+  }).map((val, idx) => {
     return (
       <Table.Row key={val.term} disabled={disabled} >
         <Table.Cell>{renderCell(val.term)}</Table.Cell>
         <Table.Cell>{renderCell(val.definition)}</Table.Cell>
         <Table.Cell>
-          <button title={`Delete ${val.term}`} onClick={(event) => onMatchDelete(event, val.term)} >
+          <button title={`Delete ${val.term}`} onClick={(event, term) => onMatchDelete(event, val.term)} >
             <Icon
               icon="trash"
               size={16} />
@@ -37,27 +38,50 @@ const renderRows = (matches, disabled, onMatchDelete) => {
   });
 }
 
-const MatchTable = ({ id, matches, disabled, onMatchDelete }) => {
-  const rows = renderRows(matches, disabled, onMatchDelete);
+const renderPagination = (activePage, totalPages, onPageChange) => {
   return (
-    <Table id={id} compact>
-      <Table.Header>
-        <Table.Row>
-          <Table.HeaderCell>Term</Table.HeaderCell>
-          <Table.HeaderCell>Definition</Table.HeaderCell>
-          <Table.HeaderCell></Table.HeaderCell>
-        </Table.Row>
-      </Table.Header>
-      <Table.Body>
-        {
-          matches.length > 0
-            ? rows
-            : (<Table.Row disabled={disabled}>
-              <Table.Cell>No matches...</Table.Cell>
-            </Table.Row>)
-        }
-      </Table.Body>
-    </Table>);
+    <Pagination
+      activePage={activePage}
+      totalPages={totalPages}
+      siblingRange={1}
+      onPageChange={(event, data) => onPageChange(event, data)}
+    />
+  );
+}
+
+const MatchTable = ({ id, matches, activePage, itemsPerPage, disabled, onMatchDelete, onPageChange }) => {
+  const totalPages = Math.ceil((matches.length ? matches.length : 0) / itemsPerPage);
+  console.log('Matches (length)', matches.length);
+  console.log('Total Pages', totalPages);
+  const rows = renderRows(matches, disabled, activePage, itemsPerPage, onMatchDelete);
+  const pagination = renderPagination(activePage, totalPages, onPageChange);
+  return (
+    <React.Fragment>
+      <Table 
+        id={id}>
+        <Table.Header>
+          <Table.Row>
+            <Table.HeaderCell>Term</Table.HeaderCell>
+            <Table.HeaderCell>Definition</Table.HeaderCell>
+            <Table.HeaderCell></Table.HeaderCell>
+          </Table.Row>
+        </Table.Header>
+        <Table.Body>
+          {
+            matches.length > 0
+              ? rows
+              : (<Table.Row disabled={disabled}>
+                <Table.Cell>No matches...</Table.Cell>
+              </Table.Row>)
+          }
+        </Table.Body>
+      </Table>
+      {
+        totalPages > 1
+          ? pagination
+          : null
+      }
+    </React.Fragment>);
 }
 
 MatchTable.propTypes = {

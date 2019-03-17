@@ -5,50 +5,26 @@ This project is the teacher front-end for Quizdini 2.0
 * Match Authoring
    * Components
       * **`MatchGame`**
-         * ~~Create an up-to-date sample json file to use in testing~~
          * Convert to dumb functional component (if possible)
-         * ~~Fetch from API e.g., start with call to static `.json`~~
+         * Refine fetch and save from API to use axios, etc.
          * Save to API 
-         * Create Related Components/scripts
-            * ~~View~~
-            * ~~loadData~~
-            * ~~index.js~~
-            * ~~Loading~~
-            * ~~Error~~
       * **`MatchForm`**
-         * ~~Create references for `MatchEditor` and pass down to `MatchBank`, etc. using what we learned [here](https://codesandbox.io/s/vv110zn39l?fontsize=14)~~
-         * **Pull out common code to `updateMatches` function and refactor**
          * Add high-level form-level validation 
             * Not enough matches
          * Refine `matchSchema`
-         * ~~Add term-based `removeMatch` function (for use by `MatchTable`)~~
          * Create button group (if necessary)
          * Create additional buttons 
             * Delete
             * Cancel
             * Back?
          * Refine `newMatchSchema` validation functionality, including `touched`, etc.
-         * ~~Add de-duping functionality to `parseMatch`~~
-         * ~~Add `handleBulkPaste` function; pass down to `MatchBulkEditor`~~
-           * ~~Install `csv-parse` and consider adding using [Sync API](https://csv.js.org/parse/api/#sync-api) in order to allow for otherwise problematic parsing of string-enclosed data, etc.~~
-           * ~~Figure out how to integrate [DOMPurify](https://www.npmjs.com/package/dompurify) or [html-react-parser](https://www.npmjs.com/package/html-react-parser)~~    
-         * ~~Add `matchToString` function~~
-           ~~Incorporate into `handleNewMatch`, updating `bulkMatches`~~
-         * ~~Conditional `MatchBulkEditor` loading~~
       * **`MatchBulk`**
-         * ~~Convert to stateless functional component~~
-         * ~~Convert to use custom `onChange` function that calls `setFieldValue`, etc.~~
          * Create UPDATE button
          * Wire UPDATE function to some abstracted version of `parseMatch` 
          * Add ability to disable, e.g., make readonly based upon `isSubmitting` 
       * **`MatchBank`**
-         * ~~Refine tab stops~~
       * **`MatchTable`**
-         * ~~Add Delete Button~~
-         * ~~Pass `removeMatch` function down as prop~~ 
          * Add ability to disable delete button, e.g., based upon `isSubmitting`
-         * ~~Consider wrapping in pagination component (depending upon space, etc.)~~
-         * ~~Determine resolution to delete last Page 2 item edge case bug~~
          * Wrap MatchTable in segment with `min-height` and try to position/attached Table and Pagination in a stable way
       * **`FormatToolbar`**
          * Consider converting to use SUI's `IconGroup`
@@ -60,18 +36,12 @@ This project is the teacher front-end for Quizdini 2.0
          * Figure out which Semantic component to wrap
          * Develop and incorporate as appropriate into other `Input*` components
       * **`InputFile`**
-         * ~~Test `onChange` function and accessing files' contents~~
-         * ~~Add `accepts` and other attributes~~
-         * ~~Investigate whether use of `ref` is necessary~~
-         * ~~Move up to `MatchForm` (if appropriate)~~
-         * ~~Cleanup and comment `handleFileChange` function~~
          * Test adding `progress` event and printing out to console; see [this article](https://stackoverflow.com/questions/16443440/how-to-implement-progress-bar-and-callbacks-with-async-nature-of-the-filereader)
       * **`InputText`**
          * Reexamine whether floating label should be pulled out into its own Component
          * Remove inline floating label style; add appropriate CSS definitions
          * Add floating label `className` dynamically
       * **`InputTextarea`**
-         * ~~Create child `TextArea` component~~
          * Create using `InputText` as guide, i.e., include label, errors, etc.
          * Retrofit for instructions
          * Convert instructions to use

@@ -47,7 +47,9 @@ This project is the teacher front-end for Quizdini 2.0
          * ~~Add Delete Button~~
          * ~~Pass `removeMatch` function down as prop~~ 
          * Add ability to disable delete button, e.g., based upon `isSubmitting`
-         * Consider wrapping in pagination component (depending upon space, etc.)
+         * ~~Consider wrapping in pagination component (depending upon space, etc.)~~
+         * ~~Determine resolution to delete last Page 2 item edge case bug~~
+         * Wrap MatchTable in segment with `min-height` and try to position/attached Table and Pagination in a stable way
       * **`FormatToolbar`**
          * Consider converting to use SUI's `IconGroup`
          * Consider renaming
@@ -60,9 +62,9 @@ This project is the teacher front-end for Quizdini 2.0
       * **`InputFile`**
          * ~~Test `onChange` function and accessing files' contents~~
          * ~~Add `accepts` and other attributes~~
-         * Investigate whether use of `ref` is necessary
+         * ~~Investigate whether use of `ref` is necessary~~
          * ~~Move up to `MatchForm` (if appropriate)~~
-         * **Cleanup and comment `handleFileChange` function**
+         * ~~Cleanup and comment `handleFileChange` function~~
          * Test adding `progress` event and printing out to console; see [this article](https://stackoverflow.com/questions/16443440/how-to-implement-progress-bar-and-callbacks-with-async-nature-of-the-filereader)
       * **`InputText`**
          * Reexamine whether floating label should be pulled out into its own Component

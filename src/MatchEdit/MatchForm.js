@@ -105,16 +105,16 @@ const matchToString = (matches) => {
 }
 
 /**
- * Converts bulk string of matches to a properly-formatted array
- * Term and definition values should be comma-delimited
- * Each "match" item should be newline-delimited
+ * Converts bulk string of matches to a properly-formatted array.
+ * Term and definition values should be comma-delimited.
+ * Each "match" item should be newline-delimited.
  * 
  * This function performs three major functions
  *    Parsing - Splitting text into matches
  *    Sanitizing - Insuring that all inline HTML is safe
  *    Dedup - Enforcing the business rule that matches shall be unique
  * 
- * @param {String} bulkMatches Match content to parse.
+ * @param {string} bulkMatches Match content to parse.
  * @return {Array} Parsed matches.
  */
 const parseMatch = (bulkMatches) => {
@@ -175,35 +175,47 @@ class MatchForm extends Component {
   };
 
   /**
+   * Update state with new value for the active editor tab.
+   * 
    * @param {Event} event Event to handle.
-   * @param {Object} data Contains all form data and props, including activeIndex
-   * Update state with new active editor tab
+   * @param {Object} data Contains all form data and props, including activeIndex.
    */
   handleTabChange = (event, data) => {
     event.preventDefault();
     const activeTab = data.activeIndex;  // activeIndex is the current tab pane
     this.setState((state, props) => {
-      return {
-        activeTab: activeTab
-      }
-    });
-  }
-
-  handlePageChange = (event, data) => {
-    event.preventDefault();
-    const activePage = data.activePage;
-    this.setState((state, props) => {
-      return {
-        activePage: activePage
-      }
+      return { activeTab: activeTab }
     });
   }
 
   /**
-   * Update state with new `value` (Map) of the editor
+   * Update state with new value for the active page in match paginator.
+   * 
+   * @param {Event} event Event to handle.
+   * @param {Object} data Contains all form data and props, including activePage.
+   */
+  handlePageChange = (event, data) => {
+    event.preventDefault();
+    const activePage = data.activePage;
+    this.setActivePage(activePage);
+  }
+
+  /**
+   * Update state with new `activePage` value of the paginator.
+   * 
+   * @param {number} activePage Value to set for activePage. 
+   */
+  setActivePage = (activePage) => {
+    this.setState((state, props) => {
+      return { activePage }
+    });
+  }
+
+  /**
+   * Update state with new `value` (Map) of the editor.
    *
-   * @param {Editor} editor Editor object to grab `value` from
-   * @param {String} field Name of the field
+   * @param {Editor} editor Editor object to grab `value` from.
+   * @param {string} field Name of the field.
    */
   handleEditorChange = ({ value }, field) => {
     this.setState((state, props) => {
@@ -212,10 +224,10 @@ class MatchForm extends Component {
   }
 
   /**
-   * Updated touched state of field
+   * Updated `touched` state of field.
    *
-   * @param {String} field Name of the field
-   * @param {bool} touched Whether field has been interacted with (or not)
+   * @param {string} field Name of the field.
+   * @param {boolean} touched Whether interactive with field has occurred (or not).
    */
   handleEditorTouch = (field, touched) => {
     this.setState((state, props) => {
@@ -224,10 +236,10 @@ class MatchForm extends Component {
   }
 
   /**
-   * Updated error state of field
+   * Updated `error` state of field.
    *
-   * @param {String} field Name of the field
-   * @param {bool} error Error message
+   * @param {string} field Name of the field.
+   * @param {boolean} error Error message.
    */
   setFieldError = (field, error) => {
     this.setState((state, props) => {
@@ -270,29 +282,37 @@ class MatchForm extends Component {
           this.setFieldError(path, message);
         });
       });
-    this.handleEditorTouch('term', false);                                                 // Mark field untouched
-    this.handleEditorTouch('definition', false);
+    this.handleEditorTouch('term', false);                                                 // Mark fields untouched
+    this.handleEditorTouch('definition', false);                                                        
+    this.setActivePage(1);                                                                 // Reset pagination to beginning
   }
 
   /** 
-   * Remove a match from the matches
+   * Remove a match.
    * 
-   * @param {String} term The term to be removed from matches 
+   * @param {string} term The term to be removed from matches. 
    */
   handleMatchDelete = (event, term) => {
-    console.log('handleMatchDelete fired...', term);
     event.preventDefault();
-    const { setFieldValue } = this.props;    // Get function used to update matches (from Formik)
-    const { matches } = this.props.values;   // Get matches array (from Formik)    
-    const filtered = matches.filter((match) => { return match.term !== term; }); // Filter out term
-    setFieldValue('matches', filtered); // Update state (in Formik) with matches minus term
-    setFieldValue('bulkMatches', matchToString(filtered)); // Format bulkMatches then update Formik state
+    const { setFieldValue } = this.props;                                                  // Get function used to update matches (Formik)
+    const { matches } = this.props.values;                                                 // Get matches array (Formik)    
+    const filtered = matches.filter((match) => {                                           // Filter out (deleted) term
+      return match.term !== term; 
+    }); 
+    setFieldValue('matches', filtered);                                                    // Update state (in Formik) with matches minus (deleted) term
+    setFieldValue('bulkMatches', matchToString(filtered));                                 // Format bulkMatches then update Formik state
+    const { activePage, itemsPerPage } = this.state;                                       // Grab pagination value from state
+    const totalPages = Math.ceil((filtered.length ? filtered.length : 0) / itemsPerPage);  // Calculate total # of pages
+    if (activePage > totalPages) {                                                         // If active page does not exist (because of delete) 
+      this.setActivePage(totalPages);                                                      // Set to current number of pages
+    }
   }
 
   /**
+   * Update state with new `value` from textarea  
+   *
    * @param {Event} event Event to handle.
    * @param {Object} data Contains components data value and props.
-   * Update state with new `value` from textarea  
    */
   handleBulkChange = (event, data) => {
     console.log('Change to bulk matches detected...');
@@ -301,45 +321,58 @@ class MatchForm extends Component {
     const { setFieldValue } = this.props;
     setFieldValue('bulkMatches', data.value);
   }
-
+   
   /**
-   * @param {Event} event Event to handle.
-   * Process bulk matches, updating Formik state  
+   * Perform shared bulk match processing
+   * 
+   * @param {string} bulkMatches Matches in unprocessed csv form
    */
-  handleBulkPaste = (event) => {
-    console.log('Paste to bulk matches detected...');
-    event.preventDefault();                                  // Prevent default
-    const pasted = event.clipboardData.getData('text');      // Grab pasted value (consider adding try-catch here)
+  updateMatches = (bulkMatches) => {
     const { setFieldValue } = this.props;                    // Grab Formik function (to update state)
-    const parsed = parseMatch(pasted);                       // Split, Sanitize, Dedup -> array of matches
-    console.log(parsed);
+    const parsed = parseMatch(bulkMatches);                  // Split, Sanitize, Dedup -> array of matches
     setFieldValue('matches', parsed);                        // Update matches in Formik state
     setFieldValue('bulkMatches', matchToString(parsed));     // Flatten parsed matches
+    this.setActivePage(1);                                   // Reset pagination to beginning
   }
 
+  /**
+   * Process bulk matches, updating Formik state  
+   * 
+   * @param {Event} event Event to handle, i.e., pasting into a field.
+   */
+  handleBulkPaste = (event) => {
+    event.preventDefault();                                  // Prevent default
+    const pasted = event.clipboardData.getData('text');      // Grab pasted value (consider adding try-catch here)
+    this.updateMatches(pasted);                              // Call common function to parse, santize, dedup, and update state, etc.
+  }
+
+  /**
+   * Process bulk matches from user-provided text file
+   * 
+   * @param {Event} event. Event to handle, i.e., interaction with file picker
+   */
   handleFileChange = (event) => {
+
+    console.log('File change registered!');
 
     event.preventDefault();
 
-    if (event.target.files.length) { // Assumes single file processing
-      const file = event.target.files[0];
-      const contents = event.target.files[0].slice(0, file.size, '');  // 0, size, '' are defaults
-      let reader = new FileReader();
-      const { setFieldValue } = this.props;                    // Grab Formik function (to update state)
+    if (event.target.files.length) {    
+      const file = event.target.files[0];                                 // Assumes single file processing
+      const contents = event.target.files[0].slice(0, file.size, '');     // 0, size, '' are defaults
+      const reader = new FileReader();                                    // To read file from disk  
 
-      reader.onload = (function (file, setFieldValue, parseMatch, matchToString) { // Closure which allows access to file and results
+      reader.onload = (function (file, updateMatches) {                   // Closure run upon read completion
         return function (event) {
           console.log(`Loaded ${file.size} bytes from ${file.name}...`);
-          if (event.target.result) {                    
-            const parsed = parseMatch(event.target.result);          // Split, Sanitize, Dedup -> array of matches
-            console.log(event.target.result);
-            setFieldValue('matches', parsed);                        // Update matches in Formik state
-            setFieldValue('bulkMatches', matchToString(parsed));     // Flatten parsed matches
+          if (event.target.result) {                                      // If results are returned      
+            updateMatches(event.target.result);                           // Call common function to parse, santize, dedup, and update state, etc.
+            event.target.value = null;
           }
         }
-      })(file, setFieldValue, parseMatch, matchToString);
+      })(file, this.updateMatches);
 
-      reader.readAsText(contents, 'UTF-8');
+      reader.readAsText(contents, 'UTF-8');                              // Initiate file read, assuming UTF-8 encoding
 
     }
 

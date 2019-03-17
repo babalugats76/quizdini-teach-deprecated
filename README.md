@@ -19,8 +19,6 @@ This project is the teacher front-end for Quizdini 2.0
             * Back?
          * Refine `newMatchSchema` validation functionality, including `touched`, etc.
       * **`MatchBulk`**
-         * Create UPDATE button
-         * Wire UPDATE function to some abstracted version of `parseMatch` 
          * Add ability to disable, e.g., make readonly based upon `isSubmitting` 
       * **`MatchBank`**
       * **`MatchTable`**
@@ -48,6 +46,8 @@ This project is the teacher front-end for Quizdini 2.0
       * **`Accordian`**
          * Consider pushing `active` state up to parent component
          * Parameterize so that things like the icon to show are passed in, etc.
+      * **`TextArea`**
+         * Add disable/greyout functionality by adding support for a `disabled` prop. Use this prop to make the textarea, temporarily readonly or something similar
    
 * Global Styling
    * Once editors are complete, consider adding style rule for buttons, using rule similar to: ```#match-bank button.labeled:not(.active):not(:hover) {

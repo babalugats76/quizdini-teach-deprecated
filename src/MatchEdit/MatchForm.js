@@ -315,7 +315,6 @@ class MatchForm extends Component {
    * @param {Object} data Contains components data value and props.
    */
   handleBulkChange = (event, data) => {
-    console.log('Change to bulk matches detected...');
     event.preventDefault();
     console.log(data);
     const { setFieldValue } = this.props;
@@ -323,9 +322,20 @@ class MatchForm extends Component {
   }
    
   /**
-   * Perform shared bulk match processing
+   * Process bulk matches, updating Formik state, etc.  
    * 
-   * @param {string} bulkMatches Matches in unprocessed csv form
+   * @param {Event} event Event to handle. 
+   */
+  handleUpdateMatches = (event) => {
+    event.preventDefault();
+    const { bulkMatches } = this.props.values;               // Grab bulk matches from Formik state
+    this.updateMatches(bulkMatches);                         // Call common function to parse, santize, dedup, and update state, etc.
+  }
+
+  /**
+   * Perform shared bulk match processing.
+   * 
+   * @param {string} bulkMatches Matches in unprocessed csv form.
    */
   updateMatches = (bulkMatches) => {
     const { setFieldValue } = this.props;                    // Grab Formik function (to update state)
@@ -336,7 +346,7 @@ class MatchForm extends Component {
   }
 
   /**
-   * Process bulk matches, updating Formik state  
+   * Process bulk matches, updating Formik state, etc.  
    * 
    * @param {Event} event Event to handle, i.e., pasting into a field.
    */
@@ -347,9 +357,9 @@ class MatchForm extends Component {
   }
 
   /**
-   * Process bulk matches from user-provided text file
+   * Process bulk matches from user-provided text file.
    * 
-   * @param {Event} event. Event to handle, i.e., interaction with file picker
+   * @param {Event} event. Event to handle.
    */
   handleFileChange = (event) => {
 
@@ -407,7 +417,9 @@ class MatchForm extends Component {
             <MatchBulk
               value={values.bulkMatches}
               placeholder="Term, Definition"
+              isSubmitting={isSubmitting}
               onBulkChange={(event, data) => this.handleBulkChange(event, data)}
+              onUpdateMatches={(event) => this.handleUpdateMatches(event)}
               onBulkPaste={(event) => this.handleBulkPaste(event)}
               onFileChange={(event) => this.handleFileChange(event)}
             />

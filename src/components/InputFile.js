@@ -20,11 +20,12 @@ const InputFile = ({ id, label, onChange }) => {
   return (
     <React.Fragment>
       <Button
+        secondary
+        size="small"
         htmlFor={id}
         as="label"
         title="Upload Your Matches"
-        icon="cog"
-        size="mini"
+        icon="upload"
         onClick={(event) => handleClick(event)}>
         {label}
       </Button>

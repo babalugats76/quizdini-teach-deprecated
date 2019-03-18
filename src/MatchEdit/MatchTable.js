@@ -60,7 +60,8 @@ const MatchTable = ({ id, matches, activePage, itemsPerPage, disabled, onMatchDe
   return (
     <React.Fragment>
       <Table 
-        id={id}>
+        id={id}
+        compact="very">
         <Table.Header>
           <Table.Row>
             <Table.HeaderCell>Term</Table.HeaderCell>

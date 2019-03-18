@@ -156,7 +156,7 @@ class MatchForm extends Component {
   state = {
     activeTab: MatchForm.MATCH_TAB,
     activePage: 1,
-    itemsPerPage: 11,
+    itemsPerPage: 12,
     term: {
       value: HtmlSerializer.deserialize(''),
       touched: false

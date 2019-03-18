@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Segment } from 'semantic-ui-react';
 import Button from '../components/Button';
 import TextArea from '../components/TextArea'
 import InputFile from '../components/InputFile';
@@ -9,7 +8,7 @@ const MatchBulk = ({ value, placeholder, isSubmitting, onBulkChange, onUpdateMat
 
   return (
     <React.Fragment>
-      <Segment basic clearing>
+      <div id="btn-group-bulk-match">
         <Button
           as="label"
           secondary
@@ -19,12 +18,14 @@ const MatchBulk = ({ value, placeholder, isSubmitting, onBulkChange, onUpdateMat
           type="button"
           tabIndex={-1}
           disabled={isSubmitting}
-          onClick={(event) => onUpdateMatches(event)}>UPDATE</Button>
+          onClick={(event) => onUpdateMatches(event)}>
+          UPDATE
+        </Button>
         <InputFile
           id="input-match-file"
-          label="UPLOAD FILE"
+          label="UPLOAD"
           onChange={(event) => onFileChange(event)} />
-      </Segment>
+      </div>
       <TextArea
         value={value}
         placeholder={placeholder}

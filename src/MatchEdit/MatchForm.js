@@ -17,29 +17,35 @@ import DisplayFormikState from '../components/FormikHelper';
 import { Grid, Tab, Divider, Segment, Form } from 'semantic-ui-react';
 import { Accordion } from '../components/Accordion';
 
+/* eslint-disable no-template-curly-in-string */
 const transformMatch = Yup.object().shape({
   title: Yup.string()
-    .min(2, 'Title is too short')
-    .max(40, 'Title is too long')
-    .required('Title is required')
+    .min(2, 'Title is too short. ${min} characters are required.')
+    .max(40, 'Title is too long. ${max} characters are allowed.')
+    .required('Title is required.')
     .default(''),
   instructions: Yup.string()
-    .max(60, 'Instructions are too long')
+    .max(60, 'Instructions are too long. ${max} characters are allowed.')
     .default(''),
   config: Yup.object({
     itemsPerBoard: Yup.number()
       .integer()
       .positive()
-      .min(4, 'You must have at least 4 items per board')
-      .max(5, 'You may have no more than 5 items per board')
+      .required('Game Tiles is required.')
+      .min(4, 'Game must contain at least ${min} tiles.')
+      .max(9, 'Game may contain no more than ${max} tiles.')
       .default(9),
     duration: Yup.number()
       .integer()
       .positive()
-      .min(60, 'Games must last at 1 minute long')
-      .max(300, 'Game may last no more than 5 minutes')
+      .required('Duration is required.')
+      .min(60, 'Games must last at least ${min} seconds.')
+      .max(300, 'Game may last no more than ${max} seconds.')
       .default(180)
   }),
+  matches: Yup.array()
+    .required('Matches are required.')
+    .default(() => [])
 });
 
 /* eslint-disable no-template-curly-in-string */
@@ -48,27 +54,29 @@ const validateMatch = Yup.object().shape(
     title: Yup.string()
       .min(2, 'Title is too short. ${min} characters are required.')
       .max(40, 'Title is too long. ${max} characters are allowed.')
-      .required('Title is required'),
+      .required('Title is required.'),
     instructions: Yup.string()
       .max(60, 'Instructions are too long. ${max} characters are allowed.'),
     itemsPerBoard: Yup.number()
       .integer()
       .positive()
+      .required('Game Tiles is required.')
       .min(4, 'Game must contain at least ${min} tiles.')
       .max(9, 'Game may contain no more than ${max} tiles.'),
     duration: Yup.number()
       .integer()
       .positive()
+      .required('Duration is required.')
       .min(60, 'Games must last at least ${min} seconds.')
-      .max(180, 'Game may last no more than ${max} seconds.'),
+      .max(300, 'Game may last no more than ${max} seconds.'),
     matches: Yup.array()
       .test({
         name: 'min-matches',
-        params: { 
+        params: {
           itemsPerBoard: Yup.ref('itemsPerBoard')
         },
-        message: "${itemsPerBoard} matches required in bank.", 
-        test: function(value) { return value.length >= this.parent.itemsPerBoard }
+        message: "${itemsPerBoard} matches required in bank.",
+        test: function (value) { return value.length >= this.parent.itemsPerBoard }
       })
   }
 );
@@ -294,7 +302,7 @@ class MatchForm extends Component {
         });
       });
     this.handleEditorTouch('term', false);                                                 // Mark fields untouched
-    this.handleEditorTouch('definition', false);                                                        
+    this.handleEditorTouch('definition', false);
     this.setActivePage(1);                                                                 // Reset pagination to beginning
   }
 
@@ -308,8 +316,8 @@ class MatchForm extends Component {
     const { setFieldValue } = this.props;                                                  // Get function used to update matches (Formik)
     const { matches } = this.props.values;                                                 // Get matches array (Formik)    
     const filtered = matches.filter((match) => {                                           // Filter out (deleted) term
-      return match.term !== term; 
-    }); 
+      return match.term !== term;
+    });
     setFieldValue('matches', filtered);                                                    // Update state (in Formik) with matches minus (deleted) term
     setFieldValue('bulkMatches', matchToString(filtered));                                 // Format bulkMatches then update Formik state
     const { activePage, itemsPerPage } = this.state;                                       // Grab pagination value from state
@@ -331,7 +339,7 @@ class MatchForm extends Component {
     const { setFieldValue } = this.props;
     setFieldValue('bulkMatches', data.value);
   }
-   
+
   /**
    * Process bulk matches, updating Formik state, etc.  
    * 
@@ -378,7 +386,7 @@ class MatchForm extends Component {
 
     event.preventDefault();
 
-    if (event.target.files.length) {    
+    if (event.target.files.length) {
       const file = event.target.files[0];                                 // Assumes single file processing
       const contents = event.target.files[0].slice(0, file.size, '');     // 0, size, '' are defaults
       const reader = new FileReader();                                    // To read file from disk  
@@ -539,7 +547,7 @@ class MatchForm extends Component {
               activePage={activePage}
               itemsPerPage={itemsPerPage}
               disabled={isSubmitting}
-              error={errors.matches && `Add at least ${values.itemsPerBoard - values.matches.length} more term${((values.itemsPerBoard - values.matches.length) === 1 ? '': 's')}...`}
+              error={errors.matches && `Add at least ${values.itemsPerBoard - values.matches.length} more term${((values.itemsPerBoard - values.matches.length) === 1 ? '' : 's')}...`}
               onMatchDelete={(event, term) => this.handleMatchDelete(event, term)}
               onPageChange={(event, data) => this.handlePageChange(event, data)}
             />
@@ -560,14 +568,17 @@ export default withFormik({
     console.log('Mapping props to values...');
     // Cast and transform incoming data as appropriate
     const data = transformMatch.cast({ match });
+
+    console.log('data', data);
+
     // Flatten and map (for use in `values`)
     return {
       title: data.match.title,
       instructions: data.match.instructions,
       itemsPerBoard: data.config.itemsPerBoard,
       duration: data.config.duration,
-      matches: data.match.matches,
-      bulkMatches: matchToString(data.match.matches)
+      matches: data.match.matches || [],
+      bulkMatches: matchToString(data.match.matches || [])
     }
   },
   validationSchema: validateMatch,

@@ -10,7 +10,6 @@ This project is the teacher front-end for Quizdini 2.0
          * Save to API 
       * **`MatchForm`**
          * Add high-level form-level validation 
-            * Not enough matches
          * Refine `matchSchema`
          * Create button group (if necessary)
          * Create additional buttons 

@@ -42,24 +42,34 @@ const transformMatch = Yup.object().shape({
   }),
 });
 
+/* eslint-disable no-template-curly-in-string */
 const validateMatch = Yup.object().shape(
   {
     title: Yup.string()
-      .min(2, 'Title is too short')
-      .max(40, 'Title is too long')
+      .min(2, 'Title is too short. ${min} characters are required.')
+      .max(40, 'Title is too long. ${max} characters are allowed.')
       .required('Title is required'),
     instructions: Yup.string()
-      .max(60, 'Instructions are too long'),
+      .max(60, 'Instructions are too long. ${max} characters are allowed.'),
     itemsPerBoard: Yup.number()
       .integer()
       .positive()
-      .min(4, 'You must have at least 4 items per board')
-      .max(9, 'You may have no more than 9 items per board'),
+      .min(4, 'Game must contain at least ${min} tiles.')
+      .max(9, 'Game may contain no more than ${max} tiles.'),
     duration: Yup.number()
       .integer()
       .positive()
-      .min(60, 'Games must last at 1 minute long')
-      .max(300, 'Game may last no more than 5 minutes')
+      .min(60, 'Games must last at least ${min} seconds.')
+      .max(180, 'Game may last no more than ${max} seconds.'),
+    matches: Yup.array()
+      .test({
+        name: 'min-matches',
+        params: { 
+          itemsPerBoard: Yup.ref('itemsPerBoard')
+        },
+        message: "${itemsPerBoard} matches required in bank.", 
+        test: function(value) { return value.length >= this.parent.itemsPerBoard }
+      })
   }
 );
 
@@ -241,7 +251,7 @@ class MatchForm extends Component {
    * @param {string} field Name of the field.
    * @param {boolean} error Error message.
    */
-  setFieldError = (field, error) => {
+  setError = (field, error) => {
     this.setState((state, props) => {
       return { [field]: { ...state[field], error: error } }
     });
@@ -258,6 +268,7 @@ class MatchForm extends Component {
     const termHtml = HtmlSerializer.serialize(term);                                       // Serialize editors' contents  
     const definitionHtml = HtmlSerializer.serialize(definition);
 
+    // eslint-disable-next-line
     const { setFieldValue } = this.props;                                                  // Get function used to update matches (in Formik)
 
     newMatchSchema(matches)
@@ -272,14 +283,14 @@ class MatchForm extends Component {
         setFieldValue('bulkMatches', matchToString(updated));                              // Format bulkMatches then update Formik state
         this.handleEditorChange({ value: HtmlSerializer.deserialize('') }, 'term');        // Reset editors' contents
         this.handleEditorChange({ value: HtmlSerializer.deserialize('') }, 'definition');
-        this.setFieldError('term', '');                                                    // Clear errors
-        this.setFieldError('definition', '');
+        this.setError('term', '');                                                         // Clear errors (using custom function)
+        this.setError('definition', '');
         this.setFocus(this.termRef);                                                       // Move focus to term editor
       })
       .catch((errors) => {                                                                 // If invalid, update state with errors
         errors.inner.forEach((value, index) => {
           let { path, message } = value;
-          this.setFieldError(path, message);
+          this.setError(path, message);
         });
       });
     this.handleEditorTouch('term', false);                                                 // Mark fields untouched
@@ -403,9 +414,10 @@ class MatchForm extends Component {
             <MatchBank
               term={term}
               termRef={this.termRef}
-              definitionRef={this.definitionRef}
               definition={definition}
-              isSubmitting={isSubmitting}
+              definitionRef={this.definitionRef}
+              disabled={isSubmitting}
+              error={errors.matches}
               onEditorTouch={(field, touched) => this.handleEditorTouch(field, touched)}
               onEditorChange={(value, field) => this.handleEditorChange(value, field)}
               onNewMatch={this.handleNewMatch} />
@@ -486,7 +498,7 @@ class MatchForm extends Component {
                         selection
                         compact
                         options={itemsPerBoardOptions}
-                        error={errors.itemsPerBoard}
+                        error={touched.itemsPerBoard && errors.itemsPerBoard}
                         value={values.itemsPerBoard}
                         onBlur={handleBlur}
                         setFieldValue={setFieldValue}
@@ -503,7 +515,7 @@ class MatchForm extends Component {
                         selection
                         compact
                         options={durationOptions}
-                        error={errors.duration}
+                        error={touched.duration && errors.duration}
                         value={values.duration}
                         onBlur={handleBlur}
                         setFieldValue={setFieldValue}
@@ -527,6 +539,7 @@ class MatchForm extends Component {
               activePage={activePage}
               itemsPerPage={itemsPerPage}
               disabled={isSubmitting}
+              error={errors.matches && `Add at least ${values.itemsPerBoard - values.matches.length} more term${((values.itemsPerBoard - values.matches.length) === 1 ? '': 's')}...`}
               onMatchDelete={(event, term) => this.handleMatchDelete(event, term)}
               onPageChange={(event, data) => this.handlePageChange(event, data)}
             />

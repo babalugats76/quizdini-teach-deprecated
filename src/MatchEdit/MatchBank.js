@@ -8,13 +8,14 @@ import Button from '../components/Button';
 
 const MatchBank = ({
   term,
+  termRef,
   definition,
+  definitionRef,
+  disabled,
   onEditorChange,
   onEditorTouch,
   onNewMatch,
-  isSubmitting,
-  termRef,
-  definitionRef }) => {
+ }) => {
 
   return (
     <div id="match-bank">
@@ -25,7 +26,7 @@ const MatchBank = ({
         value={term.value}
         tabIndex={3}
         placeholder="Enter term..."
-        readOnly={isSubmitting}
+        readOnly={disabled}
         onEditorTouch={(field, touched) => onEditorTouch(field, touched)}
         onChange={(value, field) => onEditorChange(value, field)}
       />
@@ -37,7 +38,7 @@ const MatchBank = ({
         value={definition.value}
         tabIndex={4}
         placeholder="Enter definition..."
-        readOnly={isSubmitting}
+        readOnly={disabled}
         onEditorTouch={(field, touched) => onEditorTouch(field, touched)}
         onChange={(value, field) => onEditorChange(value, field)}
       />
@@ -52,7 +53,7 @@ const MatchBank = ({
           type="button"
           active={term.touched && definition.touched}
           tabIndex={5}
-          disabled={isSubmitting}
+          disabled={disabled}
           onClick={(event) => onNewMatch(event)}
         >
           ADD

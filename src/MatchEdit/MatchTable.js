@@ -1,6 +1,6 @@
 import React from 'react';
 // eslint-disable-next-line
-import { Table, Pagination } from 'semantic-ui-react';
+import { Segment, Table, Pagination } from 'semantic-ui-react';
 // eslint-disable-next-line
 import Icon from '../components/Icon';
 // eslint-disable-next-line
@@ -39,6 +39,19 @@ const renderRows = (matches, disabled, activePage, itemsPerPage, onMatchDelete) 
   });
 }
 
+const renderFooter = (error) => {
+  return (
+    error ?
+      <Table.Footer>
+        <Table.Row>
+          <Table.Cell colSpan='3'>
+            {error}
+          </Table.Cell>
+        </Table.Row>
+      </Table.Footer> :
+      null);
+}
+
 const renderPagination = (activePage, totalPages, onPageChange) => {
   return (
     <Pagination
@@ -50,16 +63,17 @@ const renderPagination = (activePage, totalPages, onPageChange) => {
   );
 }
 
-const MatchTable = ({ id, matches, activePage, itemsPerPage, disabled, onMatchDelete, onPageChange }) => {
+const MatchTable = ({ id, matches, activePage, itemsPerPage, disabled, error, onMatchDelete, onPageChange }) => {
   const totalPages = Math.ceil((matches.length ? matches.length : 0) / itemsPerPage);
   console.log('Matches (length)', matches.length);
   console.log('Total Pages', totalPages);
   console.log('Active Page', activePage);
   const rows = renderRows(matches, disabled, activePage, itemsPerPage, onMatchDelete);
+  const footer = renderFooter(error);
   const pagination = renderPagination(activePage, totalPages, onPageChange);
   return (
     <React.Fragment>
-      <Table 
+      <Table
         id={id}
         compact="very">
         <Table.Header>
@@ -78,6 +92,7 @@ const MatchTable = ({ id, matches, activePage, itemsPerPage, disabled, onMatchDe
               </Table.Row>)
           }
         </Table.Body>
+        {footer}
       </Table>
       {
         totalPages > 1

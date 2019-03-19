@@ -15,7 +15,6 @@ This project is the teacher front-end for Quizdini 2.0
             * Delete
             * Cancel
             * Back?
-         * Refine `newMatchSchema` validation functionality, including `touched`, etc.
       * **`MatchBulk`**
          * Add ability to disable, e.g., make readonly based upon `isSubmitting` 
       * **`MatchBank`**

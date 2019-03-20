@@ -7,7 +7,7 @@ import DOMPurify from 'dompurify';
 import Button from '../components/Button';
 import InputText from '../components/InputText';
 import InputDropdown from '../components/InputDropdown';
-import HtmlSerializer from './HtmlSerializer'
+import HtmlSerializer from './HtmlSerializer';
 import MatchBank from './MatchBank';
 import MatchBulk from './MatchBulk';
 import MatchTable from './MatchTable';
@@ -49,52 +49,52 @@ const transformMatch = Yup.object().shape({
 });
 
 /* eslint-disable no-template-curly-in-string */
-const validateMatch = Yup.object().shape(
-  {
-    title: Yup.string()
-      .min(2, 'Title is too short. ${min} characters are required.')
-      .max(40, 'Title is too long. ${max} characters are allowed.')
-      .required('Title is required.'),
-    instructions: Yup.string()
-      .max(60, 'Instructions are too long. ${max} characters are allowed.'),
-    itemsPerBoard: Yup.number()
-      .integer()
-      .positive()
-      .required('Game Tiles is required.')
-      .min(4, 'Game must contain at least ${min} tiles.')
-      .max(9, 'Game may contain no more than ${max} tiles.'),
-    duration: Yup.number()
-      .integer()
-      .positive()
-      .required('Duration is required.')
-      .min(60, 'Games must last at least ${min} seconds.')
-      .max(300, 'Game may last no more than ${max} seconds.'),
-    matches: Yup.array()
-      .test({
-        name: 'min-matches',
-        params: {
-          itemsPerBoard: Yup.ref('itemsPerBoard')
-        },
-        message: "${itemsPerBoard} matches required in bank.",
-        test: function (value) { return value.length >= this.parent.itemsPerBoard }
-      })
-  }
-);
+const validateMatch = Yup.object().shape({
+  title: Yup.string()
+    .min(2, 'Title is too short. ${min} characters are required.')
+    .max(40, 'Title is too long. ${max} characters are allowed.')
+    .required('Title is required.'),
+  instructions: Yup.string().max(
+    60,
+    'Instructions are too long. ${max} characters are allowed.'
+  ),
+  itemsPerBoard: Yup.number()
+    .integer()
+    .positive()
+    .required('Game Tiles is required.')
+    .min(4, 'Game must contain at least ${min} tiles.')
+    .max(9, 'Game may contain no more than ${max} tiles.'),
+  duration: Yup.number()
+    .integer()
+    .positive()
+    .required('Duration is required.')
+    .min(60, 'Games must last at least ${min} seconds.')
+    .max(300, 'Game may last no more than ${max} seconds.'),
+  matches: Yup.array().test({
+    name: 'min-matches',
+    params: {
+      itemsPerBoard: Yup.ref('itemsPerBoard')
+    },
+    message: '${itemsPerBoard} matches required in bank.',
+    test: function(value) {
+      return value.length >= this.parent.itemsPerBoard;
+    }
+  })
+});
 
-const newMatchSchema = (matches) => {
+const newMatchSchema = matches => {
   return Yup.object().shape({
     term: Yup.string()
       .required('Term is required')
-      .test('duplicate term', 'Duplicate term',
-        function (value) {
-          const passed = !matches.some((element) => { return element.term === value; });  // check for duplicate terms
-          return passed;
-        }
-      ),
-    definition: Yup.string()
-      .required('Definition is required')
+      .test('duplicate term', 'Duplicate term', function(value) {
+        const passed = !matches.some(element => {
+          return element.term === value;
+        }); // check for duplicate terms
+        return passed;
+      }),
+    definition: Yup.string().required('Definition is required')
   });
-}
+};
 
 const itemsPerBoardOptions = [
   { text: '4', value: 4 },
@@ -102,7 +102,7 @@ const itemsPerBoardOptions = [
   { text: '6', value: 6 },
   { text: '7', value: 7 },
   { text: '8', value: 8 },
-  { text: '9', value: 9 },
+  { text: '9', value: 9 }
 ];
 
 const durationOptions = [
@@ -111,70 +111,77 @@ const durationOptions = [
   { text: '120', value: 120 },
   { text: '180', value: 180 },
   { text: '240', value: 240 },
-  { text: '300', value: 300 },
+  { text: '300', value: 300 }
 ];
 
-const PURIFY_OPTS = { ALLOWED_TAGS: ['u', 'code', 'sup', 'sub'], ALLOWED_ATTR: [''] };
+const PURIFY_OPTS = {
+  ALLOWED_TAGS: ['u', 'code', 'sup', 'sub'],
+  ALLOWED_ATTR: ['']
+};
 
-const matchToString = (matches) => {
+const matchToString = matches => {
   return matches.reduce((accum, vals) => {
     return accum + vals.term + ', ' + vals.definition + '\n';
   }, '');
-}
+};
 
 /**
  * Converts bulk string of matches to a properly-formatted array.
  * Term and definition values should be comma-delimited.
  * Each "match" item should be newline-delimited.
- * 
+ *
  * This function performs three major functions
  *    Parsing - Splitting text into matches
  *    Sanitizing - Insuring that all inline HTML is safe
  *    Dedup - Enforcing the business rule that matches shall be unique
- * 
+ *
  * @param {string} bulkMatches Match content to parse.
  * @return {Array} Parsed matches.
  */
-const parseMatch = (bulkMatches) => {
-
-  const parsed = parse(bulkMatches, {           // Use csv-parse
-    columns: ['term', 'definition'],            // Give our two columns a name
-    skip_empty_lines: true,                     // Skip empty lines, e.g., \n
-    skip_lines_with_error: true,                // Ignore failed lines, e.g, misused quotes
-    rtrim: true,                                // Remove whitespace from the right         
-    ltrim: true,                                // Remove whitespace from the left
-    relax_column_count: true                    // Do not throw error on invalid # of columns
+const parseMatch = bulkMatches => {
+  const parsed = parse(bulkMatches, {
+    // Use csv-parse
+    columns: ['term', 'definition'], // Give our two columns a name
+    skip_empty_lines: true, // Skip empty lines, e.g., \n
+    skip_lines_with_error: true, // Ignore failed lines, e.g, misused quotes
+    rtrim: true, // Remove whitespace from the right
+    ltrim: true, // Remove whitespace from the left
+    relax_column_count: true // Do not throw error on invalid # of columns
   });
 
   // finally, sanitize, dedup both columns
-  let matches = new Array(0).fill(null);                                          // Create empty array (to store matches)
-  let uniqueTerms = new Map();                                                    // Create empty map (to store terms seen thus far)
-  parsed.reduce((accum, match) => {                                               // Reduce array of lines to valid ones
-    if (!match.term || !match.definition) { return accum; }                       // Do not attempt to parse if contents do not exist
-    const term = DOMPurify.sanitize(match.term.trim(), PURIFY_OPTS);              // Trim and HTML sanitize term
-    const definition = DOMPurify.sanitize(match.definition.trim(), PURIFY_OPTS);  // Trim and HTML sanitize definition
-    if (term.length !== 0                                                         // Push if fields are non-empty
-      && definition.length !== 0
-      && !uniqueTerms.has(term)) {                                                // Skip if term is a duplicate          
-      uniqueTerms.set(term, true);                                                // Keep track of terms seen so far
-      accum.push({ term, definition });                                           // Add to results
+  let matches = new Array(0).fill(null); // Create empty array (to store matches)
+  let uniqueTerms = new Map(); // Create empty map (to store terms seen thus far)
+  parsed.reduce((accum, match) => {
+    // Reduce array of lines to valid ones
+    if (!match.term || !match.definition) {
+      return accum;
+    } // Do not attempt to parse if contents do not exist
+    const term = DOMPurify.sanitize(match.term.trim(), PURIFY_OPTS); // Trim and HTML sanitize term
+    const definition = DOMPurify.sanitize(match.definition.trim(), PURIFY_OPTS); // Trim and HTML sanitize definition
+    if (
+      term.length !== 0 && // Push if fields are non-empty
+      definition.length !== 0 &&
+      !uniqueTerms.has(term)
+    ) {
+      // Skip if term is a duplicate
+      uniqueTerms.set(term, true); // Keep track of terms seen so far
+      accum.push({ term, definition }); // Add to results
     }
-    return accum;                                                                 // In all cases, pass back work-in-progress array
-  }, matches);                                                                    // start with empty array (created earlier)
+    return accum; // In all cases, pass back work-in-progress array
+  }, matches); // start with empty array (created earlier)
 
-  return matches;                                                                 // Return results
-
-}
+  return matches; // Return results
+};
 
 class MatchForm extends Component {
-
   static MATCH_TAB = 0;
   static BULK_TAB = 1;
 
   state = {
     activeTab: MatchForm.MATCH_TAB,
     activePage: 1,
-    itemsPerPage: 12,
+    itemsPerPage: 11,
     term: {
       value: HtmlSerializer.deserialize(''),
       touched: false
@@ -183,32 +190,32 @@ class MatchForm extends Component {
       value: HtmlSerializer.deserialize(''),
       touched: false
     }
-  }
+  };
 
   termRef = React.createRef();
   definitionRef = React.createRef();
 
-  setFocus = (ref) => {
+  setFocus = ref => {
     ref.current.focus();
   };
 
   /**
    * Update state with new value for the active editor tab.
-   * 
+   *
    * @param {Event} event Event to handle.
    * @param {Object} data Contains all form data and props, including activeIndex.
    */
   handleTabChange = (event, data) => {
     event.preventDefault();
-    const activeTab = data.activeIndex;  // activeIndex is the current tab pane
+    const activeTab = data.activeIndex; // activeIndex is the current tab pane
     this.setState((state, props) => {
-      return { activeTab: activeTab }
+      return { activeTab: activeTab };
     });
-  }
+  };
 
   /**
    * Update state with new value for the active page in match paginator.
-   * 
+   *
    * @param {Event} event Event to handle.
    * @param {Object} data Contains all form data and props, including activePage.
    */
@@ -216,18 +223,18 @@ class MatchForm extends Component {
     event.preventDefault();
     const activePage = data.activePage;
     this.setActivePage(activePage);
-  }
+  };
 
   /**
    * Update state with new `activePage` value of the paginator.
-   * 
-   * @param {number} activePage Value to set for activePage. 
+   *
+   * @param {number} activePage Value to set for activePage.
    */
-  setActivePage = (activePage) => {
+  setActivePage = activePage => {
     this.setState((state, props) => {
-      return { activePage }
+      return { activePage };
     });
-  }
+  };
 
   /**
    * Update state with new `value` (Map) of the editor.
@@ -237,9 +244,9 @@ class MatchForm extends Component {
    */
   handleEditorChange = ({ value }, field) => {
     this.setState((state, props) => {
-      return { [field]: { ...state[field], value: value } }
+      return { [field]: { ...state[field], value: value } };
     });
-  }
+  };
 
   /**
    * Updated `touched` state of field.
@@ -249,9 +256,9 @@ class MatchForm extends Component {
    */
   handleEditorTouch = (field, touched) => {
     this.setState((state, props) => {
-      return { [field]: { ...state[field], touched: touched } }
+      return { [field]: { ...state[field], touched: touched } };
     });
-  }
+  };
 
   /**
    * Updated `error` state of field.
@@ -261,74 +268,90 @@ class MatchForm extends Component {
    */
   setError = (field, error) => {
     this.setState((state, props) => {
-      return { [field]: { ...state[field], error: error } }
+      return { [field]: { ...state[field], error: error } };
     });
-  }
+  };
 
-  handleNewMatch = (event) => {
-
+  handleNewMatch = event => {
     event.preventDefault();
 
-    const { matches } = this.props.values;                                                 // Get matches (from Formik)
-    const term = this.state.term.value;                                                    // Get editors' contents (from state)    
+    const { matches } = this.props.values; // Get matches (from Formik)
+    const term = this.state.term.value; // Get editors' contents (from state)
     const definition = this.state.definition.value;
 
-    const termHtml = HtmlSerializer.serialize(term);                                       // Serialize editors' contents  
+    const termHtml = HtmlSerializer.serialize(term); // Serialize editors' contents
     const definitionHtml = HtmlSerializer.serialize(definition);
 
     // eslint-disable-next-line
-    const { setFieldValue } = this.props;                                                  // Get function used to update matches (in Formik)
+    const { setFieldValue } = this.props; // Get function used to update matches (in Formik)
 
     newMatchSchema(matches)
-      .validate({ term: termHtml, definition: definitionHtml }, { abortEarly: false })     // Validate serialized term and definition
-      .then((valid) => {                                                                   // If valid, merge into matches
+      .validate(
+        { term: termHtml, definition: definitionHtml },
+        { abortEarly: false }
+      ) // Validate serialized term and definition
+      .then(valid => {
+        // If valid, merge into matches
         const updated = [
           {
             term: termHtml,
             definition: definitionHtml
-          }, ...matches];
-        setFieldValue('matches', updated);                                                 // Update Formik state
-        setFieldValue('bulkMatches', matchToString(updated));                              // Format bulkMatches then update Formik state
-        this.handleEditorChange({ value: HtmlSerializer.deserialize('') }, 'term');        // Reset editors' contents
-        this.handleEditorChange({ value: HtmlSerializer.deserialize('') }, 'definition');
-        this.setError('term', '');                                                         // Clear errors (using custom function)
+          },
+          ...matches
+        ];
+        setFieldValue('matches', updated); // Update Formik state
+        setFieldValue('bulkMatches', matchToString(updated)); // Format bulkMatches then update Formik state
+        this.handleEditorChange(
+          { value: HtmlSerializer.deserialize('') },
+          'term'
+        ); // Reset editors' contents
+        this.handleEditorChange(
+          { value: HtmlSerializer.deserialize('') },
+          'definition'
+        );
+        this.setError('term', ''); // Clear errors (using custom function)
         this.setError('definition', '');
-        this.setFocus(this.termRef);                                                       // Move focus to term editor
+        this.setFocus(this.termRef); // Move focus to term editor
       })
-      .catch((errors) => {                                                                 // If invalid, update state with errors
+      .catch(errors => {
+        // If invalid, update state with errors
         errors.inner.forEach((value, index) => {
           let { path, message } = value;
           this.setError(path, message);
         });
       });
-    this.handleEditorTouch('term', false);                                                 // Mark fields untouched
+    this.handleEditorTouch('term', false); // Mark fields untouched
     this.handleEditorTouch('definition', false);
-    this.setActivePage(1);                                                                 // Reset pagination to beginning
-  }
+    this.setActivePage(1); // Reset pagination to beginning
+  };
 
-  /** 
+  /**
    * Remove a match.
-   * 
-   * @param {string} term The term to be removed from matches. 
+   *
+   * @param {string} term The term to be removed from matches.
    */
   handleMatchDelete = (event, term) => {
     event.preventDefault();
-    const { setFieldValue } = this.props;                                                  // Get function used to update matches (Formik)
-    const { matches } = this.props.values;                                                 // Get matches array (Formik)    
-    const filtered = matches.filter((match) => {                                           // Filter out (deleted) term
+    const { setFieldValue } = this.props; // Get function used to update matches (Formik)
+    const { matches } = this.props.values; // Get matches array (Formik)
+    const filtered = matches.filter(match => {
+      // Filter out (deleted) term
       return match.term !== term;
     });
-    setFieldValue('matches', filtered);                                                    // Update state (in Formik) with matches minus (deleted) term
-    setFieldValue('bulkMatches', matchToString(filtered));                                 // Format bulkMatches then update Formik state
-    const { activePage, itemsPerPage } = this.state;                                       // Grab pagination value from state
-    const totalPages = Math.ceil((filtered.length ? filtered.length : 0) / itemsPerPage);  // Calculate total # of pages
-    if (activePage > totalPages) {                                                         // If active page does not exist (because of delete) 
-      this.setActivePage(totalPages);                                                      // Set to current number of pages
+    setFieldValue('matches', filtered); // Update state (in Formik) with matches minus (deleted) term
+    setFieldValue('bulkMatches', matchToString(filtered)); // Format bulkMatches then update Formik state
+    const { activePage, itemsPerPage } = this.state; // Grab pagination value from state
+    const totalPages = Math.ceil(
+      (filtered.length ? filtered.length : 0) / itemsPerPage
+    ); // Calculate total # of pages
+    if (activePage > totalPages) {
+      // If active page does not exist (because of delete)
+      this.setActivePage(totalPages); // Set to current number of pages
     }
-  }
+  };
 
   /**
-   * Update state with new `value` from textarea  
+   * Update state with new `value` from textarea
    *
    * @param {Event} event Event to handle.
    * @param {Object} data Contains components data value and props.
@@ -338,86 +361,93 @@ class MatchForm extends Component {
     console.log(data);
     const { setFieldValue } = this.props;
     setFieldValue('bulkMatches', data.value);
-  }
+  };
 
   /**
-   * Process bulk matches, updating Formik state, etc.  
-   * 
-   * @param {Event} event Event to handle. 
+   * Process bulk matches, updating Formik state, etc.
+   *
+   * @param {Event} event Event to handle.
    */
-  handleUpdateMatches = (event) => {
+  handleUpdateMatches = event => {
     event.preventDefault();
-    const { bulkMatches } = this.props.values;               // Grab bulk matches from Formik state
-    this.updateMatches(bulkMatches);                         // Call common function to parse, santize, dedup, and update state, etc.
-  }
+    const { bulkMatches } = this.props.values; // Grab bulk matches from Formik state
+    this.updateMatches(bulkMatches); // Call common function to parse, santize, dedup, and update state, etc.
+  };
 
   /**
    * Perform shared bulk match processing.
-   * 
+   *
    * @param {string} bulkMatches Matches in unprocessed csv form.
    */
-  updateMatches = (bulkMatches) => {
-    const { setFieldValue } = this.props;                    // Grab Formik function (to update state)
-    const parsed = parseMatch(bulkMatches);                  // Split, Sanitize, Dedup -> array of matches
-    setFieldValue('matches', parsed);                        // Update matches in Formik state
-    setFieldValue('bulkMatches', matchToString(parsed));     // Flatten parsed matches
-    this.setActivePage(1);                                   // Reset pagination to beginning
-  }
+  updateMatches = bulkMatches => {
+    const { setFieldValue } = this.props; // Grab Formik function (to update state)
+    const parsed = parseMatch(bulkMatches); // Split, Sanitize, Dedup -> array of matches
+    setFieldValue('matches', parsed); // Update matches in Formik state
+    setFieldValue('bulkMatches', matchToString(parsed)); // Flatten parsed matches
+    this.setActivePage(1); // Reset pagination to beginning
+  };
 
   /**
-   * Process bulk matches, updating Formik state, etc.  
-   * 
+   * Process bulk matches, updating Formik state, etc.
+   *
    * @param {Event} event Event to handle, i.e., pasting into a field.
    */
-  handleBulkPaste = (event) => {
-    event.preventDefault();                                  // Prevent default
-    const pasted = event.clipboardData.getData('text');      // Grab pasted value (consider adding try-catch here)
-    this.updateMatches(pasted);                              // Call common function to parse, santize, dedup, and update state, etc.
-  }
+  handleBulkPaste = event => {
+    event.preventDefault(); // Prevent default
+    const pasted = event.clipboardData.getData('text'); // Grab pasted value (consider adding try-catch here)
+    this.updateMatches(pasted); // Call common function to parse, santize, dedup, and update state, etc.
+  };
 
   /**
    * Process bulk matches from user-provided text file.
-   * 
+   *
    * @param {Event} event. Event to handle.
    */
-  handleFileChange = (event) => {
-
+  handleFileChange = event => {
     console.log('File change registered!');
 
     event.preventDefault();
 
     if (event.target.files.length) {
-      const file = event.target.files[0];                                 // Assumes single file processing
-      const contents = event.target.files[0].slice(0, file.size, '');     // 0, size, '' are defaults
-      const reader = new FileReader();                                    // To read file from disk  
+      const file = event.target.files[0]; // Assumes single file processing
+      const contents = event.target.files[0].slice(0, file.size, ''); // 0, size, '' are defaults
+      const reader = new FileReader(); // To read file from disk
 
-      reader.onload = (function (file, updateMatches) {                   // Closure run upon read completion
-        return function (event) {
+      reader.onload = (function(file, updateMatches) {
+        // Closure run upon read completion
+        return function(event) {
           console.log(`Loaded ${file.size} bytes from ${file.name}...`);
-          if (event.target.result) {                                      // If results are returned      
-            updateMatches(event.target.result);                           // Call common function to parse, santize, dedup, and update state, etc.
+          if (event.target.result) {
+            // If results are returned
+            updateMatches(event.target.result); // Call common function to parse, santize, dedup, and update state, etc.
             event.target.value = null;
           }
-        }
+        };
       })(file, this.updateMatches);
 
-      reader.readAsText(contents, 'UTF-8');                              // Initiate file read, assuming UTF-8 encoding
-
+      reader.readAsText(contents, 'UTF-8'); // Initiate file read, assuming UTF-8 encoding
     }
-
-  }
+  };
 
   render() {
-
     // eslint-disable-next-line
-    const { values, touched, errors, handleChange, handleBlur, isSubmitting, handleSubmit, setFieldValue } = this.props;
+    const {
+      values,
+      touched,
+      errors,
+      handleChange,
+      handleBlur,
+      isSubmitting,
+      handleSubmit,
+      setFieldValue
+    } = this.props;
     const { activeTab, activePage, itemsPerPage } = this.state;
     const { term, definition } = this.state;
 
     const editorPanes = [
       {
         menuItem: 'Match Bank',
-        render: () =>
+        render: () => (
           <Tab.Pane>
             <MatchBank
               term={term}
@@ -426,25 +456,33 @@ class MatchForm extends Component {
               definitionRef={this.definitionRef}
               disabled={isSubmitting}
               error={errors.matches}
-              onEditorTouch={(field, touched) => this.handleEditorTouch(field, touched)}
-              onEditorChange={(value, field) => this.handleEditorChange(value, field)}
-              onNewMatch={this.handleNewMatch} />
+              onEditorTouch={(field, touched) =>
+                this.handleEditorTouch(field, touched)
+              }
+              onEditorChange={(value, field) =>
+                this.handleEditorChange(value, field)
+              }
+              onNewMatch={this.handleNewMatch}
+            />
           </Tab.Pane>
+        )
       },
       {
-        menuItem: 'Expert Mode', render: () =>
+        menuItem: 'Expert Mode',
+        render: () => (
           <Tab.Pane>
             <MatchBulk
               value={values.bulkMatches}
-              placeholder="Term, Definition"
+              placeholder='Term, Definition'
               isSubmitting={isSubmitting}
               onBulkChange={(event, data) => this.handleBulkChange(event, data)}
-              onUpdateMatches={(event) => this.handleUpdateMatches(event)}
-              onBulkPaste={(event) => this.handleBulkPaste(event)}
-              onFileChange={(event) => this.handleFileChange(event)}
+              onUpdateMatches={event => this.handleUpdateMatches(event)}
+              onBulkPaste={event => this.handleBulkPaste(event)}
+              onFileChange={event => this.handleFileChange(event)}
             />
           </Tab.Pane>
-      },
+        )
+      }
     ];
 
     return (
@@ -453,22 +491,23 @@ class MatchForm extends Component {
           primary
           loading={isSubmitting}
           active
-          title="Save Game"
-          icon="save"
-          size="small"
-          type="submit"
+          title='Save Game'
+          icon='save'
+          size='small'
+          type='submit'
           tabIndex={6}
-          disabled={isSubmitting}>
+          disabled={isSubmitting}
+        >
           SAVE
         </Button>
         <Divider hidden />
         <Grid columns={2} stackable>
           <Grid.Column computer={8} mobile={16} tablet={16}>
             <InputText
-              name="title"
-              type="text"
-              label="Title"
-              placeholder="Legends of Computer Science"
+              name='title'
+              type='text'
+              label='Title'
+              placeholder='Legends of Computer Science'
               tabIndex={1}
               disabled={isSubmitting}
               error={touched.title && errors.title}
@@ -478,10 +517,10 @@ class MatchForm extends Component {
               onChange={handleChange}
             />
             <InputText
-              name="instructions"
-              type="text"
-              label="Instructions"
-              placeholder="Match each legend with their accomplishment"
+              name='instructions'
+              type='text'
+              label='Instructions'
+              placeholder='Match each legend with their accomplishment'
               tabIndex={2}
               disabled={isSubmitting}
               error={touched.instructions && errors.instructions}
@@ -492,15 +531,16 @@ class MatchForm extends Component {
             />
             <Accordion
               openOnStart={false}
-              forceOpen={(!!errors.itemsPerBoard) || (!!errors.duration)} >
+              forceOpen={!!errors.itemsPerBoard || !!errors.duration}
+            >
               <Segment basic>
                 <Grid columns={2} stackable textAlign='center'>
                   <Grid.Row verticalAlign='middle'>
                     <Grid.Column>
                       <InputDropdown
-                        name="itemsPerBoard"
-                        label="Game Tiles"
-                        icon="tiles"
+                        name='itemsPerBoard'
+                        label='Game Tiles'
+                        icon='tiles'
                         tabIndex={-1}
                         disabled={isSubmitting}
                         selection
@@ -515,9 +555,9 @@ class MatchForm extends Component {
 
                     <Grid.Column>
                       <InputDropdown
-                        name="duration"
-                        label="Seconds"
-                        icon="timer"
+                        name='duration'
+                        label='Seconds'
+                        icon='timer'
                         tabIndex={-1}
                         disabled={isSubmitting}
                         selection
@@ -538,24 +578,33 @@ class MatchForm extends Component {
               panes={editorPanes}
               activeIndex={activeTab}
               onTabChange={(event, data) => this.handleTabChange(event, data)}
-              renderActiveOnly={true} />
+              renderActiveOnly={true}
+            />
           </Grid.Column>
           <Grid.Column computer={8} mobile={16} tablet={16}>
             <MatchTable
-              id="table-match"
+              id='table-match'
               matches={values.matches}
               activePage={activePage}
               itemsPerPage={itemsPerPage}
               disabled={isSubmitting}
-              error={errors.matches && `Add at least ${values.itemsPerBoard - values.matches.length} more term${((values.itemsPerBoard - values.matches.length) === 1 ? '' : 's')}...`}
-              onMatchDelete={(event, term) => this.handleMatchDelete(event, term)}
+              error={
+                errors.matches &&
+                `Add at least ${values.itemsPerBoard -
+                  values.matches.length} more term${
+                  values.itemsPerBoard - values.matches.length === 1 ? '' : 's'
+                }...`
+              }
+              onMatchDelete={(event, term) =>
+                this.handleMatchDelete(event, term)
+              }
               onPageChange={(event, data) => this.handlePageChange(event, data)}
             />
           </Grid.Column>
         </Grid>
         <DisplayFormikState {...this.props} />
         <pre>{JSON.stringify(this.state, null, 2)}</pre>
-      </Form >
+      </Form>
     );
   }
 }
@@ -579,12 +628,12 @@ export default withFormik({
       duration: data.config.duration,
       matches: data.match.matches || [],
       bulkMatches: matchToString(data.match.matches || [])
-    }
+    };
   },
   validationSchema: validateMatch,
   handleSubmit: (values, formikBag) => {
     const { onSave } = formikBag.props;
     const { setSubmitting } = formikBag;
     onSave(values, setSubmitting);
-  },
+  }
 })(MatchForm);

@@ -33253,6 +33253,11 @@ Floated Menu / Item
 /*******************************
          Site Overrides
 *******************************/
+
+.ui.table td {
+  word-wrap: break-word;
+  word-break: break-word;
+}
 /*!
  * # Semantic UI 2.7.2 - Ad
  * http://github.com/semantic-org/semantic-ui/

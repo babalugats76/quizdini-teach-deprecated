@@ -28,13 +28,12 @@ textarea#matchText {
 
 .rich-text-editor {
   font-family: 'Roboto', sans-serif;
-  background-color: rgba(128, 128, 128, 0.01);
   color: #000000;
   font-size: 1.3rem;
   line-height: 1.5rem;
   border: none;
   border-radius: 0.26666667rem;
-  padding: 1rem 1rem 2.5rem;
+  padding: 1rem 1rem 1.5rem;
   outline: none;
   width: 100;
   display: block;
@@ -64,6 +63,10 @@ textarea#matchText {
 
 .match-editor {
   position: relative;
+}
+
+.toolbar {
+  float: right;
 }
 
 .format-toolbar {

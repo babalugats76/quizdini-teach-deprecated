@@ -183,12 +183,14 @@ class MatchForm extends Component {
     activePage: 1,
     itemsPerPage: 11,
     term: {
-      value: HtmlSerializer.deserialize(''),
-      touched: false
+      placeholder: '',
+      touched: false,
+      value: HtmlSerializer.deserialize('')
     },
     definition: {
-      value: HtmlSerializer.deserialize(''),
-      touched: false
+      placeholder: '',
+      touched: false,
+      value: HtmlSerializer.deserialize('')
     }
   };
 
@@ -282,7 +284,6 @@ class MatchForm extends Component {
     const termHtml = HtmlSerializer.serialize(term); // Serialize editors' contents
     const definitionHtml = HtmlSerializer.serialize(definition);
 
-    // eslint-disable-next-line
     const { setFieldValue } = this.props; // Get function used to update matches (in Formik)
 
     newMatchSchema(matches)
@@ -503,82 +504,84 @@ class MatchForm extends Component {
         <Divider hidden />
         <Grid columns={2} stackable>
           <Grid.Column computer={8} mobile={16} tablet={16}>
-            <InputText
-              name='title'
-              type='text'
-              label='Title'
-              placeholder=''
-              tabIndex={1}
-              disabled={isSubmitting}
-              error={touched.title && errors.title}
-              maxlength={40}
-              value={values.title}
-              onBlur={handleBlur}
-              onChange={handleChange}
-            />
-            <InputText
-              name='instructions'
-              type='text'
-              label='Instructions'
-              placeholder=''
-              tabIndex={2}
-              disabled={isSubmitting}
-              error={touched.instructions && errors.instructions}
-              maxlength={60}
-              value={values.instructions}
-              onBlur={handleBlur}
-              onChange={handleChange}
-            />
-            <Accordion
-              openOnStart={false}
-              forceOpen={!!errors.itemsPerBoard || !!errors.duration}
-            >
-              <Segment basic>
-                <Grid columns={2} stackable textAlign='center'>
-                  <Grid.Row>
-                    <Grid.Column verticalAlign='top'>
-                      <IconDropdown
-                        name='itemsPerBoard'
-                        label='Game Tiles'
-                        icon='tiles'
-                        tabIndex={-1}
-                        disabled={isSubmitting}
-                        selection
-                        compact
-                        options={itemsPerBoardOptions}
-                        error={touched.itemsPerBoard && errors.itemsPerBoard}
-                        value={values.itemsPerBoard}
-                        onBlur={handleBlur}
-                        setFieldValue={setFieldValue}
-                      />
-                    </Grid.Column>
-                    <Grid.Column verticalAlign='top'>
-                      <IconDropdown
-                        name='duration'
-                        label='Seconds'
-                        icon='timer'
-                        tabIndex={-1}
-                        disabled={isSubmitting}
-                        selection
-                        compact
-                        options={durationOptions}
-                        error={touched.duration && errors.duration}
-                        value={values.duration}
-                        onBlur={handleBlur}
-                        setFieldValue={setFieldValue}
-                      />
-                    </Grid.Column>
-                  </Grid.Row>
-                </Grid>
-              </Segment>
-            </Accordion>
-            <Divider hidden />
-            <Tab
-              panes={editorPanes}
-              activeIndex={activeTab}
-              onTabChange={(event, data) => this.handleTabChange(event, data)}
-              renderActiveOnly={true}
-            />
+            <Segment>
+              <InputText
+                name='title'
+                type='text'
+                label='Title'
+                placeholder=''
+                tabIndex={1}
+                disabled={isSubmitting}
+                error={touched.title && errors.title}
+                maxlength={40}
+                value={values.title}
+                onBlur={handleBlur}
+                onChange={handleChange}
+              />
+              <InputText
+                name='instructions'
+                type='text'
+                label='Instructions'
+                placeholder=''
+                tabIndex={2}
+                disabled={isSubmitting}
+                error={touched.instructions && errors.instructions}
+                maxlength={60}
+                value={values.instructions}
+                onBlur={handleBlur}
+                onChange={handleChange}
+              />
+              <Accordion
+                openOnStart={false}
+                forceOpen={!!errors.itemsPerBoard || !!errors.duration}
+              >
+                <Segment basic>
+                  <Grid columns={2} stackable textAlign='center'>
+                    <Grid.Row>
+                      <Grid.Column verticalAlign='top'>
+                        <IconDropdown
+                          name='itemsPerBoard'
+                          label='Game Tiles'
+                          icon='tiles'
+                          tabIndex={-1}
+                          disabled={isSubmitting}
+                          selection
+                          compact
+                          options={itemsPerBoardOptions}
+                          error={touched.itemsPerBoard && errors.itemsPerBoard}
+                          value={values.itemsPerBoard}
+                          onBlur={handleBlur}
+                          setFieldValue={setFieldValue}
+                        />
+                      </Grid.Column>
+                      <Grid.Column verticalAlign='top'>
+                        <IconDropdown
+                          name='duration'
+                          label='Seconds'
+                          icon='timer'
+                          tabIndex={-1}
+                          disabled={isSubmitting}
+                          selection
+                          compact
+                          options={durationOptions}
+                          error={touched.duration && errors.duration}
+                          value={values.duration}
+                          onBlur={handleBlur}
+                          setFieldValue={setFieldValue}
+                        />
+                      </Grid.Column>
+                    </Grid.Row>
+                  </Grid>
+                </Segment>
+              </Accordion>
+              <Divider hidden />
+              <Tab
+                panes={editorPanes}
+                activeIndex={activeTab}
+                onTabChange={(event, data) => this.handleTabChange(event, data)}
+                renderActiveOnly={true}
+              />
+            </Segment>
           </Grid.Column>
           <Grid.Column computer={8} mobile={16} tablet={16}>
             <MatchTable

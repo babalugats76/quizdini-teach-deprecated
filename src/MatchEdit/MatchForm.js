@@ -6,7 +6,7 @@ import DOMPurify from 'dompurify';
 
 import Button from '../components/Button';
 import InputText from '../components/InputText';
-import InputDropdown from '../components/InputDropdown';
+import IconDropdown from '../components/IconDropdown';
 import HtmlSerializer from './HtmlSerializer';
 import MatchBank from './MatchBank';
 import MatchBulk from './MatchBulk';
@@ -507,7 +507,7 @@ class MatchForm extends Component {
               name='title'
               type='text'
               label='Title'
-              placeholder='Legends of Computer Science'
+              placeholder=''
               tabIndex={1}
               disabled={isSubmitting}
               error={touched.title && errors.title}
@@ -520,7 +520,7 @@ class MatchForm extends Component {
               name='instructions'
               type='text'
               label='Instructions'
-              placeholder='Match each legend with their accomplishment'
+              placeholder=''
               tabIndex={2}
               disabled={isSubmitting}
               error={touched.instructions && errors.instructions}
@@ -535,9 +535,9 @@ class MatchForm extends Component {
             >
               <Segment basic>
                 <Grid columns={2} stackable textAlign='center'>
-                  <Grid.Row verticalAlign='middle'>
-                    <Grid.Column>
-                      <InputDropdown
+                  <Grid.Row>
+                    <Grid.Column verticalAlign='top'>
+                      <IconDropdown
                         name='itemsPerBoard'
                         label='Game Tiles'
                         icon='tiles'
@@ -552,9 +552,8 @@ class MatchForm extends Component {
                         setFieldValue={setFieldValue}
                       />
                     </Grid.Column>
-
-                    <Grid.Column>
-                      <InputDropdown
+                    <Grid.Column verticalAlign='top'>
+                      <IconDropdown
                         name='duration'
                         label='Seconds'
                         icon='timer'

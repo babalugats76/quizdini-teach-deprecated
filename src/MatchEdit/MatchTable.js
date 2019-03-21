@@ -120,7 +120,7 @@ const MatchTable = ({
         {error && (
           <Grid.Row verticalAlign='bottom'>
             <Grid.Column>
-              <Message content={error} />
+              <Message info content={error} />
             </Grid.Column>
           </Grid.Row>
         )}

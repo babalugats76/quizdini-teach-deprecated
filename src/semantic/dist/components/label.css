@@ -18,10 +18,10 @@
   line-height: 1;
   vertical-align: baseline;
   margin: 0 0.13333333em;
-  background-color: #A333C8;
+  background-color: #E8E8E8;
   background-image: none;
   padding: 0.5833em 0.833em;
-  color: #ffffff;
+  color: rgba(0, 0, 0, 0.6);
   text-transform: none;
   font-weight: bold;
   border: 0 solid transparent;
@@ -167,7 +167,7 @@ a.ui.label {
   max-width: 9999px;
   vertical-align: baseline;
   text-transform: none;
-  background: #A333C8;
+  background: #E8E8E8;
   padding: 0.5833em 0.833em 0.5833em 0.5em;
   border-radius: 0.26666667rem;
   -webkit-box-shadow: none;
@@ -254,7 +254,7 @@ a.ui.label {
   margin: 0;
   padding: 0;
   text-align: center;
-  border-color: #A333C8;
+  border-color: #E8E8E8;
   width: 4em;
   height: 4em;
   z-index: 1;
@@ -579,13 +579,13 @@ a.ui.basic.label:hover {
 .ui.inverted.labels .label,
 .ui.inverted.label {
   color: rgba(255, 255, 255, 0.9);
-  background-color: #611e77;
+  background-color: #b5b5b5;
 }
 .ui.inverted.corner.label {
-  border-color: #611e77;
+  border-color: #b5b5b5;
 }
 .ui.inverted.corner.label:hover {
-  border-color: #A333C8;
+  border-color: #E8E8E8;
   -webkit-transition: none;
   transition: none;
 }

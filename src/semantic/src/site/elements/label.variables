@@ -1,5 +1,3 @@
 /*******************************
     User Variable Overrides
 *******************************/
-@backgroundColor: @purple;
-@color: #ffffff;

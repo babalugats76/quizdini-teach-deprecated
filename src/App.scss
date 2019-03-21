@@ -28,7 +28,7 @@ textarea#matchText {
 
 .rich-text-editor {
   font-family: 'Roboto', sans-serif;
-  background-color: rgba(128,128,128,.01);
+  background-color: rgba(128, 128, 128, 0.01);
   color: #000000;
   font-size: 1.3rem;
   line-height: 1.5rem;
@@ -43,7 +43,7 @@ textarea#matchText {
 
 .rich-text-editor:not([contenteditable='true']) {
   pointer-events: none;
-  color: rgba(40,40,40,0.3);
+  color: rgba(40, 40, 40, 0.3);
 }
 
 /*.format-toolbar {
@@ -54,7 +54,6 @@ textarea#matchText {
   border-bottom: 2px solid rgb(238, 238, 238);
 }*/
 
-
 /*.rich-text-editor-container {
   display: inline-block;
   max-width: calc(50% - 20px);
@@ -64,14 +63,14 @@ textarea#matchText {
 }*/
 
 .match-editor {
-   position: relative;
+  position: relative;
 }
 
 .format-toolbar {
   position: absolute;
   bottom: 5px;
   right: 5px;
-} 
+}
 
 .format-toolbar button {
   background-color: white;
@@ -86,7 +85,8 @@ textarea#matchText {
   fill: #d5d5d5;
 }
 
-.format-toolbar button:hover, .format-toolbar button:focus {
+.format-toolbar button:hover,
+.format-toolbar button:focus {
   cursor: pointer;
   background-color: red;
   border-color: #222222;
@@ -108,14 +108,36 @@ textarea#matchText {
   fill: #222222;
 }
 
-.button-toolbar {  
+.button-toolbar {
   background-color: transparent;
-  background-repeat:no-repeat;
+  background-repeat: no-repeat;
   border: none;
-  cursor:pointer;
-  overflow: hidden;        
+  cursor: pointer;
+  overflow: hidden;
 }
 
 #match-bank button.labeled:not(.active):not(:hover) {
-  background-color: rgba(40,40,40,0.3) !important;
+  background-color: rgba(40, 40, 40, 0.3) !important;
+}
+
+.error .label {
+  color: red;
+}
+
+.input-feedback {
+  color: #999;
+  margin-top: 0.5rem;
+  font-size: 0.9em;
+  &.error {
+    color: red;
+  }
+}
+
+.animated {
+  animation-duration: 0.3s;
+  animation-fill-mode: both;
+}
+
+.input-group {
+  margin-bottom: 1rem;
 }

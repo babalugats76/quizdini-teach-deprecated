@@ -182,7 +182,7 @@ class MatchForm extends Component {
   state = {
     // Use to track open/close state of accordions
     accordion: {
-      [MatchForm.GAME_OPTS_ACCORDION]: true
+      [MatchForm.GAME_OPTS_ACCORDION]: false // Closed by default
     },
     activeTab: MatchForm.MATCH_TAB,
     activePage: 1,

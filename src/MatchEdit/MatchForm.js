@@ -177,8 +177,13 @@ const parseMatch = bulkMatches => {
 class MatchForm extends Component {
   static MATCH_TAB = 0;
   static BULK_TAB = 1;
+  static GAME_OPTS_ACCORDION = 'gameOptions';
 
   state = {
+    // Use to track open/close state of accordions
+    accordion: {
+      [MatchForm.GAME_OPTS_ACCORDION]: true
+    },
     activeTab: MatchForm.MATCH_TAB,
     activePage: 1,
     itemsPerPage: 11,
@@ -199,6 +204,24 @@ class MatchForm extends Component {
 
   setFocus = ref => {
     ref.current.focus();
+  };
+
+  /**
+   * If title is clicked, toggle state of accordion
+   * Used to expand/collapse accordions
+   *
+   * @param {Event} event Event to handle.
+   * @param {Object} titleProps Props from <Accordion.Title>
+   */
+  handleAccordionClick = (event, titleProps) => {
+    this.setState((state, props) => {
+      return {
+        accordion: {
+          ...state.accordion,
+          [titleProps.index]: !state.accordion[titleProps.index]
+        }
+      };
+    });
   };
 
   /**
@@ -405,8 +428,6 @@ class MatchForm extends Component {
    * @param {Event} event. Event to handle.
    */
   handleFileChange = event => {
-    console.log('File change registered!');
-
     event.preventDefault();
 
     if (event.target.files.length) {
@@ -443,7 +464,7 @@ class MatchForm extends Component {
       setFieldValue
     } = this.props;
     const { activeTab, activePage, itemsPerPage } = this.state;
-    const { term, definition } = this.state;
+    const { term, definition, accordion } = this.state;
 
     const editorPanes = [
       {
@@ -532,7 +553,11 @@ class MatchForm extends Component {
                 onChange={handleChange}
               />
               <Accordion
-                openOnStart={false}
+                index={MatchForm.GAME_OPTS_ACCORDION}
+                onClick={(event, titleProps) =>
+                  this.handleAccordionClick(event, titleProps)
+                }
+                open={accordion[MatchForm.GAME_OPTS_ACCORDION]}
                 forceOpen={!!errors.itemsPerBoard || !!errors.duration}
               >
                 <Segment basic>

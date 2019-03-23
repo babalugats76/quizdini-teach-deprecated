@@ -39,8 +39,7 @@ This project is the teacher front-end for Quizdini 2.0
       - Create using `InputText` as guide, i.e., include label, errors, etc.
       - Retrofit for instructions
       - Convert instructions to use
-    - **`Accordian`**
-      - Consider pushing `active` state up to parent component
+    - **`Accordion`**
       - Parameterize so that things like the icon to show are passed in, etc.
     - **`TextArea`**
       - Add disable/greyout functionality by adding support for a `disabled` prop. Use this prop to make the textarea, temporarily readonly or something similar

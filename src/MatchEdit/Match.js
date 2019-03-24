@@ -1,18 +1,16 @@
-import React, { Component } from 'react';
+import { Component } from 'react';
 
 class Match extends Component {
-
   componentDidMount() {
-    const { onLoad, initialQuery } = this.props;
+    const { onLoad, initialQuery, sleep } = this.props;
     if (initialQuery) {
-      onLoad(initialQuery);
+      onLoad(initialQuery, sleep);
     }
   }
 
   render() {
-    return (<React.Fragment></React.Fragment>)
+    return null;
   }
-
 }
 
 export default Match;

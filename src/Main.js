@@ -11,8 +11,8 @@ const Main = () => (
     <Switch>
       <Route path='/hello' component={Hello} />
       <Route
-        path='/match'
-        render={props => <MatchEdit {...props} initialQuery='4' sleep={3000} />}
+        path='/match/new'
+        render={(props) => <MatchEdit {...props} initialQuery='4' sleep={3000} />}
       />
     </Switch>
   </Container>

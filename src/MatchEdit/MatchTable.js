@@ -29,7 +29,7 @@ const renderRows = (
     .filter((element, index) => {
       const start = activePage * itemsPerPage - itemsPerPage;
       const end = activePage * itemsPerPage - 1;
-      console.log('start vs. end', `${start} vs ${end}`);
+     // console.log('start vs. end', `${start} vs ${end}`);
       return index >= start && index <= end;
     })
     .map((val, idx) => {
@@ -76,9 +76,9 @@ const MatchTable = ({
   const totalPages = Math.ceil(
     (matches.length ? matches.length : 0) / itemsPerPage
   );
-  console.log('Matches (length)', matches.length);
-  console.log('Total Pages', totalPages);
-  console.log('Active Page', activePage);
+  //console.log('Matches (length)', matches.length);
+  //console.log('Total Pages', totalPages);
+  //console.log('Active Page', activePage);
   const rows = renderRows(
     matches,
     disabled,

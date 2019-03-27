@@ -11,7 +11,7 @@ const View = ({
   sleep,
   data,
   error,
-  exception,
+  errmsg,
   onLoad,
   onSave,
   RenderMatchForm,
@@ -21,17 +21,17 @@ const View = ({
   <div>
     <Match initialQuery={initialQuery} sleep={sleep} onLoad={onLoad} />
     <div>
-      {((loading, data, error) => {
+      {((loading, data, error, errmsg) => {
         console.log(loading, data, error);
         if (loading) {
           return <RenderLoading />;
         } else if (error) {
-          return <RenderError error={exception} />;
+          return <RenderError error={errmsg} />;
         } else {
           console.log('rendering form with...', data);
           return <RenderMatchForm match={data} onSave={onSave} />;
         }
-      })(loading, data, error)}
+      })(loading, data, error, errmsg)}
     </div>
   </div>
 );

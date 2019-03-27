@@ -63,8 +63,8 @@ class FixedMenu extends Component {
             <Menu.Item as={Link} to='/hello' tabIndex={-1}>
               Hello, World!
             </Menu.Item>
-            {currentRoute !== '/match' && (
-              <Menu.Item as={Link} to='/match' tabIndex={-1}>
+            {currentRoute !== '/match/new' && (
+              <Menu.Item as={Link} to='/match/new' tabIndex={-1}>
                 New Match Game
               </Menu.Item>
             )}

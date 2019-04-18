@@ -9,6 +9,7 @@ import { Switch, Route, Link } from 'react-router-dom';
 const Main = () => (
   <Container>
     <Switch>
+      <a href="/auth/google">Sign In With Google</a>
       <Route path='/hello' component={Hello} />
       <Route
         path='/match/new'
